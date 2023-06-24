@@ -13,7 +13,7 @@ import sys
 def usage():
     print()
     print('-------------------------------------------------------------------------------')
-    print("  getStats.py is a script to get box score data from a specificed MLB game")
+    print("  getStats.py is a script to get box score data from a specified MLB game")
     print('-------------------------------------------------------------------------------')
     print()
     print("Usage:   getStats.py TEAMABBREV DATE")
@@ -106,8 +106,7 @@ def batting(team,soup):
     data_header = data_header[0].findAll("tr")
     data_header = data_header[0].findAll("th")
     game_data = [[td.getText() for td in data_rows[i].findAll(['th','td'])]
-        for i in range(len(data_rows))
-        ]
+        for i in range(len(data_rows))]
     data = pd.DataFrame(game_data)
     header = []
     for i in range(len(data.columns)):
@@ -126,8 +125,7 @@ def pitching(team,soup):
     data_header = data_header[0].findAll("tr")
     data_header = data_header[0].findAll("th")
     game_data = [[td.getText() for td in data_rows[i].findAll(['th','td'])]
-        for i in range(len(data_rows))
-        ]
+        for i in range(len(data_rows))]
     data = pd.DataFrame(game_data)
     header = []
     for i in range(len(data.columns)):
@@ -216,5 +214,4 @@ def main():
     output(hteam, ateam, gameInfo, homeBatting, awayBatting, homePitching, awayPitching)
 
 if __name__ == "__main__":
-
    main()
