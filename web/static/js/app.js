@@ -14,7 +14,7 @@ const app = {
 
   async init() {
     try {
-      const response = await fetch('./data.json');
+      const response = await fetch('./data.json?v=6');
       const rawText = await response.text();
       this.rawBundle = JSON.parse(rawText.replace(/\bNaN\b/g, 'null').replace(/\bInfinity\b/g, 'null'));
       this.setSportData(this.currentSport);
@@ -70,7 +70,11 @@ const app = {
     this.renderKPIs();
     this.populateDropdowns();
     trophyComponent.updateButtonLabels();
-    playersComponent.renderPresets();
+    if (window.playersComponent) {
+      playersComponent.perfState.page = 1;
+      playersComponent.aggState.page = 1;
+      playersComponent.renderPresets();
+    }
 
     // Re-render components
     gamesComponent.render();

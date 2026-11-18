@@ -1116,6 +1116,46 @@ table.stats-table tr:hover {
   flex-wrap: wrap;
 }
 
+.team-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.25rem 0.5rem;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 0.4rem;
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.025);
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.stat-lbl {
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+}
+
+.stat-val {
+  color: var(--text-secondary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.soccer-performer-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 2px 0;
+}
+
 /* Caliber Badges */
 .caliber-badge {
   font-size: 0.65rem;

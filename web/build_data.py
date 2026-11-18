@@ -92,20 +92,21 @@ NBA_ARENAS_CATALOG = [
 ]
 
 NBA_MVPS = {
-    'LeBron James', 'Stephen Curry', 'Giannis Antetokounmpo', 'Nikola Jokic',
-    'Kevin Durant', 'Russell Westbrook', 'James Harden', 'Joel Embiid'
+    'LeBron James', 'Derrick Rose', 'Kevin Durant', 'Stephen Curry',
+    'Russell Westbrook', 'James Harden', 'Giannis Antetokounmpo',
+    'Nikola Jokic', 'Joel Embiid', 'Shai Gilgeous-Alexander'
 }
 
 NBA_ALL_NBA = NBA_MVPS | {
     'Kawhi Leonard', 'Anthony Davis', 'Paul George', 'Chris Paul', 'Damian Lillard',
-    'Luka Doncic', 'Jimmy Butler', 'Jayson Tatum', 'Jaylen Brown', 'Shai Gilgeous-Alexander',
+    'Luka Doncic', 'Jimmy Butler', 'Jayson Tatum', 'Jaylen Brown',
     'Donovan Mitchell', 'DeMar DeRozan', 'Rudy Gobert', 'Karl-Anthony Towns', 'Devin Booker',
     'Pascal Siakam', 'Trae Young', 'Domantas Sabonis', "De'Aaron Fox", 'Jalen Brunson',
     'Tyrese Haliburton', 'Dwyane Wade', 'Carmelo Anthony', 'Dwight Howard', 'Carlos Boozer',
     'Elton Brand', 'Pau Gasol', 'Marc Gasol', 'DeAndre Jordan', 'Isaiah Thomas',
     'Kemba Walker', 'John Wall', 'Bradley Beal', 'Goran Dragic', 'Al Horford',
     'Ben Simmons', 'Victor Oladipo', 'Klay Thompson', 'Draymond Green', 'Kyle Lowry',
-    'Andre Iguodala', 'Shawn Marion'
+    'Andre Iguodala', 'Shawn Marion', 'Victor Wembanyama'
 }
 
 NBA_ALL_STARS = NBA_ALL_NBA | {
@@ -113,7 +114,7 @@ NBA_ALL_STARS = NBA_ALL_NBA | {
     'David West', 'Gordon Hayward', 'Jamaal Magloire', 'Jarrett Allen', 'Jrue Holiday',
     'Khris Middleton', 'LaMelo Ball', 'Lauri Markkanen', 'Mike Conley', 'Nikola Vucevic',
     'Paolo Banchero', 'Rajon Rondo', 'Roy Hibbert', 'Theo Ratliff', 'Tyrese Maxey',
-    'Victor Wembanyama', 'Zach LaVine', 'Dejounte Murray', 'Brandon Ingram', 'Fred VanVleet'
+    'Zach LaVine', 'Dejounte Murray', 'Brandon Ingram', 'Fred VanVleet'
 }
 
 MLB_MVPS = {
@@ -953,14 +954,34 @@ def build_soccer():
         soccer_players.append(p)
     soccer_players.sort(key=lambda x: (x['goals'], x['assists'], x['matches_count']), reverse=True)
 
-    # Attach match top performers from playerstats if available
+    SOCCER_TEAM_ALIASES = {
+        'AC': 'Angel City',
+        'SDW': 'Wave',
+        'GC': 'Gotham',
+        'NCC': 'Courage',
+        'Czechia': 'Czech Republic',
+        'Cape Town': 'Cape Town City',
+    }
+    def soccer_teams_match(p_team, m_team):
+        std_p = SOCCER_TEAM_ALIASES.get(p_team, p_team).strip().lower()
+        std_m = SOCCER_TEAM_ALIASES.get(m_team, m_team).strip().lower()
+        return std_p == std_m or std_p in std_m or std_m in std_p
+
+    # Attach match top performers and team columns (goal scorers and assisters) from playerstats
     for m in matches:
         d = m['date']
         day_players = []
         for p in soccer_players:
             for l in p['log']:
                 if l['date'] == d:
-                    day_players.append({'name': p['name'], 'team': l['team'], 'goals': l['goals'], 'assists': l['assists'], 'yc': l['yc'], 'rc': l['rc']})
+                    day_players.append({
+                        'name': p['name'],
+                        'team': l['team'],
+                        'goals': l['goals'],
+                        'assists': l['assists'],
+                        'yc': l['yc'],
+                        'rc': l['rc']
+                    })
         goalscorers = [dp for dp in day_players if dp['goals'] > 0]
         goalscorers.sort(key=lambda x: x['goals'], reverse=True)
         if goalscorers:
@@ -970,6 +991,29 @@ def build_soccer():
             m['top_performer'] = {'name': day_players[0]['name'], 'team': day_players[0]['team'], 'line': 'Featured Player'}
         else:
             m['top_performer'] = None
+
+        h_players = [dp for dp in day_players if soccer_teams_match(dp['team'], m['home'])]
+        a_players = [dp for dp in day_players if soccer_teams_match(dp['team'], m['away'])]
+
+        h_scorers = [{'name': p['name'], 'goals': p['goals']} for p in h_players if p['goals'] > 0]
+        h_assisters = [{'name': p['name'], 'assists': p['assists']} for p in h_players if p['assists'] > 0]
+        a_scorers = [{'name': p['name'], 'goals': p['goals']} for p in a_players if p['goals'] > 0]
+        a_assisters = [{'name': p['name'], 'assists': p['assists']} for p in a_players if p['assists'] > 0]
+
+        m['home_details'] = {
+            'team': m['home'],
+            'score': m['home_score'],
+            'scorers': h_scorers,
+            'assisters': h_assisters,
+            'has_player_stats': len(h_players) > 0
+        }
+        m['away_details'] = {
+            'team': m['away'],
+            'score': m['away_score'],
+            'scorers': a_scorers,
+            'assisters': a_assisters,
+            'has_player_stats': len(a_players) > 0
+        }
 
     trophy_stadiums = []
     for s_name, count in sorted(seen_stadiums.items(), key=lambda x: x[1], reverse=True):

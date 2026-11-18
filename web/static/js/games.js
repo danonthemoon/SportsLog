@@ -77,7 +77,7 @@ const gamesComponent = {
           <!-- Left Column: Date, Note, Matchup & Score, Arena & City -->
           <div class="game-card-left">
             <div class="game-card-header">
-              <span class="game-date">📅 ${app.formatDate(game.date)}</span>
+              <span class="game-date">${app.formatDate(game.date)}</span>
               <span class="event-badge ${eventBadgeClass}">${game.note}</span>
             </div>
 
@@ -161,19 +161,13 @@ const gamesComponent = {
                     ` : ''}
                   </div>
 
-                  <div class="nba-team-stats-box">
-                    <div class="nba-stat-line">
-                      <span><strong>FG:</strong> ${teamObj.fgm}/${teamObj.fga} (${(teamObj.fg_pct * (teamObj.fg_pct <= 1 ? 100 : 1)).toFixed(1)}%)</span>
-                      <span><strong>3P:</strong> ${teamObj.tpm}/${teamObj.tpa} (${(teamObj.tp_pct * (teamObj.tp_pct <= 1 ? 100 : 1)).toFixed(1)}%)</span>
-                    </div>
-                    <div class="nba-stat-line">
-                      <span><strong>AST:</strong> ${teamObj.ast}</span>
-                      <span><strong>DREB:</strong> ${teamObj.dreb} • <strong>OREB:</strong> ${teamObj.oreb}</span>
-                    </div>
-                    <div class="nba-stat-line">
-                      <span><strong>STL:</strong> ${teamObj.stl}</span>
-                      <span><strong>BLK:</strong> ${teamObj.blk}</span>
-                    </div>
+                  <div class="team-stat-grid">
+                    <div class="stat-cell"><span class="stat-lbl">FG</span><span class="stat-val">${teamObj.fgm}/${teamObj.fga} (${(teamObj.fg_pct * (teamObj.fg_pct <= 1 ? 100 : 1)).toFixed(1)}%)</span></div>
+                    <div class="stat-cell"><span class="stat-lbl">3P</span><span class="stat-val">${teamObj.tpm}/${teamObj.tpa} (${(teamObj.tp_pct * (teamObj.tp_pct <= 1 ? 100 : 1)).toFixed(1)}%)</span></div>
+                    <div class="stat-cell"><span class="stat-lbl">AST</span><span class="stat-val">${teamObj.ast}</span></div>
+                    <div class="stat-cell"><span class="stat-lbl">REB</span><span class="stat-val">${teamObj.reb} (${teamObj.dreb}D • ${teamObj.oreb}O)</span></div>
+                    <div class="stat-cell"><span class="stat-lbl">STL</span><span class="stat-val">${teamObj.stl}</span></div>
+                    <div class="stat-cell"><span class="stat-lbl">BLK</span><span class="stat-val">${teamObj.blk}</span></div>
                   </div>
                 </div>
               `;
@@ -239,7 +233,7 @@ const gamesComponent = {
           <!-- Left Column: Date, Note, Matchup & Score, Ballpark -->
           <div class="game-card-left">
             <div class="game-card-header">
-              <span class="game-date">📅 ${app.formatDate(game.date)}</span>
+              <span class="game-date">${app.formatDate(game.date)}</span>
               <span class="event-badge" style="background: rgba(16,185,129,0.15); color: var(--accent-emerald);">MLB</span>
             </div>
 
@@ -271,38 +265,65 @@ const gamesComponent = {
 
             <div class="game-meta-footer" style="margin-top: 0.5rem; padding-top: 0.5rem;">
               <span class="game-arena">📍 ${game.stadium}</span>
+              <span style="color: var(--text-muted); font-size: 0.72rem; margin-top: 0.2rem; display: block;">⏱️ Duration: ${game.duration || 'N/A'} • 👥 ${game.attendance ? Number(game.attendance).toLocaleString() + ' Fans' : 'N/A'}</span>
             </div>
           </div>
 
-          <!-- Right Column: Top Performers and Key Team Stats -->
+          <!-- Right Column: Each Team's Best Batter, Starting Pitcher, and Offense -->
           <div class="game-card-right">
-            <div>
-              <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                ⭐ Top Performers & Match Facts
-              </div>
-              ${game.top_performer ? `
-                <div class="top-performer-pill" style="margin-top: 0; margin-bottom: 0.35rem;">
-                  <span>Hitter: <strong>${game.top_performer.name}</strong> (${game.top_performer.team})</span>
-                  <span style="color: var(--accent-gold); font-weight: 700;">${game.top_performer.line}</span>
-                </div>
-              ` : ''}
+            ${(() => {
+              const renderMlbTeamCol = (teamObj) => {
+                const batters = [...(teamObj.batting || [])];
+                batters.sort((a, b) => (Number(b.HR) || 0) - (Number(a.HR) || 0) || (Number(b.H) || 0) - (Number(a.H) || 0) || (Number(b.RBI) || 0) - (Number(a.RBI) || 0));
+                const bestBatter = batters[0];
+                const sp = (teamObj.pitching && teamObj.pitching.length > 0) ? teamObj.pitching[0] : null;
 
-              <div style="margin-top: 0.75rem; padding-top: 0.6rem; border-top: 1px solid var(--border-subtle); font-size: 0.76rem; color: var(--text-secondary); display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
-                <div>
-                  <span style="color: var(--text-muted); font-size: 0.7rem; display: block;">OFFENSIVE HITS & HR</span>
-                  <span>${game.away.abbrev}: ${game.away.hits} Hits (${game.away.hr} HR)</span><br>
-                  <span>${game.home.abbrev}: ${game.home.hits} Hits (${game.home.hr} HR)</span>
-                </div>
-                <div>
-                  <span style="color: var(--text-muted); font-size: 0.7rem; display: block;">GAME METRICS</span>
-                  <span>Total Runs: ${game.total_runs} (Diff: ${game.margin})</span><br>
-                  <span>Attendance: ${game.attendance || 'N/A'}</span>
-                </div>
-              </div>
-            </div>
+                return `
+                  <div class="nba-team-card-col">
+                    <div class="nba-team-col-header" style="color: ${app.getTeamColor(teamObj.abbrev)};">
+                      <strong>${teamObj.team}</strong>
+                    </div>
+                    
+                    <div class="nba-leaders-box">
+                      ${bestBatter ? `
+                        <div class="nba-leader-row">
+                          <span class="nba-stat-pill pts">BAT</span>
+                          <div class="nba-leader-info">
+                            <span class="nba-leader-name">${bestBatter.Batting}</span>
+                            <span class="nba-leader-pra">${bestBatter.H}-for-${bestBatter.AB}, ${bestBatter.HR} HR, ${bestBatter.RBI} RBI</span>
+                          </div>
+                        </div>
+                      ` : ''}
+                      ${sp ? `
+                        <div class="nba-leader-row">
+                          <span class="nba-stat-pill ast">SP</span>
+                          <div class="nba-leader-info">
+                            <span class="nba-leader-name">${sp.Pitching}</span>
+                            <span class="nba-leader-pra">${sp.IP} IP, ${sp.ER} ER, ${sp.SO} K, ${sp.BB} BB</span>
+                          </div>
+                        </div>
+                      ` : ''}
+                    </div>
 
-            <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 0.75rem;">
-              <span style="color: var(--accent-emerald); font-weight: 700; font-size: 0.8rem;">View Full Box Score →</span>
+                    <div class="team-stat-grid" style="grid-template-columns: repeat(3, 1fr);">
+                      <div class="stat-cell"><span class="stat-lbl">H</span><span class="stat-val">${teamObj.hits}</span></div>
+                      <div class="stat-cell"><span class="stat-lbl">HR</span><span class="stat-val">${teamObj.hr}</span></div>
+                      <div class="stat-cell"><span class="stat-lbl">R</span><span class="stat-val">${teamObj.runs}</span></div>
+                    </div>
+                  </div>
+                `;
+              };
+
+              return `
+                <div class="nba-right-teams-grid">
+                  ${renderMlbTeamCol(game.away)}
+                  ${renderMlbTeamCol(game.home)}
+                </div>
+              `;
+            })()}
+
+            <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 0.6rem;">
+              <span style="color: var(--accent-emerald); font-weight: 700; font-size: 0.78rem;">View Full Box Score →</span>
             </div>
           </div>
         </div>
@@ -350,7 +371,7 @@ const gamesComponent = {
           <!-- Left Column: Date, Matchup & Score, Stadium & City -->
           <div class="game-card-left">
             <div class="game-card-header">
-              <span class="game-date">📅 ${app.formatDate(m.date)}</span>
+              <span class="game-date">${app.formatDate(m.date)}</span>
               <span class="event-badge" style="background: rgba(56,189,248,0.15); color: var(--accent-cyan);">Soccer</span>
             </div>
 
@@ -372,42 +393,66 @@ const gamesComponent = {
 
             <div class="game-meta-footer" style="margin-top: 0.5rem; padding-top: 0.5rem;">
               <span class="game-arena">📍 ${m.stadium} • ${m.city}</span>
+              <span style="color: var(--text-muted); font-size: 0.72rem; margin-top: 0.2rem; display: block;">👥 ${m.attendance ? Number(m.attendance).toLocaleString() + ' Fans' : 'Official Match'}</span>
             </div>
           </div>
 
-          <!-- Right Column: Top Performers & Key Match Stats -->
+          <!-- Right Column: Each Team's Goal Scorers and Assisters -->
           <div class="game-card-right">
-            <div>
-              <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                ⭐ Key Match Facts & Performers
-              </div>
+            ${(() => {
+              const renderSoccerTeamCol = (teamName, teamDetails, defaultColor) => {
+                const scorers = teamDetails?.scorers || [];
+                const assisters = teamDetails?.assisters || [];
+                const scoreNum = Number(teamDetails?.score || 0);
+                const hasStats = teamDetails?.has_player_stats;
 
-              ${m.top_performer ? `
-                <div class="top-performer-pill" style="margin-top: 0; margin-bottom: 0.35rem;">
-                  <span>Performer: <strong>${m.top_performer.name}</strong> (${m.top_performer.team})</span>
-                  <span style="color: var(--accent-gold); font-weight: 700;">${m.top_performer.line}</span>
-                </div>
-              ` : `
-                <div class="top-performer-pill" style="margin-top: 0; margin-bottom: 0.35rem;">
-                  <span>Result: <strong>${homeWin ? m.home + ' Victory' : awayWin ? m.away + ' Victory' : 'Draw'}</strong></span>
-                  <span style="color: var(--accent-cyan); font-weight: 700;">${m.home_score}-${m.away_score} FT</span>
-                </div>
-              `}
+                return `
+                  <div class="nba-team-card-col">
+                    <div class="nba-team-col-header" style="color: ${defaultColor};">
+                      <strong>${teamName}</strong>
+                    </div>
+                    
+                    <div class="nba-leaders-box" style="margin-bottom: 0;">
+                      ${scorers.length > 0 ? scorers.map(s => `
+                        <div class="nba-leader-row">
+                          <span class="nba-stat-pill pts">⚽</span>
+                          <div class="nba-leader-info">
+                            <span class="nba-leader-name">${s.name}</span>
+                            <span class="nba-leader-pra">${s.goals} Goal${s.goals > 1 ? 's' : ''}</span>
+                          </div>
+                        </div>
+                      `).join('') : (scoreNum === 0 ? `
+                        <div style="font-size: 0.72rem; color: var(--text-muted); padding: 3px 0;">0 Goals</div>
+                      ` : (hasStats ? `
+                        <div style="font-size: 0.72rem; color: var(--text-muted); padding: 3px 0;">Own Goal / Uncredited</div>
+                      ` : `
+                        <div style="font-size: 0.72rem; color: var(--text-secondary); padding: 3px 0;">${scoreNum} Goals (Unlisted)</div>
+                      `))}
 
-              <div style="margin-top: 0.75rem; padding-top: 0.6rem; border-top: 1px solid var(--border-subtle); font-size: 0.76rem; color: var(--text-secondary); display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
-                <div>
-                  <span style="color: var(--text-muted); font-size: 0.7rem; display: block;">ATTENDANCE</span>
-                  <span>${m.attendance ? Number(m.attendance).toLocaleString() + ' Fans' : 'Official Match'}</span>
-                </div>
-                <div>
-                  <span style="color: var(--text-muted); font-size: 0.7rem; display: block;">STADIUM & LOCATION</span>
-                  <span>${m.city}</span>
-                </div>
-              </div>
-            </div>
+                      ${assisters.length > 0 ? assisters.map(a => `
+                        <div class="nba-leader-row">
+                          <span class="nba-stat-pill ast">🅰️</span>
+                          <div class="nba-leader-info">
+                            <span class="nba-leader-name">${a.name}</span>
+                            <span class="nba-leader-pra">${a.assists} Assist${a.assists > 1 ? 's' : ''}</span>
+                          </div>
+                        </div>
+                      `).join('') : ''}
+                    </div>
+                  </div>
+                `;
+              };
 
-            <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 0.75rem;">
-              <span style="color: var(--accent-cyan); font-weight: 700; font-size: 0.8rem;">Match Logged ✓</span>
+              return `
+                <div class="nba-right-teams-grid">
+                  ${renderSoccerTeamCol(m.away, m.away_details, '#0284c7')}
+                  ${renderSoccerTeamCol(m.home, m.home_details, '#10b981')}
+                </div>
+              `;
+            })()}
+
+            <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 0.6rem;">
+              <span style="color: var(--accent-cyan); font-weight: 700; font-size: 0.78rem;">Match Logged ✓</span>
             </div>
           </div>
         </div>
@@ -420,9 +465,13 @@ const gamesComponent = {
     if (!game) return;
 
     document.getElementById('modal-game-title').textContent = `${game.away.team} vs. ${game.home.team}`;
-    document.getElementById('modal-game-subtitle').textContent = `📅 ${app.formatDate(game.date)} • 📍 ${game.arena}, ${game.city} • 🎯 ${game.note}`;
+    document.getElementById('modal-game-subtitle').textContent = `${app.formatDate(game.date)} • 📍 ${game.arena}, ${game.city} • 🎯 ${game.note}`;
 
     const isHomeWinner = game.home.wl === 'W';
+
+    const allPlayers = [...(game.away.players || []), ...(game.home.players || [])];
+    const maxNameLen = allPlayers.length > 0 ? Math.max(...allPlayers.map(p => (p.NAME || '').length)) : 16;
+    const boundPlayerWidth = Math.max(170, Math.min(260, Math.round(maxNameLen * 8.5) + 40));
 
     const renderRoster = (teamObj) => {
       const players = teamObj.players || [];
@@ -440,7 +489,25 @@ const gamesComponent = {
             </div>
           </div>
           <div class="table-responsive">
-            <table class="stats-table">
+            <table class="stats-table" style="table-layout: fixed; width: max-content; min-width: 100%;">
+              <colgroup>
+                <col style="width: ${boundPlayerWidth}px;">
+                <col style="width: 50px;">
+                <col style="width: 50px;">
+                <col style="width: 48px;">
+                <col style="width: 48px;">
+                <col style="width: 46px;">
+                <col style="width: 46px;">
+                <col style="width: 64px;">
+                <col style="width: 58px;">
+                <col style="width: 64px;">
+                <col style="width: 58px;">
+                <col style="width: 64px;">
+                <col style="width: 58px;">
+                <col style="width: 46px;">
+                <col style="width: 46px;">
+                <col style="width: 80px;">
+              </colgroup>
               <thead>
                 <tr>
                   <th class="text-left">Player</th>
@@ -597,7 +664,15 @@ const gamesComponent = {
     if (!game) return;
 
     document.getElementById('modal-game-title').textContent = `${game.away.team} vs. ${game.home.team}`;
-    document.getElementById('modal-game-subtitle').textContent = `📅 ${app.formatDate(game.date)} • 📍 ${game.stadium} • ⏱️ Duration: ${game.duration} • 👥 Attendance: ${game.attendance}`;
+    document.getElementById('modal-game-subtitle').textContent = `${app.formatDate(game.date)} • 📍 ${game.stadium} • ⏱️ Duration: ${game.duration} • 👥 Attendance: ${game.attendance}`;
+
+    const allBatters = [...(game.away.batting || []), ...(game.home.batting || [])];
+    const maxBatterLen = allBatters.length > 0 ? Math.max(...allBatters.map(b => (b.Batting || '').length)) : 16;
+    const boundBatterWidth = Math.max(170, Math.min(260, Math.round(maxBatterLen * 8.5) + 30));
+
+    const allPitchers = [...(game.away.pitching || []), ...(game.home.pitching || [])];
+    const maxPitcherLen = allPitchers.length > 0 ? Math.max(...allPitchers.map(p => (p.Pitcher || '').length)) : 16;
+    const boundPitcherWidth = Math.max(170, Math.min(260, Math.round(maxPitcherLen * 8.5) + 30));
 
     const renderBatting = (teamObj) => `
       <div style="margin-bottom: 1.5rem;">
@@ -605,7 +680,19 @@ const gamesComponent = {
           ${teamObj.team} — Batting Lineup (${teamObj.runs} Runs, ${teamObj.hits} Hits, ${teamObj.hr} HR)
         </h4>
         <div class="table-responsive">
-          <table class="stats-table">
+          <table class="stats-table" style="table-layout: fixed; width: max-content; min-width: 100%;">
+            <colgroup>
+              <col style="width: ${boundBatterWidth}px;">
+              <col style="width: 52px;">
+              <col style="width: 48px;">
+              <col style="width: 48px;">
+              <col style="width: 48px;">
+              <col style="width: 48px;">
+              <col style="width: 48px;">
+              <col style="width: 48px;">
+              <col style="width: 48px;">
+              <col style="width: 140px;">
+            </colgroup>
             <thead>
               <tr>
                 <th class="text-left">Batter</th>
@@ -665,7 +752,19 @@ const gamesComponent = {
           ${teamObj.team} — Pitching Outings
         </h4>
         <div class="table-responsive">
-          <table class="stats-table">
+          <table class="stats-table" style="table-layout: fixed; width: max-content; min-width: 100%;">
+            <colgroup>
+              <col style="width: ${boundPitcherWidth}px;">
+              <col style="width: 55px;">
+              <col style="width: 48px;">
+              <col style="width: 48px;">
+              <col style="width: 48px;">
+              <col style="width: 48px;">
+              <col style="width: 48px;">
+              <col style="width: 48px;">
+              <col style="width: 65px;">
+              <col style="width: 65px;">
+            </colgroup>
             <thead>
               <tr>
                 <th class="text-left">Pitcher</th>

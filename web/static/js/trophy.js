@@ -343,9 +343,6 @@ const trophyComponent = {
               <g class="map-pin" onclick="app.filterGamesByArena('${pin.name.replace(/'/g, "\\'")}')" style="cursor: pointer;">
                 <circle cx="${pin.x}" cy="${pin.y}" r="12" fill="url(#pin-glow)"/>
                 <circle cx="${pin.x}" cy="${pin.y}" r="3.5" fill="#38bdf8" stroke="#ffffff" stroke-width="1.2"/>
-                <text x="${pin.x}" y="${pin.y + (pin.labelY || -7)}" font-size="7.5" fill="#f8fafc" font-weight="700" text-anchor="middle" style="paint-order: stroke fill; stroke: #070d19; stroke-width: 2.5px; stroke-linejoin: round; pointer-events: none;">
-                  ${pin.name}
-                </text>
                 <title>${pin.name} (${pin.city}) • ${pin.matches} Matches Attended</title>
               </g>
             `).join('')}

@@ -6,11 +6,17 @@ const playersComponent = {
     sortAsc: false,
     preset: 'ALL',
     page: 1,
-    pageSize: 25,
+    pageSize: 100,
   },
   aggState: {
     sortCol: 'pts',
     sortAsc: false,
+    page: 1,
+    pageSize: 100,
+  },
+  changeAggPage(delta) {
+    this.aggState.page += delta;
+    this.renderAggregates();
   },
   dossierState: {
     player: null,
@@ -402,16 +408,18 @@ const playersComponent = {
 
   paginateAndRender(list, tbody, rowRenderer) {
     const totalCount = list.length;
-    const maxPage = Math.max(1, Math.ceil(totalCount / this.perfState.pageSize));
+    const pageSize = totalCount <= 200 ? totalCount : 100;
+    this.perfState.pageSize = pageSize;
+    const maxPage = Math.max(1, Math.ceil(totalCount / pageSize));
     if (this.perfState.page > maxPage) this.perfState.page = maxPage;
     if (this.perfState.page < 1) this.perfState.page = 1;
 
-    const startIdx = (this.perfState.page - 1) * this.perfState.pageSize;
-    const pageItems = list.slice(startIdx, startIdx + this.perfState.pageSize);
+    const startIdx = (this.perfState.page - 1) * pageSize;
+    const pageItems = list.slice(startIdx, startIdx + pageSize);
 
     const countLabel = document.getElementById('perf-count-label');
     if (countLabel) {
-      countLabel.textContent = `Showing ${totalCount > 0 ? startIdx + 1 : 0}-${Math.min(startIdx + this.perfState.pageSize, totalCount)} of ${totalCount}`;
+      countLabel.textContent = `Showing ${totalCount > 0 ? startIdx + 1 : 0}-${Math.min(startIdx + pageSize, totalCount)} of ${totalCount}`;
     }
     const indicator = document.getElementById('perf-page-indicator');
     if (indicator) {
@@ -425,6 +433,33 @@ const playersComponent = {
     tbody.innerHTML = pageItems.map(rowRenderer).join('');
   },
 
+  paginateAgg(list, tbody, rowRenderer) {
+    const totalCount = list.length;
+    const pageSize = totalCount <= 200 ? totalCount : 100;
+    this.aggState.pageSize = pageSize;
+    const maxPage = Math.max(1, Math.ceil(totalCount / pageSize));
+    if (this.aggState.page > maxPage) this.aggState.page = maxPage;
+    if (this.aggState.page < 1) this.aggState.page = 1;
+
+    const startIdx = (this.aggState.page - 1) * pageSize;
+    const pageItems = list.slice(startIdx, startIdx + pageSize);
+
+    const countLabel = document.getElementById('agg-count-label');
+    if (countLabel) {
+      countLabel.textContent = `Showing ${totalCount > 0 ? startIdx + 1 : 0}-${Math.min(startIdx + pageSize, totalCount)} of ${totalCount}`;
+    }
+    const indicator = document.getElementById('agg-page-indicator');
+    if (indicator) {
+      indicator.textContent = `Page ${this.aggState.page} of ${maxPage}`;
+    }
+    const prevBtn = document.getElementById('agg-prev-btn');
+    if (prevBtn) prevBtn.disabled = (this.aggState.page <= 1);
+    const nextBtn = document.getElementById('agg-next-btn');
+    if (nextBtn) nextBtn.disabled = (this.aggState.page >= maxPage);
+
+    tbody.innerHTML = pageItems.map(rowRenderer).join('');
+  },
+
   sortAggBy(col) {
     if (this.aggState.sortCol.toUpperCase() === col.toUpperCase()) {
       this.aggState.sortAsc = !this.aggState.sortAsc;
@@ -432,6 +467,7 @@ const playersComponent = {
       this.aggState.sortCol = col;
       this.aggState.sortAsc = false;
     }
+    this.aggState.page = 1;
     this.renderAggregates();
   },
 
@@ -485,7 +521,7 @@ const playersComponent = {
         return asc ? (valA - valB) : (valB - valA);
       });
 
-      tbody.innerHTML = list.map(p => `
+      this.paginateAgg(list, tbody, (p) => `
         <tr onclick="app.openPlayerDossier('${p.name.replace(/'/g, "\\'")}', 'nba')" style="cursor: pointer;">
           <td class="text-left ${getTdClass('name')}">
             <span class="player-link">${p.name}</span>
@@ -505,7 +541,7 @@ const playersComponent = {
           <td class="${getTdClass('triple_doubles')}">${p.triple_doubles > 0 ? `<strong style="color: var(--accent-gold);">${p.triple_doubles}</strong>` : '-'}</td>
           <td class="${getTdClass('high_pts')}" style="font-weight: 700; color: var(--accent-gold);">${p.highs.pts} PTS</td>
         </tr>
-      `).join('');
+      `);
     } else if (sport === 'mlb') {
       tableThead.innerHTML = `
         <th class="text-left ${getThClass('name')}" onclick="playersComponent.sortAggBy('name')">Batter${ind('name')}</th>
@@ -536,7 +572,7 @@ const playersComponent = {
         return asc ? (valA - valB) : (valB - valA);
       });
 
-      tbody.innerHTML = list.map(b => `
+      this.paginateAgg(list, tbody, (b) => `
         <tr onclick="app.openPlayerDossier('${b.name.replace(/'/g, "\\'")}', 'mlb_bat')" style="cursor: pointer;">
           <td class="text-left ${getTdClass('name')}">
             <span class="player-link">${b.name}</span>
@@ -552,7 +588,7 @@ const playersComponent = {
           <td class="${getTdClass('avg')}" style="font-weight: 700;">.${(b.avg * 1000).toFixed(0)}</td>
           <td class="${getTdClass('high_hr')}" style="font-weight: 700; color: var(--accent-gold);">${b.high_hr} HR</td>
         </tr>
-      `).join('');
+      `);
     } else if (sport === 'soccer') {
       tableThead.innerHTML = `
         <th class="text-left ${getThClass('name')}" onclick="playersComponent.sortAggBy('name')">Player${ind('name')}</th>
@@ -581,7 +617,7 @@ const playersComponent = {
         return asc ? (valA - valB) : (valB - valA);
       });
 
-      tbody.innerHTML = list.map(p => `
+      this.paginateAgg(list, tbody, (p) => `
         <tr onclick="app.openPlayerDossier('${p.name.replace(/'/g, "\\'")}', 'soccer')" style="cursor: pointer;">
           <td class="text-left ${getTdClass('name')}">
             <span class="player-link">${p.name}</span>
@@ -595,7 +631,7 @@ const playersComponent = {
           <td class="${getTdClass('yc')}">${p.yc}</td>
           <td class="${getTdClass('rc')}">${p.rc}</td>
         </tr>
-      `).join('');
+      `);
     }
   },
 

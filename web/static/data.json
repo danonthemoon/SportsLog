@@ -32908,7 +32908,7 @@
         "tp_pct": 0.298,
         "ft_pct": 0.901,
         "win_pct": 0.654,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -46308,7 +46308,7 @@
         "win_pct": 1.0,
         "is_mvp": false,
         "is_all_star": true,
-        "is_all_nba": false
+        "is_all_nba": true
       },
       {
         "name": "Bogdan Bogdanovic",
@@ -89722,7 +89722,7 @@
         "game_score": 7.7,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -90330,7 +90330,7 @@
         "game_score": 8.6,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -90938,7 +90938,7 @@
         "game_score": 14.0,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -91994,7 +91994,7 @@
         "game_score": 14.0,
         "double_double": true,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -94394,7 +94394,7 @@
         "game_score": 19.7,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -95642,7 +95642,7 @@
         "game_score": 24.9,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -95994,7 +95994,7 @@
         "game_score": 7.5,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -96986,7 +96986,7 @@
         "game_score": 23.5,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -98874,7 +98874,7 @@
         "game_score": 17.2,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -99482,7 +99482,7 @@
         "game_score": 16.9,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -100122,7 +100122,7 @@
         "game_score": 11.4,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -101786,7 +101786,7 @@
         "game_score": 18.8,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -102682,7 +102682,7 @@
         "game_score": 25.0,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -104122,7 +104122,7 @@
         "game_score": 22.1,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -104794,7 +104794,7 @@
         "game_score": 29.0,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -106682,7 +106682,7 @@
         "game_score": 16.6,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -107802,7 +107802,7 @@
         "game_score": 18.3,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -108122,7 +108122,7 @@
         "game_score": 31.9,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -108954,7 +108954,7 @@
         "game_score": 22.2,
         "double_double": true,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -110138,7 +110138,7 @@
         "game_score": 32.3,
         "double_double": true,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -110906,7 +110906,7 @@
         "game_score": 24.1,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -111898,7 +111898,7 @@
         "game_score": 16.5,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -112348,7 +112348,7 @@
         "triple_double": false,
         "is_mvp": false,
         "is_all_star": true,
-        "is_all_nba": false
+        "is_all_nba": true
       },
       {
         "name": "Dillon Brooks",
@@ -113594,7 +113594,7 @@
         "game_score": 12.4,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -114938,7 +114938,7 @@
         "game_score": 19.7,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -115226,7 +115226,7 @@
         "game_score": 13.8,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -115644,7 +115644,7 @@
         "triple_double": false,
         "is_mvp": false,
         "is_all_star": true,
-        "is_all_nba": false
+        "is_all_nba": true
       },
       {
         "name": "De'Aaron Fox",
@@ -116890,7 +116890,7 @@
         "game_score": 29.3,
         "double_double": false,
         "triple_double": false,
-        "is_mvp": false,
+        "is_mvp": true,
         "is_all_star": true,
         "is_all_nba": true
       },
@@ -236431,6 +236431,60 @@
           "name": "Kennedy Wesley",
           "team": "SDW",
           "line": "1 Goal"
+        },
+        "home_details": {
+          "team": "Wave",
+          "score": "1",
+          "scorers": [
+            {
+              "name": "Kennedy Wesley",
+              "goals": 1
+            }
+          ],
+          "assisters": [
+            {
+              "name": "Alex Morgan",
+              "assists": 1
+            },
+            {
+              "name": "Maria Sanchez",
+              "assists": 1
+            }
+          ],
+          "has_player_stats": true
+        },
+        "away_details": {
+          "team": "Courage",
+          "score": "4",
+          "scorers": [
+            {
+              "name": "Haley Hopkins",
+              "goals": 1
+            },
+            {
+              "name": "Bianca St Georges",
+              "goals": 1
+            },
+            {
+              "name": "Meredith Speck",
+              "goals": 1
+            },
+            {
+              "name": "Felicitas Rauch",
+              "goals": 1
+            }
+          ],
+          "assisters": [
+            {
+              "name": "Malia Berkely",
+              "assists": 3
+            },
+            {
+              "name": "Olivia Wingate",
+              "assists": 1
+            }
+          ],
+          "has_player_stats": true
         }
       },
       {
@@ -236448,6 +236502,40 @@
           "name": "Alyssa Thompson",
           "team": "AC",
           "line": "2 Goals"
+        },
+        "home_details": {
+          "team": "Wave",
+          "score": "1",
+          "scorers": [
+            {
+              "name": "Abby Dahlkemper",
+              "goals": 1
+            }
+          ],
+          "assisters": [
+            {
+              "name": "Maria Sanchez",
+              "assists": 1
+            }
+          ],
+          "has_player_stats": true
+        },
+        "away_details": {
+          "team": "Angel City",
+          "score": "2",
+          "scorers": [
+            {
+              "name": "Alyssa Thompson",
+              "goals": 2
+            }
+          ],
+          "assisters": [
+            {
+              "name": "Meggie Dougherty Howard",
+              "assists": 1
+            }
+          ],
+          "has_player_stats": true
         }
       },
       {
@@ -236461,7 +236549,21 @@
         "stadium": "Snapdragon Stadium",
         "city": "San Diego",
         "attendance": "24115.0",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "Wave",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Red Stars",
+          "score": "3",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_28",
@@ -236474,7 +236576,21 @@
         "stadium": "Snapdragon Stadium",
         "city": "San Diego",
         "attendance": "17073.0",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "Wave",
+          "score": "1",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Pride",
+          "score": "1",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_27",
@@ -236487,7 +236603,21 @@
         "stadium": "Snapdragon Stadium",
         "city": "San Diego",
         "attendance": "32262.0",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "Wave",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Reign",
+          "score": "1",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_26",
@@ -236500,7 +236630,21 @@
         "stadium": "Snapdragon Stadium",
         "city": "San Diego",
         "attendance": "",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "USWNT",
+          "score": "3",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Colombia",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_25",
@@ -236513,7 +236657,21 @@
         "stadium": "Snapdragon Stadium",
         "city": "San Diego",
         "attendance": "15832.0",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "Wave",
+          "score": "1",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Current",
+          "score": "2",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_24",
@@ -236526,7 +236684,21 @@
         "stadium": "Snapdragon Stadium",
         "city": "San Diego",
         "attendance": "12045.0",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "Wave",
+          "score": "2",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Gotham",
+          "score": "1",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_23",
@@ -236539,7 +236711,21 @@
         "stadium": "Snapdragon Stadium",
         "city": "San Diego",
         "attendance": "14408.0",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "Wave",
+          "score": "1",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Angel City",
+          "score": "1",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_22",
@@ -236552,7 +236738,21 @@
         "stadium": "Dignity Health Sports Park",
         "city": "Los Angeles",
         "attendance": "8000.0",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "Juventus",
+          "score": "2 (4)",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Milan",
+          "score": "2 (3)",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_21",
@@ -236565,7 +236765,21 @@
         "stadium": "Snapdragon Stadium",
         "city": "San Diego",
         "attendance": "32690.0",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "USMNT",
+          "score": "1 (4)",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Panama",
+          "score": "1 (5)",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_20",
@@ -236578,7 +236792,21 @@
         "stadium": "Snapdragon Stadium",
         "city": "San Diego",
         "attendance": "22682.0",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "Wave",
+          "score": "1",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Reign",
+          "score": "2",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_19",
@@ -236591,7 +236819,21 @@
         "stadium": "Snapdragon Stadium",
         "city": "San Diego",
         "attendance": "25515.0",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "Wave",
+          "score": "1",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Angel City",
+          "score": "2",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_18",
@@ -236604,7 +236846,21 @@
         "stadium": "Snapdragon Stadium",
         "city": "San Diego",
         "attendance": "9763.0",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "Wave",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Reign",
+          "score": "3",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_17",
@@ -236617,7 +236873,21 @@
         "stadium": "Snapdragon Stadium",
         "city": "San Diego",
         "attendance": "18130.0",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "Wave",
+          "score": "1",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Thorns",
+          "score": "1",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_16",
@@ -236630,7 +236900,21 @@
         "stadium": "Stadio Olimpico",
         "city": "Rome",
         "attendance": "64191.0",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "Roma",
+          "score": "1",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Milan",
+          "score": "1",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_15",
@@ -236643,7 +236927,21 @@
         "stadium": "Allianz Stadium",
         "city": "Turin",
         "attendance": "39839.0",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "Juventus",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Napoli",
+          "score": "1",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_14",
@@ -236656,7 +236954,21 @@
         "stadium": "Snapdragon Stadium",
         "city": "San Diego",
         "attendance": "17000.0",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "Wave",
+          "score": "3",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Courage",
+          "score": "1",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_13",
@@ -236669,7 +236981,21 @@
         "stadium": "Snapdragon Stadium",
         "city": "San Diego",
         "attendance": "30854.0",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "Wave",
+          "score": "3",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Red Stars",
+          "score": "2",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_12",
@@ -236682,7 +237008,21 @@
         "stadium": "Dignity Health Sports Park",
         "city": "Los Angeles",
         "attendance": "",
-        "top_performer": null
+        "top_performer": null,
+        "home_details": {
+          "team": "USMNT",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        },
+        "away_details": {
+          "team": "Colombia",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": false
+        }
       },
       {
         "match_id": "soccer_match_11",
@@ -236699,6 +237039,20 @@
           "name": "Jodie Taylor",
           "team": "SDW",
           "line": "Featured Player"
+        },
+        "home_details": {
+          "team": "Wave",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": true
+        },
+        "away_details": {
+          "team": "Courage",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": true
         }
       },
       {
@@ -236716,6 +237070,30 @@
           "name": "Jaedyn Shaw",
           "team": "SDW",
           "line": "1 Goal"
+        },
+        "home_details": {
+          "team": "Wave",
+          "score": "1",
+          "scorers": [
+            {
+              "name": "Jaedyn Shaw",
+              "goals": 1
+            }
+          ],
+          "assisters": [
+            {
+              "name": "Sofia Jakobsson",
+              "assists": 1
+            }
+          ],
+          "has_player_stats": true
+        },
+        "away_details": {
+          "team": "Angel City",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": true
         }
       },
       {
@@ -236733,6 +237111,34 @@
           "name": "Marco Asensio",
           "team": "Real Madrid",
           "line": "1 Goal"
+        },
+        "home_details": {
+          "team": "Juventus",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": true
+        },
+        "away_details": {
+          "team": "Real Madrid",
+          "score": "2",
+          "scorers": [
+            {
+              "name": "Marco Asensio",
+              "goals": 1
+            },
+            {
+              "name": "Karim Benzema",
+              "goals": 1
+            }
+          ],
+          "assisters": [
+            {
+              "name": "Jesus Vallejo",
+              "assists": 1
+            }
+          ],
+          "has_player_stats": true
         }
       },
       {
@@ -236750,6 +237156,25 @@
           "name": "Alex Morgan",
           "team": "SDW",
           "line": "4 Goals"
+        },
+        "home_details": {
+          "team": "Wave",
+          "score": "4",
+          "scorers": [
+            {
+              "name": "Alex Morgan",
+              "goals": 4
+            }
+          ],
+          "assisters": [],
+          "has_player_stats": true
+        },
+        "away_details": {
+          "team": "Gotham",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": true
         }
       },
       {
@@ -236767,6 +237192,47 @@
           "name": "Alex Morgan",
           "team": "SDW",
           "line": "2 Goals"
+        },
+        "home_details": {
+          "team": "Wave",
+          "score": "4",
+          "scorers": [
+            {
+              "name": "Alex Morgan",
+              "goals": 2
+            },
+            {
+              "name": "Jodie Taylor",
+              "goals": 1
+            },
+            {
+              "name": "Amirah Ali",
+              "goals": 1
+            }
+          ],
+          "assisters": [
+            {
+              "name": "Christen Westphal",
+              "assists": 1
+            },
+            {
+              "name": "Isabella Briede",
+              "assists": 1
+            }
+          ],
+          "has_player_stats": true
+        },
+        "away_details": {
+          "team": "Angel City",
+          "score": "2",
+          "scorers": [
+            {
+              "name": "Christen Press",
+              "goals": 1
+            }
+          ],
+          "assisters": [],
+          "has_player_stats": true
         }
       },
       {
@@ -236784,6 +237250,54 @@
           "name": "Carli Lloyd",
           "team": "USWNT",
           "line": "5 Goals"
+        },
+        "home_details": {
+          "team": "USWNT",
+          "score": "9",
+          "scorers": [
+            {
+              "name": "Carli Lloyd",
+              "goals": 5
+            },
+            {
+              "name": "Andi Sullivan",
+              "goals": 2
+            },
+            {
+              "name": "Lynn Williams",
+              "goals": 1
+            },
+            {
+              "name": "Tobin Heath",
+              "goals": 1
+            }
+          ],
+          "assisters": [
+            {
+              "name": "Andi Sullivan",
+              "assists": 1
+            },
+            {
+              "name": "Lynn Williams",
+              "assists": 2
+            },
+            {
+              "name": "Mallory Swanson",
+              "assists": 3
+            },
+            {
+              "name": "Tierna Davidson",
+              "assists": 1
+            }
+          ],
+          "has_player_stats": true
+        },
+        "away_details": {
+          "team": "Paraguay",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": true
         }
       },
       {
@@ -236801,6 +237315,25 @@
           "name": "Chris David",
           "team": "Cape Town",
           "line": "1 Goal"
+        },
+        "home_details": {
+          "team": "Cape Town City",
+          "score": "1",
+          "scorers": [
+            {
+              "name": "Chris David",
+              "goals": 1
+            }
+          ],
+          "assisters": [],
+          "has_player_stats": true
+        },
+        "away_details": {
+          "team": "Stellenbosch",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": true
         }
       },
       {
@@ -236818,6 +237351,40 @@
           "name": "Patrik Schick",
           "team": "Czechia",
           "line": "2 Goals"
+        },
+        "home_details": {
+          "team": "Czech Republic",
+          "score": "2",
+          "scorers": [
+            {
+              "name": "Patrik Schick",
+              "goals": 2
+            }
+          ],
+          "assisters": [
+            {
+              "name": "Marek Suchy",
+              "assists": 1
+            }
+          ],
+          "has_player_stats": true
+        },
+        "away_details": {
+          "team": "Bulgaria",
+          "score": "1",
+          "scorers": [
+            {
+              "name": "Ismail Isa",
+              "goals": 1
+            }
+          ],
+          "assisters": [
+            {
+              "name": "Ivelin Popov",
+              "assists": 1
+            }
+          ],
+          "has_player_stats": true
         }
       },
       {
@@ -236835,6 +237402,38 @@
           "name": "Sebastian Lletget",
           "team": "USMNT",
           "line": "1 Goal"
+        },
+        "home_details": {
+          "team": "USMNT",
+          "score": "2",
+          "scorers": [
+            {
+              "name": "Sebastian Lletget",
+              "goals": 1
+            },
+            {
+              "name": "Paul Arriola",
+              "goals": 1
+            }
+          ],
+          "assisters": [
+            {
+              "name": "Sebastian Lletget",
+              "assists": 1
+            },
+            {
+              "name": "Jonathan Lewis",
+              "assists": 1
+            }
+          ],
+          "has_player_stats": true
+        },
+        "away_details": {
+          "team": "Costa Rica",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": true
         }
       },
       {
@@ -236852,6 +237451,42 @@
           "name": "Walker Zimmerman",
           "team": "USMNT",
           "line": "1 Goal"
+        },
+        "home_details": {
+          "team": "USMNT",
+          "score": "3",
+          "scorers": [
+            {
+              "name": "Walker Zimmerman",
+              "goals": 1
+            },
+            {
+              "name": "Josh Sargent",
+              "goals": 1
+            },
+            {
+              "name": "Timothy Weah",
+              "goals": 1
+            }
+          ],
+          "assisters": [
+            {
+              "name": "Joe Corona",
+              "assists": 1
+            },
+            {
+              "name": "Antonee Robinson",
+              "assists": 1
+            }
+          ],
+          "has_player_stats": true
+        },
+        "away_details": {
+          "team": "Bolivia",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": true
         }
       },
       {
@@ -236869,6 +237504,20 @@
           "name": "Oscar Cardozo",
           "team": "Olympiacos",
           "line": "Featured Player"
+        },
+        "home_details": {
+          "team": "Olympiacos",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": true
+        },
+        "away_details": {
+          "team": "Kerkyra",
+          "score": "0",
+          "scorers": [],
+          "assisters": [],
+          "has_player_stats": true
         }
       }
     ],
@@ -281412,7 +282061,7 @@
       "tp_pct": 0.298,
       "ft_pct": 0.901,
       "win_pct": 0.654,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -294812,7 +295461,7 @@
       "win_pct": 1.0,
       "is_mvp": false,
       "is_all_star": true,
-      "is_all_nba": false
+      "is_all_nba": true
     },
     {
       "name": "Bogdan Bogdanovic",
@@ -338226,7 +338875,7 @@
       "game_score": 7.7,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -338834,7 +339483,7 @@
       "game_score": 8.6,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -339442,7 +340091,7 @@
       "game_score": 14.0,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -340498,7 +341147,7 @@
       "game_score": 14.0,
       "double_double": true,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -342898,7 +343547,7 @@
       "game_score": 19.7,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -344146,7 +344795,7 @@
       "game_score": 24.9,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -344498,7 +345147,7 @@
       "game_score": 7.5,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -345490,7 +346139,7 @@
       "game_score": 23.5,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -347378,7 +348027,7 @@
       "game_score": 17.2,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -347986,7 +348635,7 @@
       "game_score": 16.9,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -348626,7 +349275,7 @@
       "game_score": 11.4,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -350290,7 +350939,7 @@
       "game_score": 18.8,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -351186,7 +351835,7 @@
       "game_score": 25.0,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -352626,7 +353275,7 @@
       "game_score": 22.1,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -353298,7 +353947,7 @@
       "game_score": 29.0,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -355186,7 +355835,7 @@
       "game_score": 16.6,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -356306,7 +356955,7 @@
       "game_score": 18.3,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -356626,7 +357275,7 @@
       "game_score": 31.9,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -357458,7 +358107,7 @@
       "game_score": 22.2,
       "double_double": true,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -358642,7 +359291,7 @@
       "game_score": 32.3,
       "double_double": true,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -359410,7 +360059,7 @@
       "game_score": 24.1,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -360402,7 +361051,7 @@
       "game_score": 16.5,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -360852,7 +361501,7 @@
       "triple_double": false,
       "is_mvp": false,
       "is_all_star": true,
-      "is_all_nba": false
+      "is_all_nba": true
     },
     {
       "name": "Dillon Brooks",
@@ -362098,7 +362747,7 @@
       "game_score": 12.4,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -363442,7 +364091,7 @@
       "game_score": 19.7,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -363730,7 +364379,7 @@
       "game_score": 13.8,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
@@ -364148,7 +364797,7 @@
       "triple_double": false,
       "is_mvp": false,
       "is_all_star": true,
-      "is_all_nba": false
+      "is_all_nba": true
     },
     {
       "name": "De'Aaron Fox",
@@ -365394,7 +366043,7 @@
       "game_score": 29.3,
       "double_double": false,
       "triple_double": false,
-      "is_mvp": false,
+      "is_mvp": true,
       "is_all_star": true,
       "is_all_nba": true
     },
