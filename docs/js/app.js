@@ -69,6 +69,8 @@ const app = {
     this.initTeamColors();
     this.renderKPIs();
     this.populateDropdowns();
+    trophyComponent.updateButtonLabels();
+    playersComponent.renderPresets();
 
     // Re-render components
     gamesComponent.render();
@@ -112,86 +114,86 @@ const app = {
 
     if (this.currentSport === 'nba') {
       container.innerHTML = `
-        <div class="kpi-card">
+        <div class="kpi-card clickable" onclick="app.setTab('games')" title="Click to view Games Log">
           <div class="kpi-label"><span>Games Attended</span><span>🏟️</span></div>
           <div class="kpi-value">${s.total_games}</div>
-          <div class="kpi-subtext">Across 18 Distinct Arenas</div>
+          <div class="kpi-subtext">Across 18 Distinct Arenas →</div>
         </div>
-        <div class="kpi-card gold">
+        <div class="kpi-card gold clickable" onclick="app.setTab('trophy'); trophyComponent.setView('teams')" title="Click to view Teams Quest">
           <div class="kpi-label"><span>NBA Teams Seen</span><span>🏀</span></div>
           <div class="kpi-value" style="color: var(--accent-gold);">${s.total_teams_seen} <span style="font-size: 1rem; color: var(--text-muted);">/ 30</span></div>
-          <div class="kpi-subtext">${s.teams_completion_pct}% of the Entire League</div>
+          <div class="kpi-subtext">${s.teams_completion_pct}% of League (View Quest →)</div>
         </div>
-        <div class="kpi-card emerald">
+        <div class="kpi-card emerald clickable" onclick="app.setTab('trophy'); trophyComponent.setView('arenas')" title="Click to view Arenas Quest">
           <div class="kpi-label"><span>Active Arenas Visited</span><span>📍</span></div>
           <div class="kpi-value" style="color: var(--accent-emerald);">${s.total_active_arenas_seen} <span style="font-size: 1rem; color: var(--text-muted);">/ 30</span></div>
-          <div class="kpi-subtext">+6 Historical & Neutral Venues</div>
+          <div class="kpi-subtext">+6 Historical & Neutral Venues →</div>
         </div>
         <div class="kpi-card purple">
           <div class="kpi-label"><span>Total Points Witnessed</span><span>🔥</span></div>
           <div class="kpi-value" style="color: var(--accent-purple);">${s.total_points_seen.toLocaleString()}</div>
           <div class="kpi-subtext">Avg ${s.avg_points_per_game} Points / Game</div>
         </div>
-        <div class="kpi-card rose">
+        <div class="kpi-card rose clickable" onclick="app.setTab('players')" title="Click to view Players Tracker">
           <div class="kpi-label"><span>Players Logged</span><span>👥</span></div>
           <div class="kpi-value" style="color: var(--accent-rose);">${s.total_players_seen}</div>
-          <div class="kpi-subtext">${s.total_statlines} Individual Statlines</div>
+          <div class="kpi-subtext">${s.total_statlines} Individual Statlines →</div>
         </div>
       `;
     } else if (this.currentSport === 'mlb') {
       container.innerHTML = `
-        <div class="kpi-card">
+        <div class="kpi-card clickable" onclick="app.setTab('games')" title="Click to view MLB Games Log">
           <div class="kpi-label"><span>MLB Games Attended</span><span>⚾</span></div>
           <div class="kpi-value">${s.total_games}</div>
-          <div class="kpi-subtext">From 2008 to 2024 (16 Seasons)</div>
+          <div class="kpi-subtext">From 2008 to 2026 (16 Seasons) →</div>
         </div>
-        <div class="kpi-card gold">
+        <div class="kpi-card gold clickable" onclick="app.setTab('trophy'); trophyComponent.setView('teams')" title="Click to view MLB Franchises Quest">
           <div class="kpi-label"><span>MLB Franchises Seen</span><span>🏆</span></div>
           <div class="kpi-value" style="color: var(--accent-gold);">${s.total_teams_seen} <span style="font-size: 1rem; color: var(--text-muted);">/ 30</span></div>
-          <div class="kpi-subtext">${s.teams_completion_pct}% of All 30 MLB Franchises!</div>
+          <div class="kpi-subtext">${s.teams_completion_pct}% of Franchises (View Quest →)</div>
         </div>
-        <div class="kpi-card emerald">
+        <div class="kpi-card emerald clickable" onclick="app.setTab('trophy'); trophyComponent.setView('arenas')" title="Click to view Park Chaser">
           <div class="kpi-label"><span>Ballparks Visited</span><span>🏟️</span></div>
           <div class="kpi-value" style="color: var(--accent-emerald);">${s.total_ballparks_visited}</div>
-          <div class="kpi-subtext">Including Fenway, Wrigley & Petco</div>
+          <div class="kpi-subtext">Including Fenway, Wrigley & Petco →</div>
         </div>
         <div class="kpi-card purple">
           <div class="kpi-label"><span>Total Runs Witnessed</span><span>⚡</span></div>
           <div class="kpi-value" style="color: var(--accent-purple);">${s.total_runs_seen}</div>
           <div class="kpi-subtext">Avg ${s.avg_runs_per_game} Runs / Game</div>
         </div>
-        <div class="kpi-card rose">
+        <div class="kpi-card rose clickable" onclick="app.setTab('players')" title="Click to view Players Tracker">
           <div class="kpi-label"><span>Batters & Pitchers</span><span>👥</span></div>
           <div class="kpi-value" style="color: var(--accent-rose);">${s.total_batters_seen} <span style="font-size: 1rem; color: var(--text-muted);">/ ${s.total_pitchers_seen}</span></div>
-          <div class="kpi-subtext">1,228 Batting & 454 Pitching Lines</div>
+          <div class="kpi-subtext">View All Players Logged →</div>
         </div>
       `;
     } else if (this.currentSport === 'soccer') {
       container.innerHTML = `
-        <div class="kpi-card">
+        <div class="kpi-card clickable" onclick="app.setTab('games')" title="Click to view Soccer Matches Log">
           <div class="kpi-label"><span>Matches Attended</span><span>⚽</span></div>
           <div class="kpi-value">${s.total_matches}</div>
-          <div class="kpi-subtext">International, UEFA, Serie A & NWSL</div>
+          <div class="kpi-subtext">International, UEFA, Serie A & NWSL →</div>
         </div>
-        <div class="kpi-card gold">
-          <div class="kpi-label"><span>Global Stadiums</span><span>🌍</span></div>
-          <div class="kpi-value" style="color: var(--accent-gold);">${s.total_stadiums}</div>
-          <div class="kpi-subtext">Across 4 Continents & 10 Cities</div>
-        </div>
-        <div class="kpi-card emerald">
+        <div class="kpi-card gold clickable" onclick="app.setTab('trophy'); trophyComponent.setView('teams')" title="Click to view Clubs & Nations Quest">
           <div class="kpi-label"><span>Clubs & Countries</span><span>🛡️</span></div>
-          <div class="kpi-value" style="color: var(--accent-emerald);">${s.total_teams}</div>
-          <div class="kpi-subtext">USMNT, USWNT, Real Madrid, Juve, Wave</div>
+          <div class="kpi-value" style="color: var(--accent-gold);">${s.total_teams}</div>
+          <div class="kpi-subtext">Real Madrid, Juve, USMNT, Wave (View Quest →)</div>
+        </div>
+        <div class="kpi-card emerald clickable" onclick="app.setTab('trophy'); trophyComponent.setView('arenas')" title="Click to view Stadium Explorer Map">
+          <div class="kpi-label"><span>Global Stadiums</span><span>🌍</span></div>
+          <div class="kpi-value" style="color: var(--accent-emerald);">${s.total_stadiums}</div>
+          <div class="kpi-subtext">Across 3 Continents & 10 Cities →</div>
         </div>
         <div class="kpi-card purple">
           <div class="kpi-label"><span>Cities Visited</span><span>📍</span></div>
           <div class="kpi-value" style="color: var(--accent-purple);">${s.cities_visited}</div>
           <div class="kpi-subtext">Rome, Turin, Athens, Prague, Cape Town</div>
         </div>
-        <div class="kpi-card rose">
+        <div class="kpi-card rose clickable" onclick="app.setTab('players')" title="Click to view Players Tracker">
           <div class="kpi-label"><span>Players Tracked</span><span>⭐</span></div>
           <div class="kpi-value" style="color: var(--accent-rose);">${s.total_players_tracked}</div>
-          <div class="kpi-subtext">Alex Morgan, Pulisic, Vlahovic, Dybala</div>
+          <div class="kpi-subtext">Alex Morgan, Pulisic, Vlahovic, Dybala →</div>
         </div>
       `;
     }
@@ -287,10 +289,57 @@ const app = {
   filterGamesByTeam(abbrev) {
     this.setTab('games');
     const select = document.getElementById('game-team-filter');
-    if (select) {
+    const input = document.getElementById('game-search-input');
+    if (select && Array.from(select.options).some(o => o.value === abbrev)) {
       select.value = abbrev;
-      gamesComponent.render();
+    } else if (input) {
+      input.value = abbrev;
     }
+    gamesComponent.render();
+    const el = document.getElementById('tab-games');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  },
+
+  filterGamesByArena(arenaName) {
+    this.setTab('games');
+    const select = document.getElementById('game-arena-filter');
+    const input = document.getElementById('game-search-input');
+    if (select && Array.from(select.options).some(o => o.value === arenaName)) {
+      select.value = arenaName;
+    } else if (input) {
+      input.value = arenaName;
+    }
+    gamesComponent.render();
+    const el = document.getElementById('tab-games');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  },
+
+  filterGamesByMilestone(milestoneId) {
+    const m = (this.data?.milestones || []).find(x => x.id === milestoneId);
+    this.setTab('games');
+    const input = document.getElementById('game-search-input');
+    const teamSelect = document.getElementById('game-team-filter');
+    const arenaSelect = document.getElementById('game-arena-filter');
+    const sortSelect = document.getElementById('game-sort-select');
+
+    if (input) input.value = '';
+    if (teamSelect) teamSelect.value = 'ALL';
+    if (arenaSelect) arenaSelect.value = 'ALL';
+
+    const target = m?.filter_target || '';
+    if (target === 'thriller') {
+      if (sortSelect) sortSelect.value = 'margin-asc';
+    } else if (target && teamSelect && Array.from(teamSelect.options).some(o => o.value === target)) {
+      teamSelect.value = target;
+    } else if (target && arenaSelect && Array.from(arenaSelect.options).some(o => o.value === target)) {
+      arenaSelect.value = target;
+    } else if (target && input) {
+      input.value = target;
+    }
+
+    gamesComponent.render();
+    const el = document.getElementById('tab-games');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
   },
 
   openPlayerDossier(playerName, playerType = 'nba') {

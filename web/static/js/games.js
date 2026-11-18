@@ -74,7 +74,8 @@ const gamesComponent = {
 
       return `
         <div class="game-card" onclick="gamesComponent.openNbaBoxscore('${game.game_id}')">
-          <div>
+          <!-- Left Column: Date, Note, Matchup & Score, Arena & City -->
+          <div class="game-card-left">
             <div class="game-card-header">
               <span class="game-date">📅 ${app.formatDate(game.date)}</span>
               <span class="event-badge ${eventBadgeClass}">${game.note}</span>
@@ -106,17 +107,53 @@ const gamesComponent = {
               <div class="team-score">${game.home.pts}</div>
             </div>
 
-            ${game.top_performers.mvp ? `
-              <div class="top-performer-pill">
-                <span>⭐ Top Performer: <strong>${game.top_performers.mvp.name}</strong></span>
-                <span style="color: var(--accent-cyan); font-weight: 700;">${game.top_performers.mvp.pts} PTS</span>
-              </div>
-            ` : ''}
+            <div class="game-meta-footer" style="margin-top: 0.5rem; padding-top: 0.5rem;">
+              <span class="game-arena">📍 ${game.arena} • ${game.city}</span>
+            </div>
           </div>
 
-          <div class="game-meta-footer">
-            <span class="game-arena">📍 ${game.arena} (${game.city})</span>
-            <span style="color: var(--accent-cyan); font-weight: 600;">Box Score →</span>
+          <!-- Right Column: Top Performers and Key Team Stats -->
+          <div class="game-card-right">
+            <div>
+              <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                ⭐ Top Performers
+              </div>
+              ${game.top_performers.mvp ? `
+                <div class="top-performer-pill" style="margin-top: 0; margin-bottom: 0.35rem;">
+                  <span>MVP: <strong>${game.top_performers.mvp.name}</strong> (${game.top_performers.mvp.team})</span>
+                  <span style="color: var(--accent-cyan); font-weight: 700;">${game.top_performers.mvp.pts} PTS • GS ${game.top_performers.mvp.game_score}</span>
+                </div>
+              ` : ''}
+              ${game.top_performers.scorer && (!game.top_performers.mvp || game.top_performers.scorer.name !== game.top_performers.mvp.name) ? `
+                <div class="top-performer-pill" style="margin-top: 0; margin-bottom: 0.35rem;">
+                  <span>Top Scorer: <strong>${game.top_performers.scorer.name}</strong> (${game.top_performers.scorer.team})</span>
+                  <span style="color: var(--accent-gold); font-weight: 700;">${game.top_performers.scorer.val} PTS</span>
+                </div>
+              ` : ''}
+              ${game.top_performers.playmaker ? `
+                <div class="top-performer-pill" style="margin-top: 0; margin-bottom: 0.35rem;">
+                  <span>Assists: <strong>${game.top_performers.playmaker.name}</strong></span>
+                  <span style="color: var(--accent-emerald); font-weight: 700;">${game.top_performers.playmaker.val} AST</span>
+                </div>
+              ` : ''}
+
+              <div style="margin-top: 0.75rem; padding-top: 0.6rem; border-top: 1px solid var(--border-subtle); font-size: 0.76rem; color: var(--text-secondary); display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                <div>
+                  <span style="color: var(--text-muted); font-size: 0.7rem; display: block;">SHOOTING SPLITS</span>
+                  <span>${game.away.abbrev}: ${(game.away.fg_pct * 100).toFixed(0)}% FG (${game.away.tpm} 3PM)</span><br>
+                  <span>${game.home.abbrev}: ${(game.home.fg_pct * 100).toFixed(0)}% FG (${game.home.tpm} 3PM)</span>
+                </div>
+                <div>
+                  <span style="color: var(--text-muted); font-size: 0.7rem; display: block;">REB & AST</span>
+                  <span>REB: ${game.away.reb} - ${game.home.reb}</span><br>
+                  <span>AST: ${game.away.ast} - ${game.home.ast}</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 0.75rem;">
+              <span style="color: var(--accent-cyan); font-weight: 700; font-size: 0.8rem;">View Full Box Score →</span>
+            </div>
           </div>
         </div>
       `;
@@ -164,7 +201,8 @@ const gamesComponent = {
       const isHomeWinner = game.home.wl === 'W';
       return `
         <div class="game-card" onclick="gamesComponent.openMlbBoxscore('${game.game_id}')">
-          <div>
+          <!-- Left Column: Date, Note, Matchup & Score, Ballpark -->
+          <div class="game-card-left">
             <div class="game-card-header">
               <span class="game-date">📅 ${app.formatDate(game.date)}</span>
               <span class="event-badge" style="background: rgba(16,185,129,0.15); color: var(--accent-emerald);">MLB</span>
@@ -196,17 +234,41 @@ const gamesComponent = {
               <div class="team-score">${game.home.runs}</div>
             </div>
 
-            ${game.top_performer ? `
-              <div class="top-performer-pill">
-                <span>⭐ Hitter: <strong>${game.top_performer.name}</strong></span>
-                <span style="color: var(--accent-gold); font-weight: 700;">${game.top_performer.line}</span>
-              </div>
-            ` : ''}
+            <div class="game-meta-footer" style="margin-top: 0.5rem; padding-top: 0.5rem;">
+              <span class="game-arena">📍 ${game.stadium}</span>
+            </div>
           </div>
 
-          <div class="game-meta-footer">
-            <span class="game-arena">📍 ${game.stadium}</span>
-            <span style="color: var(--accent-cyan); font-weight: 600;">Box Score →</span>
+          <!-- Right Column: Top Performers and Key Team Stats -->
+          <div class="game-card-right">
+            <div>
+              <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                ⭐ Top Performers & Match Facts
+              </div>
+              ${game.top_performer ? `
+                <div class="top-performer-pill" style="margin-top: 0; margin-bottom: 0.35rem;">
+                  <span>Hitter: <strong>${game.top_performer.name}</strong> (${game.top_performer.team})</span>
+                  <span style="color: var(--accent-gold); font-weight: 700;">${game.top_performer.line}</span>
+                </div>
+              ` : ''}
+
+              <div style="margin-top: 0.75rem; padding-top: 0.6rem; border-top: 1px solid var(--border-subtle); font-size: 0.76rem; color: var(--text-secondary); display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                <div>
+                  <span style="color: var(--text-muted); font-size: 0.7rem; display: block;">OFFENSIVE HITS & HR</span>
+                  <span>${game.away.abbrev}: ${game.away.hits} Hits (${game.away.hr} HR)</span><br>
+                  <span>${game.home.abbrev}: ${game.home.hits} Hits (${game.home.hr} HR)</span>
+                </div>
+                <div>
+                  <span style="color: var(--text-muted); font-size: 0.7rem; display: block;">GAME METRICS</span>
+                  <span>Total Runs: ${game.total_runs} (Diff: ${game.margin})</span><br>
+                  <span>Attendance: ${game.attendance || 'N/A'}</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 0.75rem;">
+              <span style="color: var(--accent-emerald); font-weight: 700; font-size: 0.8rem;">View Full Box Score →</span>
+            </div>
           </div>
         </div>
       `;
@@ -244,37 +306,78 @@ const gamesComponent = {
       return;
     }
 
-    container.innerHTML = list.map(m => `
-      <div class="game-card">
-        <div>
-          <div class="game-card-header">
-            <span class="game-date">📅 ${app.formatDate(m.date)}</span>
-            <span class="event-badge" style="background: rgba(56,189,248,0.15); color: var(--accent-cyan);">Soccer</span>
+    container.innerHTML = list.map(m => {
+      const homeWin = Number(m.home_score) > Number(m.away_score);
+      const awayWin = Number(m.away_score) > Number(m.home_score);
+
+      return `
+        <div class="game-card">
+          <!-- Left Column: Date, Matchup & Score, Stadium & City -->
+          <div class="game-card-left">
+            <div class="game-card-header">
+              <span class="game-date">📅 ${app.formatDate(m.date)}</span>
+              <span class="event-badge" style="background: rgba(56,189,248,0.15); color: var(--accent-cyan);">Soccer</span>
+            </div>
+
+            <div class="matchup-row ${awayWin ? 'winner' : ''}">
+              <div class="team-meta">
+                <div class="team-badge-circle" style="background: #0284c7;">${m.away.slice(0,3).toUpperCase()}</div>
+                <div><div class="team-name-label">${m.away}</div></div>
+              </div>
+              <div class="team-score">${m.away_score}</div>
+            </div>
+
+            <div class="matchup-row ${homeWin ? 'winner' : ''}">
+              <div class="team-meta">
+                <div class="team-badge-circle" style="background: #10b981;">${m.home.slice(0,3).toUpperCase()}</div>
+                <div><div class="team-name-label">${m.home}</div></div>
+              </div>
+              <div class="team-score">${m.home_score}</div>
+            </div>
+
+            <div class="game-meta-footer" style="margin-top: 0.5rem; padding-top: 0.5rem;">
+              <span class="game-arena">📍 ${m.stadium} • ${m.city}</span>
+            </div>
           </div>
 
-          <div class="matchup-row" style="margin-bottom: 0.5rem;">
-            <div class="team-meta">
-              <div class="team-badge-circle" style="background: #0284c7;">${m.away.slice(0,3).toUpperCase()}</div>
-              <div><div class="team-name-label">${m.away}</div></div>
-            </div>
-            <div class="team-score">${m.away_score}</div>
-          </div>
+          <!-- Right Column: Top Performers & Key Match Stats -->
+          <div class="game-card-right">
+            <div>
+              <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                ⭐ Key Match Facts & Performers
+              </div>
 
-          <div class="matchup-row">
-            <div class="team-meta">
-              <div class="team-badge-circle" style="background: #10b981;">${m.home.slice(0,3).toUpperCase()}</div>
-              <div><div class="team-name-label">${m.home}</div></div>
+              ${m.top_performer ? `
+                <div class="top-performer-pill" style="margin-top: 0; margin-bottom: 0.35rem;">
+                  <span>Performer: <strong>${m.top_performer.name}</strong> (${m.top_performer.team})</span>
+                  <span style="color: var(--accent-gold); font-weight: 700;">${m.top_performer.line}</span>
+                </div>
+              ` : `
+                <div class="top-performer-pill" style="margin-top: 0; margin-bottom: 0.35rem;">
+                  <span>Result: <strong>${homeWin ? m.home + ' Victory' : awayWin ? m.away + ' Victory' : 'Draw'}</strong></span>
+                  <span style="color: var(--accent-cyan); font-weight: 700;">${m.home_score}-${m.away_score} FT</span>
+                </div>
+              `}
+
+              <div style="margin-top: 0.75rem; padding-top: 0.6rem; border-top: 1px solid var(--border-subtle); font-size: 0.76rem; color: var(--text-secondary); display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                <div>
+                  <span style="color: var(--text-muted); font-size: 0.7rem; display: block;">ATTENDANCE</span>
+                  <span>${m.attendance ? Number(m.attendance).toLocaleString() + ' Fans' : 'Official Match'}</span>
+                </div>
+                <div>
+                  <span style="color: var(--text-muted); font-size: 0.7rem; display: block;">STADIUM & LOCATION</span>
+                  <span>${m.city}</span>
+                </div>
+              </div>
             </div>
-            <div class="team-score">${m.home_score}</div>
+
+            <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 0.75rem;">
+              <span style="color: var(--accent-cyan); font-weight: 700; font-size: 0.8rem;">Match Logged ✓</span>
+            </div>
           </div>
         </div>
-
-        <div class="game-meta-footer">
-          <span class="game-arena">📍 ${m.stadium} (${m.city})</span>
-          ${m.attendance ? `<span style="color: var(--text-muted);">👥 ${m.attendance}</span>` : ''}
-        </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   },
 
   openNbaBoxscore(gameId) {

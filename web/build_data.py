@@ -91,6 +91,56 @@ NBA_ARENAS_CATALOG = [
     {'name': 'T-Mobile Arena', 'team': 'NBA Cup / Las Vegas', 'city': 'Las Vegas, NV', 'active': False, 'capacity': 18000, 'historical': True, 'neutral': True},
 ]
 
+NBA_MVPS = {
+    'LeBron James', 'Nikola Jokic', 'Russell Westbrook', 'James Harden', 'Kevin Durant'
+}
+NBA_ALL_STARS = {
+    'LeBron James', 'Nikola Jokic', 'Russell Westbrook', 'James Harden', 'Kevin Durant',
+    'Shai Gilgeous-Alexander', 'Kawhi Leonard', 'Paul George', 'Anthony Davis', 'Chris Paul',
+    'Devin Booker', 'Dwyane Wade', 'Carmelo Anthony', 'Bradley Beal', "De'Aaron Fox",
+    'Domantas Sabonis', 'Tyrese Haliburton', 'Pascal Siakam', 'Rudy Gobert', 'Karl-Anthony Towns',
+    'Jamal Murray', 'Jrue Holiday', 'Brook Lopez', 'Kyle Lowry', 'Jimmy Butler', 'Andre Iguodala',
+    'Dwight Howard', 'Carlos Boozer', 'Elton Brand', 'Samuel Dalembert', 'Lou Williams',
+    'Victor Oladipo', 'Gordon Hayward', 'Marc Gasol', 'Pau Gasol', 'Mike Conley', 'Kemba Walker',
+    'Khris Middleton', 'Zach LaVine', 'Nikola Vucevic', 'DeMar DeRozan', 'Trae Young',
+    'Donovan Mitchell', 'Bam Adebayo', 'Jayson Tatum', 'Jaylen Brown', 'Fred VanVleet',
+    'Darius Garland', 'Jarrett Allen', 'Lauri Markkanen', 'Chet Holmgren', 'Jalen Williams'
+}
+NBA_ALL_NBA = {
+    'LeBron James', 'Nikola Jokic', 'Russell Westbrook', 'James Harden', 'Kevin Durant',
+    'Shai Gilgeous-Alexander', 'Kawhi Leonard', 'Paul George', 'Anthony Davis', 'Chris Paul',
+    'Devin Booker', 'Dwyane Wade', 'Carmelo Anthony', "De'Aaron Fox", 'Domantas Sabonis',
+    'Tyrese Haliburton', 'Pascal Siakam', 'Rudy Gobert', 'Karl-Anthony Towns', 'Jimmy Butler',
+    'Andre Iguodala', 'Dwight Howard', 'Carlos Boozer', 'Elton Brand', 'Marc Gasol', 'Pau Gasol',
+    'Kemba Walker', 'DeMar DeRozan', 'Trae Young', 'Donovan Mitchell', 'Jayson Tatum', 'Jaylen Brown'
+}
+
+MLB_MVPS = {
+    'Mookie Betts', 'Christian Yelich', 'Bryce Harper', 'Freddie Freeman', 'Cody Bellinger',
+    'Paul Goldschmidt', 'Clayton Kershaw', 'Justin Verlander', 'Max Scherzer', 'Roy Halladay', 'Blake Snell'
+}
+MLB_ALL_STARS = {
+    'Manny Machado', 'Fernando Tatis Jr.', 'Juan Soto', 'Jackson Merrill', 'Jurickson Profar',
+    'Xander Bogaerts', 'Luis Arraez', 'Ryan Howard', 'Chase Utley', 'Jimmy Rollins', 'Shane Victorino',
+    'Cole Hamels', 'Roy Oswalt', 'Yu Darvish', 'Dylan Cease', 'Michael King', 'Joe Musgrove',
+    'Trevor Cahill', 'Edwin Jackson', 'Mason Miller', 'Robert Suarez', 'Nolan Arenado', 'Justin Turner',
+    'Nick Castellanos', 'Wil Myers', 'Josh Bell', 'Kyle Tucker', 'Teoscar Hernandez', 'Will Smith',
+    'Max Muncy', 'Whit Merrifield', 'Salvador Perez', 'Bobby Witt Jr.', 'Christian Yelich', 'Mookie Betts',
+    'Freddie Freeman', 'Cody Bellinger', 'Paul Goldschmidt', 'Clayton Kershaw', 'Justin Verlander',
+    'Max Scherzer', 'Roy Halladay', 'Blake Snell', 'Brandon Woodruff', 'Taijuan Walker', 'Sean Manaea',
+    'Michael Wacha', 'Raul Ibanez', 'Hunter Renfroe', 'Austin Hays', 'Alek Thomas', 'Jose Iglesias',
+    'Jake Cronenworth', 'Carlos Santana', 'David Peralta', 'Jesse Winker', 'J.T. Realmuto', 'Kyle Schwarber',
+    'Trea Turner', 'Brad Hand', 'Craig Kimbrel', 'Ian Kinsler', 'Howie Kendrick', 'Torii Hunter'
+}
+
+SOCCER_MVPS = {
+    'Alex Morgan', 'Carli Lloyd', 'Tobin Heath', 'Christian Pulisic', 'Dusan Vlahovic',
+    'Paulo Dybala', 'Angel Di Maria', 'Paul Pogba', 'Leonardo Bonucci', 'Federico Chiesa',
+    'Patrik Schick', 'Alyssa Thompson', 'Jaedyn Shaw', 'Lynn Williams', 'Abby Dahlkemper',
+    'Walker Zimmerman', 'Timothy Weah', 'Christen Press', 'Rose Lavelle', 'Naomi Girma', 'Kailen Sheridan'
+}
+SOCCER_ALL_STARS = SOCCER_MVPS
+
 def build_nba():
     bs = pd.read_csv(os.path.join(NBA_DIR, 'nba_boxscores.csv'), index_col=[0])
     sl = pd.read_csv(os.path.join(NBA_DIR, 'nba_statlines.csv'), index_col=[0])
@@ -275,6 +325,9 @@ def build_nba():
         p['tp_pct'] = round(p['tpm'] / p['tpa'], 3) if p['tpa'] > 0 else 0.0
         p['ft_pct'] = round(p['ftm'] / p['fta'], 3) if p['fta'] > 0 else 0.0
         p['win_pct'] = round(p['wins'] / (p['wins'] + p['losses']), 3) if (p['wins'] + p['losses']) > 0 else 0.0
+        p['is_mvp'] = pname in NBA_MVPS
+        p['is_all_star'] = pname in NBA_ALL_STARS
+        p['is_all_nba'] = pname in NBA_ALL_NBA
         p['log'].sort(key=lambda x: x['date'], reverse=True)
         players_list.append(p)
     players_list.sort(key=lambda x: x['pts'], reverse=True)
@@ -294,6 +347,9 @@ def build_nba():
             'dreb': int(row['DREB']), 'oreb': int(row['OREB']), 'to': int(row['TO']), 'pf': int(row['PF']),
             'game_score': float(row['GAME_SCORE']),
             'double_double': bool(row['DOUBLE_DOUBLE']), 'triple_double': bool(row['TRIPLE_DOUBLE']),
+            'is_mvp': row['NAME'] in NBA_MVPS,
+            'is_all_star': row['NAME'] in NBA_ALL_STARS,
+            'is_all_nba': row['NAME'] in NBA_ALL_NBA,
         })
 
     seen_abbrevs = bs['ABBREV'].value_counts().to_dict()
@@ -323,19 +379,29 @@ def build_nba():
         })
 
     milestones = [
-        {'id': 'lebron_record', 'title': 'The Scoring King', 'category': 'Historic Milestone', 'icon': '👑', 'description': 'Witnessed LeBron James surpass Kareem Abdul-Jabbar as the NBA all-time leading scorer (38 pts vs OKC).', 'date': '2023-02-07', 'venue': 'Crypto.com Arena', 'unlocked': True, 'badge': 'Legendary'},
-        {'id': 'westbrook_50_tripdub', 'title': 'Historic 50-PT Triple Double', 'category': 'Historic Milestone', 'icon': '⚡', 'description': 'Witnessed Russell Westbrook record his 42nd triple-double of the season with 50 PTS, 16 REB, 10 AST and a buzzer beater.', 'date': '2017-04-09', 'venue': 'Pepsi Center', 'unlocked': True, 'badge': 'Legendary'},
-        {'id': 'nba_finals_g7', 'title': 'World Champions Crowned (Finals G7)', 'category': 'Playoffs & Championship', 'icon': '🏆', 'description': 'Attended NBA Finals Game 7 to witness championship history (OKC 103, IND 91).', 'date': '2025-06-22', 'venue': 'Paycom Center', 'unlocked': True, 'badge': 'Championship'},
-        {'id': 'nba_finals_g2', 'title': 'NBA Finals Atmosphere (Finals G2)', 'category': 'Playoffs & Championship', 'icon': '💍', 'description': 'Attended NBA Finals Game 2 (OKC 123, IND 107).', 'date': '2025-06-08', 'venue': 'Paycom Center', 'unlocked': True, 'badge': 'Championship'},
-        {'id': 'nba_cup_vegas', 'title': 'Vegas Lights (NBA Cup Semis)', 'category': 'Tournaments', 'icon': '🎲', 'description': 'Attended the In-Season Tournament / NBA Cup Semifinals double-header in Las Vegas.', 'date': '2025-12-13', 'venue': 'T-Mobile Arena', 'unlocked': True, 'badge': 'Special Event'},
-        {'id': 'wcf_game', 'title': 'Western Conference Finals', 'category': 'Playoffs & Championship', 'icon': '🔥', 'description': 'Attended Western Conference Finals Game 4 (SAS vs OKC).', 'date': '2026-05-24', 'venue': 'Frost Bank Center', 'unlocked': True, 'badge': 'Playoffs'},
-        {'id': 'intuit_dome_charter', 'title': 'The Wall at Intuit Dome', 'category': 'Venues', 'icon': '🏟️', 'description': 'Attended multiple games at the revolutionary Intuit Dome in Inglewood (5 games attended).', 'date': '2024-2026', 'venue': 'Intuit Dome', 'unlocked': True, 'badge': 'Venue Hopper'},
-        {'id': '50_pt_club', 'title': 'Fifty-Piece Witness', 'category': 'Individual Brilliance', 'icon': '🎯', 'description': 'Watched an NBA player explode for 50 or more points in a single live game.', 'date': '2017-04-09', 'venue': 'Pepsi Center', 'unlocked': True, 'badge': 'Scoring'},
-        {'id': 'coast_to_coast', 'title': 'Coast to Coast Hoops', 'category': 'Geography', 'icon': '✈️', 'description': 'Seen NBA basketball from the Atlantic coast (D.C., Philly, Brooklyn) to the Pacific (Bay Area, LA, Sacramento).', 'date': '2009-2026', 'venue': 'Across USA', 'unlocked': True, 'badge': 'Explorer'},
-        {'id': 'thunder_nation', 'title': 'Thunder Faithful', 'category': 'Fandom', 'icon': '⛈️', 'description': 'Attended 35 games featuring the Oklahoma City Thunder across multiple eras.', 'date': '2017-2026', 'venue': '10+ Venues', 'unlocked': True, 'badge': 'Superfan'},
-        {'id': 'triple_double_club', 'title': 'Triple-Double Royalty', 'category': 'Stat Master', 'icon': '🎩', 'description': 'Seen 9 triple-doubles live in person by Russell Westbrook, Nikola Jokic, and James Harden.', 'date': 'Various', 'venue': 'Various', 'unlocked': True, 'badge': 'Elite Stats'},
-        {'id': 'buzzer_beater_thriller', 'title': 'Down to the Wire', 'category': 'Game Thrills', 'icon': '⏱️', 'description': 'Attended 8 games decided by 3 points or fewer, including 1-point heartstoppers.', 'date': 'Various', 'venue': 'Various', 'unlocked': True, 'badge': 'Clutch'},
+        {'id': 'lebron_record', 'title': 'The Scoring King', 'category': 'Historic Milestone', 'icon': '👑', 'description': 'Witnessed LeBron James surpass Kareem Abdul-Jabbar as the NBA all-time leading scorer (38 pts vs OKC).', 'date': '2023-02-07', 'venue': 'Crypto.com Arena', 'unlocked': True, 'badge': 'Legendary', 'filter_target': '2023-02-07'},
+        {'id': 'westbrook_50_tripdub', 'title': 'Historic 50-PT Triple Double', 'category': 'Historic Milestone', 'icon': '⚡', 'description': 'Witnessed Russell Westbrook record his historic 42nd triple-double of the season with 50 PTS, 16 REB, 10 AST and a buzzer-beating 3-pointer.', 'date': '2017-04-09', 'venue': 'Pepsi Center', 'unlocked': True, 'badge': 'Legendary', 'filter_target': '2017-04-09'},
+        {'id': 'nba_finals_g7', 'title': 'World Champions Crowned (Finals G7)', 'category': 'Playoffs & Championship', 'icon': '🏆', 'description': 'Attended NBA Finals Game 7 to witness championship history (OKC 103, IND 91).', 'date': '2025-06-22', 'venue': 'Paycom Center', 'unlocked': True, 'badge': 'Championship', 'filter_target': '2025-06-22'},
+        {'id': 'nba_finals_g2', 'title': 'NBA Finals Atmosphere (Finals G2)', 'category': 'Playoffs & Championship', 'icon': '💍', 'description': 'Attended NBA Finals Game 2 (OKC 123, IND 107).', 'date': '2025-06-08', 'venue': 'Paycom Center', 'unlocked': True, 'badge': 'Championship', 'filter_target': '2025-06-08'},
+        {'id': 'nba_cup_vegas', 'title': 'Vegas Lights (NBA Cup Semis)', 'category': 'Tournaments', 'icon': '🎲', 'description': 'Attended the In-Season Tournament / NBA Cup Semifinals double-header in Las Vegas.', 'date': '2025-12-13', 'venue': 'T-Mobile Arena', 'unlocked': True, 'badge': 'Special Event', 'filter_target': '2025-12-13'},
+        {'id': 'wcf_game', 'title': 'Western Conference Finals', 'category': 'Playoffs & Championship', 'icon': '🔥', 'description': 'Attended Western Conference Finals Game 4 (SAS vs OKC).', 'date': '2026-05-24', 'venue': 'Frost Bank Center', 'unlocked': True, 'badge': 'Playoffs', 'filter_target': '2026-05-24'},
+        {'id': 'intuit_dome_charter', 'title': 'The Wall at Intuit Dome', 'category': 'Venues', 'icon': '🏟️', 'description': 'Attended multiple games at the revolutionary Intuit Dome in Inglewood (7 games attended).', 'date': '2024-2026', 'venue': 'Intuit Dome', 'unlocked': True, 'badge': 'Venue Hopper', 'filter_target': 'Intuit Dome'},
+        {'id': '50_pt_club', 'title': 'Fifty-Piece Witness', 'category': 'Individual Brilliance', 'icon': '🎯', 'description': 'Watched Russell Westbrook explode for 50 PTS, 16 REB, 10 AST and a buzzer-beater at Pepsi Center.', 'date': '2017-04-09', 'venue': 'Pepsi Center', 'unlocked': True, 'badge': 'Scoring', 'filter_target': '2017-04-09'},
+        {'id': 'coast_to_coast', 'title': 'Coast to Coast Hoops', 'category': 'Geography', 'icon': '✈️', 'description': 'Seen NBA basketball from the Atlantic coast (D.C., Philly, Brooklyn) to the Pacific (Bay Area, LA, Sacramento).', 'date': '2009-2026', 'venue': 'Across USA', 'unlocked': True, 'badge': 'Explorer', 'filter_target': ''},
+        {'id': 'thunder_nation', 'title': 'Thunder Faithful', 'category': 'Fandom', 'icon': '⛈️', 'description': 'Attended 34 games featuring the Oklahoma City Thunder across multiple eras.', 'date': '2017-2026', 'venue': '10+ Venues', 'unlocked': True, 'badge': 'Superfan', 'filter_target': 'OKC'},
+        {'id': 'triple_double_club', 'title': 'Triple-Double Royalty', 'category': 'Stat Master', 'icon': '🎩', 'description': 'Seen 9 triple-doubles live in person by Russell Westbrook, Nikola Jokic, and James Harden.', 'date': 'Various', 'venue': 'Various', 'unlocked': True, 'badge': 'Elite Stats', 'filter_target': 'Westbrook'},
+        {'id': 'buzzer_beater_thriller', 'title': 'Down to the Wire', 'category': 'Game Thrills', 'icon': '⏱️', 'description': 'Attended 8 games decided by 3 points or fewer, including 1-point heartstoppers.', 'date': 'Various', 'venue': 'Various', 'unlocked': True, 'badge': 'Clutch', 'filter_target': 'thriller'},
     ]
+
+    fun_records = {
+        'most_pts': {'holder': 'Russell Westbrook', 'val': '50 PTS', 'opp': 'DEN', 'date': '2017-04-09', 'note': 'Historic 50-16-10 triple-double buzzer beater'},
+        'most_3pm': {'holder': 'Jordan Goodwin', 'val': '8 3PM', 'opp': 'LAL', 'date': '2024-04-12', 'note': 'Shot 8-of-13 from 3-point range for Grizzlies'},
+        'most_ast': {'holder': 'Russell Westbrook & James Harden', 'val': '16 AST', 'opp': 'Multiple', 'date': '2017 & 2024', 'note': 'Elite floor-general playmaking'},
+        'most_reb': {'holder': 'Russell Westbrook & Ivica Zubac', 'val': '16 REB', 'opp': 'DEN & SAS', 'date': '2017 & 2026', 'note': 'Dominant on the glass'},
+        'highest_scoring_game': {'val': '273 Total PTS', 'matchup': 'SAC 138, LAC 135', 'date': '2026-03-14', 'arena': 'Intuit Dome'},
+        'closest_game': {'val': '1 Point Thriller', 'matchup': 'OKC 106, DEN 105', 'date': '2017-04-09', 'arena': 'Pepsi Center'},
+        'biggest_blowout': {'val': '41 Point Blowout', 'matchup': 'GSW 141, LAC 100', 'date': '2017-01-28', 'arena': 'Oracle Arena'}
+    }
 
     years_data = {}
     for g in games:
@@ -373,7 +439,7 @@ def build_nba():
     return {
         'summary': summary, 'games': games, 'players': players_list, 'single_performances': single_performances,
         'trophy_teams': trophy_teams, 'trophy_arenas': trophy_arenas, 'milestones': milestones,
-        'attendance_by_year': attendance_by_year, 'team_records': team_records
+        'attendance_by_year': attendance_by_year, 'team_records': team_records, 'fun_records': fun_records
     }
 
 # ----------------------------------------------------
@@ -550,6 +616,8 @@ def build_mlb():
         b['primary_team'] = b['teams'][0] if b['teams'] else ''
         b['avg'] = round(b['h'] / b['ab'], 3) if b['ab'] > 0 else 0.0
         b['obp'] = round((b['h'] + b['bb']) / b['pa'], 3) if b['pa'] > 0 else 0.0
+        b['is_mvp'] = b['name'] in MLB_MVPS
+        b['is_all_star'] = b['name'] in MLB_ALL_STARS
         b['log'].sort(key=lambda x: x['date'], reverse=True)
         batters_list.append(b)
     batters_list.sort(key=lambda x: (x['hr'], x['h'], x['rbi']), reverse=True)
@@ -590,6 +658,8 @@ def build_mlb():
         p['primary_team'] = p['teams'][0] if p['teams'] else ''
         p['era'] = round((p['er'] * 9) / p['ip'], 2) if p['ip'] >= 1.0 else 0.0
         p['whip'] = round((p['bb'] + p['h']) / p['ip'], 2) if p['ip'] >= 1.0 else 0.0
+        p['is_mvp'] = p['name'] in MLB_MVPS
+        p['is_all_star'] = p['name'] in MLB_ALL_STARS
         p['log'].sort(key=lambda x: x['date'], reverse=True)
         pitchers_list.append(p)
     pitchers_list.sort(key=lambda x: (x['so'], x['ip']), reverse=True)
@@ -601,7 +671,9 @@ def build_mlb():
             'name': r['Batting'], 'pos': str(r['Pos']), 'team': r['Team_Norm'], 'opp': r['Opp_Norm'],
             'date': parse_mlb_date(r['Date']), 'ab': int(r.get('AB',0)), 'r': int(r.get('R',0)),
             'h': int(r.get('H',0)), 'hr': int(r.get('HR',0)), 'rbi': int(r.get('RBI',0)),
-            'bb': int(r.get('BB',0)), 'so': int(r.get('SO',0)), 'details': str(r.get('Details','')) if not pd.isna(r.get('Details')) else ''
+            'bb': int(r.get('BB',0)), 'so': int(r.get('SO',0)), 'details': str(r.get('Details','')) if not pd.isna(r.get('Details')) else '',
+            'is_mvp': r['Batting'] in MLB_MVPS,
+            'is_all_star': r['Batting'] in MLB_ALL_STARS,
         })
 
     single_pitching = []
@@ -612,7 +684,9 @@ def build_mlb():
             'r': int(r.get('R',0)), 'er': int(r.get('ER',0)), 'bb': int(r.get('BB',0)),
             'so': int(r.get('SO',0)), 'hr': int(r.get('HR',0)),
             'gsc': float(r.get('GSc',0.0)) if not pd.isna(r.get('GSc')) else 0.0,
-            'pit': int(r['Pit']) if not pd.isna(r.get('Pit')) and str(r.get('Pit')).replace('.','',1).isdigit() else 0
+            'pit': int(r['Pit']) if not pd.isna(r.get('Pit')) and str(r.get('Pit')).replace('.','',1).isdigit() else 0,
+            'is_mvp': r['Pitching'] in MLB_MVPS,
+            'is_all_star': r['Pitching'] in MLB_ALL_STARS,
         })
 
     # MLB Trophy Teams
@@ -644,14 +718,14 @@ def build_mlb():
 
     # MLB Milestones
     milestones = [
-        {'id': 'machado_10hr', 'title': 'Manny Being Manny (10 HRs)', 'category': 'Power Hitter', 'icon': '💥', 'description': 'Witnessed Manny Machado blast 10 home runs live in person across 32 games.', 'date': '2019-2024', 'venue': 'Petco Park', 'unlocked': True, 'badge': 'Power Record'},
-        {'id': 'halladay_cgso', 'title': 'Roy Halladay Masterpiece', 'category': 'Pitching Gem', 'icon': '👑', 'description': 'Witnessed Hall of Famer Roy Halladay throw a 9.0 IP Complete Game Shutout with 9 SO and 0 BB (Citizens Bank Park).', 'date': '2010-05-01', 'venue': 'Citizens Bank Park', 'unlocked': True, 'badge': 'Legendary Gem'},
-        {'id': 'fenway_wrigley', 'title': 'Historic Cathedral Duo', 'category': 'Ballpark Quest', 'icon': '🏛️', 'description': 'Attended games at Fenway Park (opened 1912) and Wrigley Field (opened 1914) — baseball\'s two oldest sacred grounds.', 'date': '2011 & 2012', 'venue': 'Fenway / Wrigley', 'unlocked': True, 'badge': 'History'},
-        {'id': 'petco_faithful', 'title': 'Petco Park Faithful (31 Games)', 'category': 'Home Ballpark', 'icon': '⚾', 'description': 'Attended 31 games at Petco Park in San Diego cheering on the Padres.', 'date': '2019-2024', 'venue': 'Petco Park', 'unlocked': True, 'badge': 'Superfan'},
-        {'id': 'darvish_k_king', 'title': 'Yu Darvish Strikeout King', 'category': 'Pitching Master', 'icon': '⚡', 'description': 'Watched Yu Darvish fan 30 batters across 8 electric starts in person.', 'date': '2021-2024', 'venue': 'Petco Park', 'unlocked': True, 'badge': 'Strikeout King'},
-        {'id': 'nlds_postseason', 'title': 'Postseason Intensity (NLDS)', 'category': 'Playoffs', 'icon': '🔥', 'description': 'Attended National League Division Series postseason action (NLDS Game 3 vs Dodgers, Oct 2024).', 'date': '2024-10-08', 'venue': 'Petco Park', 'unlocked': True, 'badge': 'Playoffs'},
-        {'id': 'california_circuit', 'title': 'Golden State Circuit', 'category': 'Geography', 'icon': '🌉', 'description': 'Visited all 5 California MLB ballparks: Dodger Stadium, Petco Park, Oracle Park, Angel Stadium, and Oakland Coliseum.', 'date': '2012-2024', 'venue': 'California', 'unlocked': True, 'badge': 'Explorer'},
-        {'id': 'mlb_90_pct', 'title': '27 of 30 MLB Franchises Seen', 'category': 'League Quest', 'icon': '🏆', 'description': 'Seen 27 out of 30 Major League Baseball teams live in person (90.0% completion!).', 'date': '2008-2024', 'venue': '13 Ballparks', 'unlocked': True, 'badge': 'Epic Quest'}
+        {'id': 'machado_10hr', 'title': 'Manny Being Manny (10 HRs)', 'category': 'Power Hitter', 'icon': '💥', 'description': 'Witnessed Manny Machado blast 10 home runs live in person across 34 games.', 'date': '2019-2026', 'venue': 'Petco Park', 'unlocked': True, 'badge': 'Power Record', 'filter_target': 'SDP'},
+        {'id': 'halladay_cgso', 'title': 'Roy Halladay Masterpiece', 'category': 'Pitching Gem', 'icon': '👑', 'description': 'Witnessed Hall of Famer Roy Halladay throw a 9.0 IP Complete Game Shutout with 9 SO and 0 BB (Citizens Bank Park).', 'date': '2010-05-01', 'venue': 'Citizens Bank Park', 'unlocked': True, 'badge': 'Legendary Gem', 'filter_target': '2010-05-01'},
+        {'id': 'fenway_wrigley', 'title': 'Historic Cathedral Duo', 'category': 'Ballpark Quest', 'icon': '🏛️', 'description': 'Attended games at Fenway Park (opened 1912) and Wrigley Field (opened 1914) — baseball\'s two oldest sacred grounds.', 'date': '2011 & 2012', 'venue': 'Fenway / Wrigley', 'unlocked': True, 'badge': 'History', 'filter_target': 'Fenway'},
+        {'id': 'petco_faithful', 'title': 'Petco Park Faithful (33 Games)', 'category': 'Home Ballpark', 'icon': '⚾', 'description': 'Attended 33 games at Petco Park in San Diego cheering on the Padres.', 'date': '2019-2026', 'venue': 'Petco Park', 'unlocked': True, 'badge': 'Superfan', 'filter_target': 'Petco Park'},
+        {'id': 'darvish_k_king', 'title': 'Yu Darvish Strikeout King', 'category': 'Pitching Master', 'icon': '⚡', 'description': 'Watched Yu Darvish fan 30 batters across 5 electric starts in person.', 'date': '2021-2024', 'venue': 'Petco Park', 'unlocked': True, 'badge': 'Strikeout King', 'filter_target': 'Petco Park'},
+        {'id': 'nlds_postseason', 'title': 'Postseason Intensity (NLDS)', 'category': 'Playoffs', 'icon': '🔥', 'description': 'Attended National League Division Series postseason action (NLDS Game 3 vs Dodgers, Oct 2024).', 'date': '2024-10-08', 'venue': 'Petco Park', 'unlocked': True, 'badge': 'Playoffs', 'filter_target': '2024-10-08'},
+        {'id': 'california_circuit', 'title': 'Golden State Circuit', 'category': 'Geography', 'icon': '🌉', 'description': 'Visited all 5 California MLB ballparks: Dodger Stadium, Petco Park, Oracle Park, Angel Stadium, and Oakland Coliseum.', 'date': '2012-2026', 'venue': 'California', 'unlocked': True, 'badge': 'Explorer', 'filter_target': 'California'},
+        {'id': 'mlb_90_pct', 'title': '27 of 30 MLB Franchises Seen', 'category': 'League Quest', 'icon': '🏆', 'description': 'Seen 27 out of 30 Major League Baseball teams live in person (90.0% completion!).', 'date': '2008-2026', 'venue': '13 Ballparks', 'unlocked': True, 'badge': 'Epic Quest', 'filter_target': ''}
     ]
 
     years_data = {}
@@ -659,6 +733,34 @@ def build_mlb():
         yr = g['date'].split('-')[0]
         years_data[yr] = years_data.get(yr, 0) + 1
     attendance_by_year = [{'year': yr, 'count': years_data[yr]} for yr in sorted(years_data.keys())]
+
+    # MLB Team Records
+    team_records = []
+    for t in MLB_TEAMS_DATA:
+        abbrev = t['abbrev']
+        if abbrev in seen_mlb_teams_set:
+            t_games = [g for g in games if g['home']['abbrev'] == abbrev or g['away']['abbrev'] == abbrev]
+            w = sum(1 for g in t_games if (g['home']['abbrev'] == abbrev and g['home']['wl'] == 'W') or (g['away']['abbrev'] == abbrev and g['away']['wl'] == 'W'))
+            l = len(t_games) - w
+            team_records.append({
+                'abbrev': abbrev,
+                'team': t['name'],
+                'games': len(t_games),
+                'wins': w,
+                'losses': l,
+                'win_pct': round(w / len(t_games), 3) if len(t_games) > 0 else 0.0,
+                'colors': t['colors']
+            })
+    team_records.sort(key=lambda x: (x['games'], x['win_pct']), reverse=True)
+
+    fun_records = {
+        'most_hits': {'holder': 'Fernando Tatis Jr., Jackson Merrill & Wil Myers', 'val': '4 Hits', 'opp': 'Multiple', 'date': '2020-2024', 'note': '4-hit performance in a 9-inning game'},
+        'most_hr': {'holder': 'Fernando Tatis Jr., Manny Machado & Justin Turner', 'val': '2 Home Runs', 'opp': 'Multiple', 'date': '2010-2024', 'note': 'Multi-home run display'},
+        'most_so': {'holder': 'Trevor Cahill', 'val': '12 Strikeouts', 'opp': 'ARI', 'date': '2018-08-16', 'note': '12 Ks across 7.0 shutout IP for SDP'},
+        'most_rbi': {'holder': 'Gavin Sheets', 'val': '5 RBIs', 'opp': 'DET', 'date': '2023-09-01', 'note': 'Grand slam & clutch run production'},
+        'highest_scoring_game': {'val': '23 Combined Runs', 'matchup': 'SDP 13, COL 10', 'date': '2022-06-11', 'stadium': 'Petco Park'},
+        'biggest_blowout': {'val': '10 Runs Margin', 'matchup': 'SDP 12, ARI 2', 'date': '2022-09-07', 'stadium': 'Petco Park'}
+    }
 
     summary = {
         'total_games': len(games), 'total_batters_seen': len(batters_list), 'total_pitchers_seen': len(pitchers_list),
@@ -673,7 +775,7 @@ def build_mlb():
         'summary': summary, 'games': games, 'batters': batters_list, 'pitchers': pitchers_list,
         'single_batting': single_batting, 'single_pitching': single_pitching,
         'trophy_teams': trophy_teams, 'trophy_ballparks': trophy_ballparks, 'milestones': milestones,
-        'attendance_by_year': attendance_by_year
+        'attendance_by_year': attendance_by_year, 'team_records': team_records, 'fun_records': fun_records
     }
 
 # ----------------------------------------------------
@@ -792,9 +894,29 @@ def build_soccer():
         p['teams'] = sorted(list(p['teams']))
         p['opponents'] = sorted(list(p['opponents']))
         p['primary_team'] = p['teams'][0] if p['teams'] else ''
+        p['is_mvp'] = p['name'] in SOCCER_MVPS
+        p['is_all_star'] = p['name'] in SOCCER_ALL_STARS
         p['log'].sort(key=lambda x: x['date'], reverse=True)
         soccer_players.append(p)
     soccer_players.sort(key=lambda x: (x['goals'], x['assists'], x['matches_count']), reverse=True)
+
+    # Attach match top performers from playerstats if available
+    for m in matches:
+        d = m['date']
+        day_players = []
+        for p in soccer_players:
+            for l in p['log']:
+                if l['date'] == d:
+                    day_players.append({'name': p['name'], 'team': l['team'], 'goals': l['goals'], 'assists': l['assists'], 'yc': l['yc'], 'rc': l['rc']})
+        goalscorers = [dp for dp in day_players if dp['goals'] > 0]
+        goalscorers.sort(key=lambda x: x['goals'], reverse=True)
+        if goalscorers:
+            top_g = goalscorers[0]
+            m['top_performer'] = {'name': top_g['name'], 'team': top_g['team'], 'line': f"{top_g['goals']} Goal{'s' if top_g['goals']>1 else ''}"}
+        elif day_players:
+            m['top_performer'] = {'name': day_players[0]['name'], 'team': day_players[0]['team'], 'line': 'Featured Player'}
+        else:
+            m['top_performer'] = None
 
     trophy_stadiums = []
     for s_name, count in sorted(seen_stadiums.items(), key=lambda x: x[1], reverse=True):
@@ -809,13 +931,13 @@ def build_soccer():
     trophy_teams = sorted(list(seen_teams))
 
     milestones = [
-        {'id': 'world_tour', 'title': 'Global Football Tour (4 Continents)', 'category': 'International', 'icon': '🌍', 'description': 'Attended football matches across North America, Europe, and Africa (Athens, Prague, Cape Town, Rome, Turin, California).', 'date': '2016-2024', 'venue': '12 Global Stadiums', 'unlocked': True, 'badge': 'World Tour'},
-        {'id': 'rose_bowl_clasico', 'title': 'Rose Bowl Super-Clasico', 'category': 'Club Giants', 'icon': '🌹', 'description': 'Witnessed European royalty Real Madrid vs. Juventus at the historic Rose Bowl (93,702 fans, July 2022).', 'date': '2022-07-30', 'venue': 'Rose Bowl, Pasadena', 'unlocked': True, 'badge': 'European Royalty'},
-        {'id': 'serie_a_pilgrimage', 'title': 'Serie A Double Header (Rome & Turin)', 'category': 'European Leagues', 'icon': '🇮🇹', 'description': 'Attended Juventus vs Napoli at Allianz Stadium (Turin) and Roma vs Milan at Stadio Olimpico (Rome) in the same week.', 'date': 'April 2023', 'venue': 'Allianz Stadium & Stadio Olimpico', 'unlocked': True, 'badge': 'Calcio'},
-        {'id': 'euro_qualifier', 'title': 'European Championship Qualifier', 'category': 'International Competitions', 'icon': '🏆', 'description': 'Attended UEFA Euro Qualifiers live in Prague: Czech Republic vs. Bulgaria at Generali Arena.', 'date': '2019-06-07', 'venue': 'Generali Arena, Prague', 'unlocked': True, 'badge': 'UEFA'},
-        {'id': 'uswnt_9_goal_explosion', 'title': 'USWNT 9-Goal Masterclass', 'category': 'National Team', 'icon': '🇺🇸', 'description': 'Witnessed the US Women\'s National Team dismantle Paraguay 9-0 at FirstEnergy Stadium in Cleveland.', 'date': '2021-09-16', 'venue': 'FirstEnergy Stadium', 'unlocked': True, 'badge': 'Goal Fest'},
-        {'id': 'snapdragon_wave', 'title': 'San Diego Wave Charter Fan', 'category': 'NWSL', 'icon': '🌊', 'description': 'Attended 19 San Diego Wave FC matches at Torero Stadium and Snapdragon Stadium cheering on Alex Morgan & Co.', 'date': '2022-2024', 'venue': 'Snapdragon Stadium', 'unlocked': True, 'badge': 'Club Charter'},
-        {'id': 'cape_town_derby', 'title': 'South African PSL Under Table Mountain', 'category': 'African Football', 'icon': '🇿🇦', 'description': 'Attended Cape Town City vs. Stellenbosch at Athlone Stadium in Cape Town, South Africa.', 'date': '2019-08-10', 'venue': 'Athlone Stadium, Cape Town', 'unlocked': True, 'badge': 'African Football'}
+        {'id': 'world_tour', 'title': 'Global Football Tour (3 Continents)', 'category': 'International', 'icon': '🌍', 'description': 'Attended football matches across North America, Europe, and Africa (Athens, Prague, Cape Town, Rome, Turin, California).', 'date': '2016-2024', 'venue': '12 Global Stadiums', 'unlocked': True, 'badge': 'World Tour', 'filter_target': ''},
+        {'id': 'rose_bowl_clasico', 'title': 'Rose Bowl Super-Clasico', 'category': 'Club Giants', 'icon': '🌹', 'description': 'Witnessed European royalty Real Madrid vs. Juventus at the historic Rose Bowl (93,702 fans, July 2022).', 'date': '2022-07-30', 'venue': 'Rose Bowl, Pasadena', 'unlocked': True, 'badge': 'European Royalty', 'filter_target': 'Rose Bowl'},
+        {'id': 'serie_a_pilgrimage', 'title': 'Serie A Double Header (Rome & Turin)', 'category': 'European Leagues', 'icon': '🇮🇹', 'description': 'Attended Juventus vs Napoli at Allianz Stadium (Turin) and Roma vs Milan at Stadio Olimpico (Rome) in the same week.', 'date': 'April 2023', 'venue': 'Allianz Stadium & Stadio Olimpico', 'unlocked': True, 'badge': 'Calcio', 'filter_target': 'Allianz Stadium'},
+        {'id': 'euro_qualifier', 'title': 'European Championship Qualifier', 'category': 'International Competitions', 'icon': '🏆', 'description': 'Attended UEFA Euro Qualifiers live in Prague: Czech Republic vs. Bulgaria at Generali Arena.', 'date': '2019-06-07', 'venue': 'Generali Arena, Prague', 'unlocked': True, 'badge': 'UEFA', 'filter_target': 'Generali Arena'},
+        {'id': 'uswnt_9_goal_explosion', 'title': 'USWNT 9-Goal Masterclass', 'category': 'National Team', 'icon': '🇺🇸', 'description': 'Witnessed the US Women\'s National Team dismantle Paraguay 9-0 at FirstEnergy Stadium in Cleveland.', 'date': '2021-09-16', 'venue': 'FirstEnergy Stadium', 'unlocked': True, 'badge': 'Goal Fest', 'filter_target': 'FirstEnergy Stadium'},
+        {'id': 'snapdragon_wave', 'title': 'San Diego Wave Charter Fan', 'category': 'NWSL', 'icon': '🌊', 'description': 'Attended 19 San Diego Wave FC matches at Torero Stadium and Snapdragon Stadium cheering on Alex Morgan & Co.', 'date': '2022-2024', 'venue': 'Snapdragon Stadium', 'unlocked': True, 'badge': 'Club Charter', 'filter_target': 'Wave'},
+        {'id': 'cape_town_derby', 'title': 'South African PSL Under Table Mountain', 'category': 'African Football', 'icon': '🇿🇦', 'description': 'Attended Cape Town City vs. Stellenbosch at Athlone Stadium in Cape Town, South Africa.', 'date': '2019-08-10', 'venue': 'Athlone Stadium, Cape Town', 'unlocked': True, 'badge': 'African Football', 'filter_target': 'Athlone Stadium'}
     ]
 
     years_data = {}
@@ -823,6 +945,14 @@ def build_soccer():
         yr = m['date'].split('-')[0]
         years_data[yr] = years_data.get(yr, 0) + 1
     attendance_by_year = [{'year': yr, 'count': years_data[yr]} for yr in sorted(years_data.keys())]
+
+    fun_records = {
+        'most_goals': {'holder': 'Alex Morgan', 'val': '4 Goals', 'opp': 'Gotham FC', 'date': '2022-05-07', 'note': '4-goal explosion in 4-0 San Diego Wave victory'},
+        'most_yc': {'holder': 'Juventus vs. AC Milan', 'val': '8 Yellow Cards', 'opp': 'Serie A Match', 'date': '2023-04-29', 'note': '8 bookings in electric Stadio Olimpico clash'},
+        'highest_attendance': {'holder': 'Real Madrid vs. Juventus', 'val': '93,702 Fans', 'opp': 'Champions Tour', 'date': '2022-07-30', 'note': 'Record crowd at the historic Rose Bowl in Pasadena'},
+        'continents_visited': {'val': '3 Continents', 'details': 'Europe (Rome, Turin, Prague, Athens), Africa (Cape Town), North America (USA)'},
+        'highest_scoring_match': {'val': '9 Goals Fest', 'matchup': 'USWNT 9, Paraguay 0', 'date': '2021-09-16', 'stadium': 'FirstEnergy Stadium, Cleveland'}
+    }
 
     summary = {
         'total_matches': len(matches), 'total_stadiums': len(trophy_stadiums), 'total_teams': len(trophy_teams),
@@ -832,7 +962,7 @@ def build_soccer():
     return {
         'summary': summary, 'matches': matches, 'players': soccer_players,
         'trophy_stadiums': trophy_stadiums, 'trophy_teams': trophy_teams, 'milestones': milestones,
-        'attendance_by_year': attendance_by_year
+        'attendance_by_year': attendance_by_year, 'fun_records': fun_records
     }
 
 def clean_nan_inf(obj):

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SportsLog | Personal Sports Attendance & Analytics</title>
-  <link rel="stylesheet" href="./css/app.css">
+  <title>SportsLog</title>
+  <link rel="stylesheet" href="./css/app.css?v=3">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏀</text></svg>">
 </head>
 <body>
@@ -54,12 +54,6 @@
           <span>📊 Records & Luck</span>
         </button>
       </nav>
-
-      <!-- Global Search -->
-      <div class="nav-search">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="global-search-input" placeholder="Search player, team, arena..." oninput="app.handleGlobalSearch(this.value)">
-      </div>
     </div>
   </header>
 
@@ -112,15 +106,8 @@
     <!-- Tab 2: Single-Game Stat Leaderboard (Sort Any Stat) -->
     <section id="tab-performances" class="tab-view" style="display: none;">
       <div class="controls-bar">
-        <div class="filter-group">
-          <span style="font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan);">Quick Presets:</span>
-          <button class="chip-btn active" onclick="playersComponent.setPerfPreset('ALL')">All Performances</button>
-          <button class="chip-btn" onclick="playersComponent.setPerfPreset('40_PTS')">🔥 40+ PTS</button>
-          <button class="chip-btn" onclick="playersComponent.setPerfPreset('TRIPLE_DOUBLE')">👑 Triple-Doubles</button>
-          <button class="chip-btn" onclick="playersComponent.setPerfPreset('DOUBLE_DOUBLE')">⚡ Double-Doubles</button>
-          <button class="chip-btn" onclick="playersComponent.setPerfPreset('5_3PM')">🎯 5+ 3-Pointers</button>
-          <button class="chip-btn" onclick="playersComponent.setPerfPreset('15_REB')">🦾 15+ Rebounds</button>
-          <button class="chip-btn" onclick="playersComponent.setPerfPreset('10_AST')">🪄 10+ Assists</button>
+        <div class="filter-group" id="perf-presets-container">
+          <!-- Dynamic sport-specific presets injected via JS -->
         </div>
         <div class="filter-group">
           <input type="text" class="input-filter" id="perf-search-input" placeholder="Search player name..." oninput="playersComponent.renderLeaderboard()">
@@ -169,8 +156,13 @@
       <div class="controls-bar">
         <div class="filter-group">
           <input type="text" class="input-filter" id="player-agg-search" placeholder="Search player name or team..." oninput="playersComponent.renderAggregates()">
+          <select class="select-filter" id="player-caliber-filter" onchange="playersComponent.renderAggregates()">
+            <option value="ALL">All Players Seen</option>
+            <option value="MVP">🏆 League MVPs Only</option>
+            <option value="ALL_STAR">⭐ All-Stars & All-NBA</option>
+          </select>
           <select class="select-filter" id="player-min-games" onchange="playersComponent.renderAggregates()">
-            <option value="1">All Players (1+ Game)</option>
+            <option value="1">All Games (1+ Game)</option>
             <option value="3">Seen 3+ Times</option>
             <option value="5" selected>Seen 5+ Times</option>
             <option value="10">Seen 10+ Times (Core Stars)</option>

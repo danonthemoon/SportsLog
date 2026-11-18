@@ -240,9 +240,29 @@ main {
   transition: transform 0.2s, border-color 0.2s;
 }
 
-.kpi-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--border-accent);
+.kpi-card.clickable {
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s, box-shadow 0.2s;
+}
+
+.kpi-card.clickable:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 0 15px rgba(56, 189, 248, 0.15);
+}
+
+.kpi-card.clickable:active {
+  transform: translateY(-1px);
+}
+
+.kpi-card.gold.clickable:hover {
+  border-color: var(--accent-gold);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 0 15px rgba(245, 158, 11, 0.15);
+}
+
+.kpi-card.emerald.clickable:hover {
+  border-color: var(--accent-emerald);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 0 15px rgba(16, 185, 129, 0.15);
 }
 
 .kpi-card::before {
@@ -344,38 +364,72 @@ main {
   font-weight: 700;
 }
 
-/* Games Grid */
+/* Games Grid - Single Column Layout */
 .games-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
 }
 
 .game-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 1.25rem;
+  padding: 1.25rem 1.5rem;
   position: relative;
   transition: all 0.25s ease;
   cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .game-card {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem 1.15rem;
+  }
+}
+
+.game-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-card), var(--shadow-glow);
+}
+
+.game-card-left {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.game-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--border-accent);
-  box-shadow: var(--shadow-card), var(--shadow-glow);
+.game-card-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 1px solid var(--border-subtle);
+  padding-left: 1.5rem;
+  height: 100%;
+}
+
+@media (max-width: 900px) {
+  .game-card-right {
+    border-left: none;
+    border-top: 1px solid var(--border-subtle);
+    padding-left: 0;
+    padding-top: 1rem;
+  }
 }
 
 .game-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.85rem;
-  padding-bottom: 0.6rem;
+  margin-bottom: 0.65rem;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -609,6 +663,17 @@ table.stats-table th:hover {
   color: var(--accent-cyan);
 }
 
+table.stats-table th.sorted-active {
+  color: var(--accent-cyan) !important;
+  background: rgba(56, 189, 248, 0.16) !important;
+  border-bottom: 2px solid var(--accent-cyan);
+}
+
+table.stats-table td.sorted-active-cell {
+  background: rgba(56, 189, 248, 0.06);
+  font-weight: 700;
+}
+
 table.stats-table td.text-left, table.stats-table th.text-left {
   text-align: left;
 }
@@ -668,21 +733,34 @@ table.stats-table tr:hover {
   background: linear-gradient(90deg, #d97706, #fbbf24);
 }
 
-/* Teams Quest Grid */
+/* Teams Quest - Single Column List */
 .teams-quest-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
 }
 
 .trophy-team-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 1rem;
+  padding: 1rem 1.25rem;
   position: relative;
   overflow: hidden;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .trophy-team-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
 }
 
 .trophy-team-card.seen {
@@ -690,8 +768,8 @@ table.stats-table tr:hover {
 }
 
 .trophy-team-card.unseen {
-  opacity: 0.55;
-  filter: grayscale(0.8);
+  opacity: 0.65;
+  filter: grayscale(0.6);
   background: rgba(15, 23, 42, 0.4);
 }
 
@@ -705,8 +783,7 @@ table.stats-table tr:hover {
 .team-card-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
+  gap: 0.75rem;
 }
 
 .seen-badge {
@@ -728,22 +805,32 @@ table.stats-table tr:hover {
   color: var(--text-muted);
 }
 
-/* Arenas Grid */
+/* Arenas - Single Column List */
 .arenas-quest-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
 }
 
 .arena-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 1.15rem;
+  padding: 1rem 1.25rem;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
+  gap: 1.5rem;
   transition: all 0.2s;
+}
+
+@media (max-width: 768px) {
+  .arena-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
 }
 
 .arena-card.visited {
@@ -758,6 +845,38 @@ table.stats-table tr:hover {
   opacity: 1;
   transform: translateY(-2px);
   border-color: var(--accent-emerald);
+}
+
+/* World Map & Milestone Button */
+.world-map-wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.milestone-link-btn {
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: var(--accent-cyan);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.milestone-link-btn:hover {
+  background: var(--accent-cyan);
+  color: #04060b;
 }
 
 /* Milestone Cards */
