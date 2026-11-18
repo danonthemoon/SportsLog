@@ -1,14 +1,23 @@
-// app.js - Main Application Controller
+// app.js - Multi-Sport Application Controller (NBA, MLB, Soccer)
 const app = {
+  rawBundle: null,
+  currentSport: 'nba', // 'nba', 'mlb', 'soccer'
   data: null,
   activeTab: 'games',
   teamColors: {},
 
+  sportMeta: {
+    nba: { icon: '🏀', title: 'NBA Live Experience', label: 'NBA' },
+    mlb: { icon: '⚾', title: 'MLB Ballpark Journey', label: 'MLB' },
+    soccer: { icon: '⚽', title: 'Global Football Experience', label: 'Soccer' }
+  },
+
   async init() {
     try {
       const response = await fetch('./data.json');
-      this.data = await response.json();
-      console.log("SportsLog loaded successfully:", this.data);
+      const rawText = await response.text();
+      this.rawBundle = JSON.parse(rawText.replace(/\bNaN\b/g, 'null').replace(/\bInfinity\b/g, 'null'));
+      this.setSportData(this.currentSport);
 
       this.initTeamColors();
       this.renderKPIs();
@@ -31,10 +40,53 @@ const app = {
     }
   },
 
+  setSportData(sport) {
+    this.currentSport = sport;
+    if (this.rawBundle && this.rawBundle[sport]) {
+      this.data = this.rawBundle[sport];
+    } else {
+      this.data = this.rawBundle;
+    }
+  },
+
+  switchSport(sport) {
+    if (this.currentSport === sport && this.data) return;
+    this.currentSport = sport;
+    this.setSportData(sport);
+
+    // Update active pill
+    document.querySelectorAll('.sport-pill').forEach(btn => {
+      btn.classList.toggle('active', btn.id === `sport-pill-${sport}`);
+    });
+
+    // Update brand
+    const meta = this.sportMeta[sport] || this.sportMeta.nba;
+    const brandIcon = document.querySelector('.brand-icon');
+    if (brandIcon) brandIcon.textContent = meta.icon;
+    const sportLabel = document.getElementById('current-sport-label');
+    if (sportLabel) sportLabel.textContent = meta.title;
+
+    this.initTeamColors();
+    this.renderKPIs();
+    this.populateDropdowns();
+
+    // Re-render components
+    gamesComponent.render();
+    playersComponent.renderLeaderboard();
+    playersComponent.renderAggregates();
+    trophyComponent.render();
+    recordsComponent.render();
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  },
+
   initTeamColors() {
+    this.teamColors = {};
     if (this.data && this.data.trophy_teams) {
       this.data.trophy_teams.forEach(t => {
-        this.teamColors[t.abbrev] = t.colors[0] || '#38bdf8';
+        if (typeof t === 'object' && t.abbrev) {
+          this.teamColors[t.abbrev] = (t.colors && t.colors[0]) || '#38bdf8';
+        }
       });
     }
   },
@@ -56,81 +108,148 @@ const app = {
   renderKPIs() {
     const s = this.data.summary;
     const container = document.getElementById('kpi-container');
-    if (!container) return;
+    if (!container || !s) return;
 
-    container.innerHTML = `
-      <div class="kpi-card">
-        <div class="kpi-label">
-          <span>Games Attended</span>
-          <span>🏟️</span>
+    if (this.currentSport === 'nba') {
+      container.innerHTML = `
+        <div class="kpi-card">
+          <div class="kpi-label"><span>Games Attended</span><span>🏟️</span></div>
+          <div class="kpi-value">${s.total_games}</div>
+          <div class="kpi-subtext">Across 18 Distinct Arenas</div>
         </div>
-        <div class="kpi-value">${s.total_games}</div>
-        <div class="kpi-subtext">Across 18 Distinct Arenas</div>
-      </div>
-
-      <div class="kpi-card gold">
-        <div class="kpi-label">
-          <span>NBA Teams Seen</span>
-          <span>🏀</span>
+        <div class="kpi-card gold">
+          <div class="kpi-label"><span>NBA Teams Seen</span><span>🏀</span></div>
+          <div class="kpi-value" style="color: var(--accent-gold);">${s.total_teams_seen} <span style="font-size: 1rem; color: var(--text-muted);">/ 30</span></div>
+          <div class="kpi-subtext">${s.teams_completion_pct}% of the Entire League</div>
         </div>
-        <div class="kpi-value" style="color: var(--accent-gold);">${s.total_teams_seen} <span style="font-size: 1rem; color: var(--text-muted);">/ 30</span></div>
-        <div class="kpi-subtext">${s.teams_completion_pct}% of the Entire League</div>
-      </div>
-
-      <div class="kpi-card emerald">
-        <div class="kpi-label">
-          <span>Active Arenas Visited</span>
-          <span>📍</span>
+        <div class="kpi-card emerald">
+          <div class="kpi-label"><span>Active Arenas Visited</span><span>📍</span></div>
+          <div class="kpi-value" style="color: var(--accent-emerald);">${s.total_active_arenas_seen} <span style="font-size: 1rem; color: var(--text-muted);">/ 30</span></div>
+          <div class="kpi-subtext">+6 Historical & Neutral Venues</div>
         </div>
-        <div class="kpi-value" style="color: var(--accent-emerald);">${s.total_active_arenas_seen} <span style="font-size: 1rem; color: var(--text-muted);">/ 30</span></div>
-        <div class="kpi-subtext">+6 Historical & Neutral Venues</div>
-      </div>
-
-      <div class="kpi-card purple">
-        <div class="kpi-label">
-          <span>Total Points Witnessed</span>
-          <span>🔥</span>
+        <div class="kpi-card purple">
+          <div class="kpi-label"><span>Total Points Witnessed</span><span>🔥</span></div>
+          <div class="kpi-value" style="color: var(--accent-purple);">${s.total_points_seen.toLocaleString()}</div>
+          <div class="kpi-subtext">Avg ${s.avg_points_per_game} Points / Game</div>
         </div>
-        <div class="kpi-value" style="color: var(--accent-purple);">${s.total_points_seen.toLocaleString()}</div>
-        <div class="kpi-subtext">Avg ${s.avg_points_per_game} Points / Game</div>
-      </div>
-
-      <div class="kpi-card rose">
-        <div class="kpi-label">
-          <span>Players Logged</span>
-          <span>👥</span>
+        <div class="kpi-card rose">
+          <div class="kpi-label"><span>Players Logged</span><span>👥</span></div>
+          <div class="kpi-value" style="color: var(--accent-rose);">${s.total_players_seen}</div>
+          <div class="kpi-subtext">${s.total_statlines} Individual Statlines</div>
         </div>
-        <div class="kpi-value" style="color: var(--accent-rose);">${s.total_players_seen}</div>
-        <div class="kpi-subtext">1,036 Individual Statlines</div>
-      </div>
-    `;
+      `;
+    } else if (this.currentSport === 'mlb') {
+      container.innerHTML = `
+        <div class="kpi-card">
+          <div class="kpi-label"><span>MLB Games Attended</span><span>⚾</span></div>
+          <div class="kpi-value">${s.total_games}</div>
+          <div class="kpi-subtext">From 2008 to 2024 (16 Seasons)</div>
+        </div>
+        <div class="kpi-card gold">
+          <div class="kpi-label"><span>MLB Franchises Seen</span><span>🏆</span></div>
+          <div class="kpi-value" style="color: var(--accent-gold);">${s.total_teams_seen} <span style="font-size: 1rem; color: var(--text-muted);">/ 30</span></div>
+          <div class="kpi-subtext">${s.teams_completion_pct}% of All 30 MLB Franchises!</div>
+        </div>
+        <div class="kpi-card emerald">
+          <div class="kpi-label"><span>Ballparks Visited</span><span>🏟️</span></div>
+          <div class="kpi-value" style="color: var(--accent-emerald);">${s.total_ballparks_visited}</div>
+          <div class="kpi-subtext">Including Fenway, Wrigley & Petco</div>
+        </div>
+        <div class="kpi-card purple">
+          <div class="kpi-label"><span>Total Runs Witnessed</span><span>⚡</span></div>
+          <div class="kpi-value" style="color: var(--accent-purple);">${s.total_runs_seen}</div>
+          <div class="kpi-subtext">Avg ${s.avg_runs_per_game} Runs / Game</div>
+        </div>
+        <div class="kpi-card rose">
+          <div class="kpi-label"><span>Batters & Pitchers</span><span>👥</span></div>
+          <div class="kpi-value" style="color: var(--accent-rose);">${s.total_batters_seen} <span style="font-size: 1rem; color: var(--text-muted);">/ ${s.total_pitchers_seen}</span></div>
+          <div class="kpi-subtext">1,228 Batting & 454 Pitching Lines</div>
+        </div>
+      `;
+    } else if (this.currentSport === 'soccer') {
+      container.innerHTML = `
+        <div class="kpi-card">
+          <div class="kpi-label"><span>Matches Attended</span><span>⚽</span></div>
+          <div class="kpi-value">${s.total_matches}</div>
+          <div class="kpi-subtext">International, UEFA, Serie A & NWSL</div>
+        </div>
+        <div class="kpi-card gold">
+          <div class="kpi-label"><span>Global Stadiums</span><span>🌍</span></div>
+          <div class="kpi-value" style="color: var(--accent-gold);">${s.total_stadiums}</div>
+          <div class="kpi-subtext">Across 4 Continents & 10 Cities</div>
+        </div>
+        <div class="kpi-card emerald">
+          <div class="kpi-label"><span>Clubs & Countries</span><span>🛡️</span></div>
+          <div class="kpi-value" style="color: var(--accent-emerald);">${s.total_teams}</div>
+          <div class="kpi-subtext">USMNT, USWNT, Real Madrid, Juve, Wave</div>
+        </div>
+        <div class="kpi-card purple">
+          <div class="kpi-label"><span>Cities Visited</span><span>📍</span></div>
+          <div class="kpi-value" style="color: var(--accent-purple);">${s.cities_visited}</div>
+          <div class="kpi-subtext">Rome, Turin, Athens, Prague, Cape Town</div>
+        </div>
+        <div class="kpi-card rose">
+          <div class="kpi-label"><span>Players Tracked</span><span>⭐</span></div>
+          <div class="kpi-value" style="color: var(--accent-rose);">${s.total_players_tracked}</div>
+          <div class="kpi-subtext">Alex Morgan, Pulisic, Vlahovic, Dybala</div>
+        </div>
+      `;
+    }
   },
 
   populateDropdowns() {
-    // Teams dropdown
     const teamSelect = document.getElementById('game-team-filter');
-    if (teamSelect && this.data.trophy_teams) {
-      const seenTeams = this.data.trophy_teams.filter(t => t.seen);
-      seenTeams.sort((a, b) => a.name.localeCompare(b.name));
-      seenTeams.forEach(t => {
-        const opt = document.createElement('option');
-        opt.value = t.abbrev;
-        opt.textContent = `${t.name} (${t.abbrev})`;
-        teamSelect.appendChild(opt);
-      });
-    }
-
-    // Arenas dropdown
     const arenaSelect = document.getElementById('game-arena-filter');
-    if (arenaSelect && this.data.trophy_arenas) {
-      const visitedArenas = this.data.trophy_arenas.filter(a => a.visited);
-      visitedArenas.sort((a, b) => a.name.localeCompare(b.name));
-      visitedArenas.forEach(a => {
-        const opt = document.createElement('option');
-        opt.value = a.name;
-        opt.textContent = `${a.name} (${a.city})`;
-        arenaSelect.appendChild(opt);
-      });
+    if (!teamSelect || !arenaSelect || !this.data) return;
+
+    teamSelect.innerHTML = '<option value="ALL">All Teams</option>';
+    arenaSelect.innerHTML = '<option value="ALL">All Venues</option>';
+
+    if (this.currentSport === 'nba') {
+      if (this.data.trophy_teams) {
+        this.data.trophy_teams.filter(t => t.seen).sort((a,b)=>a.name.localeCompare(b.name)).forEach(t => {
+          const opt = document.createElement('option');
+          opt.value = t.abbrev; opt.textContent = `${t.name} (${t.abbrev})`;
+          teamSelect.appendChild(opt);
+        });
+      }
+      if (this.data.trophy_arenas) {
+        this.data.trophy_arenas.filter(a => a.visited).sort((a,b)=>a.name.localeCompare(b.name)).forEach(a => {
+          const opt = document.createElement('option');
+          opt.value = a.name; opt.textContent = `${a.name} (${a.city})`;
+          arenaSelect.appendChild(opt);
+        });
+      }
+    } else if (this.currentSport === 'mlb') {
+      if (this.data.trophy_teams) {
+        this.data.trophy_teams.filter(t => t.seen).sort((a,b)=>a.name.localeCompare(b.name)).forEach(t => {
+          const opt = document.createElement('option');
+          opt.value = t.abbrev; opt.textContent = `${t.name} (${t.abbrev})`;
+          teamSelect.appendChild(opt);
+        });
+      }
+      if (this.data.trophy_ballparks) {
+        this.data.trophy_ballparks.sort((a,b)=>a.name.localeCompare(b.name)).forEach(b => {
+          const opt = document.createElement('option');
+          opt.value = b.name; opt.textContent = b.name;
+          arenaSelect.appendChild(opt);
+        });
+      }
+    } else if (this.currentSport === 'soccer') {
+      if (this.data.trophy_teams) {
+        this.data.trophy_teams.forEach(t => {
+          const opt = document.createElement('option');
+          opt.value = t; opt.textContent = t;
+          teamSelect.appendChild(opt);
+        });
+      }
+      if (this.data.trophy_stadiums) {
+        this.data.trophy_stadiums.sort((a,b)=>a.name.localeCompare(b.name)).forEach(s => {
+          const opt = document.createElement('option');
+          opt.value = s.name; opt.textContent = `${s.name} (${s.city})`;
+          arenaSelect.appendChild(opt);
+        });
+      }
     }
   },
 
@@ -157,26 +276,10 @@ const app = {
     const q = query.trim().toLowerCase();
     if (!q) return;
 
-    // Search in games first
-    const matchGame = this.data.games.find(g => 
-      g.home.team.toLowerCase().includes(q) ||
-      g.away.team.toLowerCase().includes(q) ||
-      g.arena.toLowerCase().includes(q)
-    );
-
-    const matchPlayer = this.data.players.find(p => p.name.toLowerCase().includes(q));
-
-    if (matchPlayer && (!matchGame || this.activeTab === 'players' || this.activeTab === 'performances')) {
-      if (this.activeTab !== 'players' && this.activeTab !== 'performances') {
-        this.setTab('players');
-      }
-      document.getElementById('player-agg-search').value = query;
-      playersComponent.renderAggregates();
-    } else {
-      if (this.activeTab !== 'games') {
-        this.setTab('games');
-      }
-      document.getElementById('game-search-input').value = query;
+    if (this.activeTab !== 'games') this.setTab('games');
+    const input = document.getElementById('game-search-input');
+    if (input) {
+      input.value = query;
       gamesComponent.render();
     }
   },
@@ -190,76 +293,19 @@ const app = {
     }
   },
 
-  openPlayerDossier(playerName) {
-    playersComponent.openDossier(playerName);
+  openPlayerDossier(playerName, playerType = 'nba') {
+    playersComponent.openDossier(playerName, playerType);
   },
 
   closeModal() {
     document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
-  },
-
-  showSportPreview(sport) {
-    const modal = document.getElementById('sport-preview-modal');
-    const title = document.getElementById('sport-preview-title');
-    const body = document.getElementById('sport-preview-body');
-
-    if (sport === 'mlb') {
-      title.textContent = '⚾ MLB Attendance Log (54 Games Logged)';
-      body.innerHTML = `
-        <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
-          <p style="margin-bottom: 1rem;">
-            Your gathered MLB data contains <strong>54 attended games</strong>, <strong>1,228 batting performances</strong>, and <strong>454 pitching outings</strong>!
-          </p>
-          <div style="background: rgba(15,23,42,0.8); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1rem;">
-            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">📁 Available Datasets:</div>
-            <ul style="padding-left: 1.25rem; font-size: 0.82rem; color: var(--accent-cyan);">
-              <li><code>all_games.csv</code> (54 games with Date, Home, Away, Score, Stadium, Duration)</li>
-              <li><code>all_batting.csv</code> (1,228 player batting statlines with AB, R, H, HR, RBI, BB, SO)</li>
-              <li><code>all_pitching.csv</code> (454 pitching statlines with IP, H, R, ER, BB, SO, HR, ERA)</li>
-            </ul>
-          </div>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">
-            We started with NBA per your request. The app's architecture is built to seamlessly plug in MLB and Soccer next!
-          </p>
-        </div>
-      `;
-    } else if (sport === 'soccer') {
-      title.textContent = '⚽ Soccer Attendance Log (31 Games Logged)';
-      body.innerHTML = `
-        <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
-          <p style="margin-bottom: 1rem;">
-            Your gathered soccer data contains <strong>31 attended matches</strong> across domestic leagues, international friendlies, and tournaments!
-          </p>
-          <div style="background: rgba(15,23,42,0.8); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1rem;">
-            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">📁 Available Datasets:</div>
-            <ul style="padding-left: 1.25rem; font-size: 0.82rem; color: var(--accent-emerald);">
-              <li><code>gamelog.csv</code> (31 matches with Date, Home, Away, Score, Stadium, City, Attendance)</li>
-              <li><code>playerstats.xlsx</code> & <code>soccerStats.ipynb</code> (Player statlines & box scores)</li>
-            </ul>
-          </div>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">
-            Ready to be activated once you want to expand beyond the NBA module!
-          </p>
-        </div>
-      `;
-    }
-
-    modal.classList.add('active');
-  },
-
-  switchSport(sport) {
-    if (sport === 'nba') {
-      this.setTab('games');
-    }
   }
 };
 
-// Keyboard listener for ESC to close modals
 window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') app.closeModal();
 });
 
-// Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
   app.init();
 });

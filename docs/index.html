@@ -22,17 +22,17 @@
 
       <!-- Multi-Sport Switcher -->
       <div class="sports-pill-group">
-        <button class="sport-pill active" onclick="app.switchSport('nba')">
+        <button class="sport-pill active" id="sport-pill-nba" onclick="app.switchSport('nba')">
           <span>🏀 NBA</span>
           <span class="badge" id="nba-badge-count">48</span>
         </button>
-        <button class="sport-pill" onclick="app.showSportPreview('mlb')">
+        <button class="sport-pill" id="sport-pill-mlb" onclick="app.switchSport('mlb')">
           <span>⚾ MLB</span>
-          <span class="badge">54</span>
+          <span class="badge" id="mlb-badge-count">54</span>
         </button>
-        <button class="sport-pill" onclick="app.showSportPreview('soccer')">
+        <button class="sport-pill" id="sport-pill-soccer" onclick="app.switchSport('soccer')">
           <span>⚽ Soccer</span>
-          <span class="badge">31</span>
+          <span class="badge" id="soccer-badge-count">31</span>
         </button>
       </div>
 
