@@ -183,8 +183,14 @@ const playersComponent = {
         <th class="${getThClass('AST')}" onclick="playersComponent.sortPerfBy('AST')">AST${ind('AST')}</th>
         <th class="${getThClass('STL')}" onclick="playersComponent.sortPerfBy('STL')">STL${ind('STL')}</th>
         <th class="${getThClass('BLK')}" onclick="playersComponent.sortPerfBy('BLK')">BLK${ind('BLK')}</th>
-        <th class="${getThClass('3PM')}" onclick="playersComponent.sortPerfBy('3PM')">3PM${ind('3PM')}</th>
+        <th class="${getThClass('FG')}" onclick="playersComponent.sortPerfBy('FG')" title="Field Goals (FGM-FGA)">FG${ind('FG')}</th>
         <th class="${getThClass('FG%')}" onclick="playersComponent.sortPerfBy('FG%')">FG%${ind('FG%')}</th>
+        <th class="${getThClass('3P')}" onclick="playersComponent.sortPerfBy('3P')" title="3-Pointers (3PM-3PA)">3P${ind('3P')}</th>
+        <th class="${getThClass('3P%')}" onclick="playersComponent.sortPerfBy('3P%')">3P%${ind('3P%')}</th>
+        <th class="${getThClass('FT')}" onclick="playersComponent.sortPerfBy('FT')" title="Free Throws (FTM-FTA)">FT${ind('FT')}</th>
+        <th class="${getThClass('FT%')}" onclick="playersComponent.sortPerfBy('FT%')">FT%${ind('FT%')}</th>
+        <th class="${getThClass('TO')}" onclick="playersComponent.sortPerfBy('TO')">TO${ind('TO')}</th>
+        <th class="${getThClass('PF')}" onclick="playersComponent.sortPerfBy('PF')">PF${ind('PF')}</th>
         <th class="${getThClass('GAME_SCORE')}" onclick="playersComponent.sortPerfBy('GAME_SCORE')" style="color: var(--accent-gold);">GameScore${ind('GAME_SCORE')}</th>
       `;
 
@@ -208,15 +214,40 @@ const playersComponent = {
         let valA = a[col.toLowerCase()] ?? a[col];
         let valB = b[col.toLowerCase()] ?? b[col];
         if (col === 'GAME_SCORE') { valA = a.game_score; valB = b.game_score; }
-        if (col === 'FG%') { valA = a.fg_pct; valB = b.fg_pct; }
-        if (col === '3PM') { valA = a.tpm; valB = b.tpm; }
+        else if (col === 'FG' || col === 'FGM') { valA = a.fgm; valB = b.fgm; }
+        else if (col === 'FGA') { valA = a.fga; valB = b.fga; }
+        else if (col === 'FG%' || col === 'FG_PCT') { valA = a.fg_pct; valB = b.fg_pct; }
+        else if (col === '3P' || col === '3PM' || col === 'TPM') { valA = a.tpm; valB = b.tpm; }
+        else if (col === '3PA' || col === 'TPA') { valA = a.tpa; valB = b.tpa; }
+        else if (col === '3P%' || col === 'TP_PCT') {
+          valA = a.tp_pct !== undefined ? a.tp_pct : (a.tpa > 0 ? a.tpm / a.tpa : 0);
+          valB = b.tp_pct !== undefined ? b.tp_pct : (b.tpa > 0 ? b.tpm / b.tpa : 0);
+        }
+        else if (col === 'FT' || col === 'FTM') { valA = a.ftm; valB = b.ftm; }
+        else if (col === 'FTA') { valA = a.fta; valB = b.fta; }
+        else if (col === 'FT%' || col === 'FT_PCT') {
+          valA = a.ft_pct !== undefined ? a.ft_pct : (a.fta > 0 ? a.ftm / a.fta : 0);
+          valB = b.ft_pct !== undefined ? b.ft_pct : (b.fta > 0 ? b.ftm / b.fta : 0);
+        }
+        else if (col === 'TO') { valA = a.to; valB = b.to; }
+        else if (col === 'PF') { valA = a.pf; valB = b.pf; }
+        else if (col === 'MINS' || col === 'MIN') { valA = a.mins; valB = b.mins; }
+        else if (col === 'PTS') { valA = a.pts; valB = b.pts; }
+        else if (col === 'REB') { valA = a.reb; valB = b.reb; }
+        else if (col === 'AST') { valA = a.ast; valB = b.ast; }
+        else if (col === 'STL') { valA = a.stl; valB = b.stl; }
+        else if (col === 'BLK') { valA = a.blk; valB = b.blk; }
+
         if (typeof valA === 'string') return asc ? valA.localeCompare(valB) : valB.localeCompare(valA);
         return asc ? (valA - valB) : (valB - valA);
       });
 
-      const getTdClass = (c) => (col === c ? 'sorted-active-cell' : '');
+      const getTdClass = (c) => (col === c.toUpperCase() ? 'sorted-active-cell' : '');
 
-      this.paginateAndRender(list, tbody, (p) => `
+      this.paginateAndRender(list, tbody, (p) => {
+        const tpPct = (p.tp_pct !== undefined) ? p.tp_pct : (p.tpa > 0 ? (p.tpm / p.tpa) : 0);
+        const ftPct = (p.ft_pct !== undefined) ? p.ft_pct : (p.fta > 0 ? (p.ftm / p.fta) : 0);
+        return `
         <tr>
           <td class="text-left ${getTdClass('NAME')}">
             <span class="player-link" onclick="app.openPlayerDossier('${p.name.replace(/'/g, "\\'")}', 'nba')">${p.name}</span>
@@ -232,11 +263,18 @@ const playersComponent = {
           <td class="${getTdClass('AST')}" style="font-weight: ${p.ast >= 10 ? '700' : 'normal'};">${p.ast}</td>
           <td class="${getTdClass('STL')}">${p.stl}</td>
           <td class="${getTdClass('BLK')}">${p.blk}</td>
-          <td class="${getTdClass('3PM')}">${p.tpm}</td>
-          <td class="${getTdClass('FG%')}">${(p.fg_pct * 100).toFixed(0)}%</td>
+          <td class="${getTdClass('FG')}">${p.fgm}-${p.fga}</td>
+          <td class="${getTdClass('FG%')}">${(p.fg_pct * 100).toFixed(1)}%</td>
+          <td class="${getTdClass('3P')}">${p.tpm}-${p.tpa}</td>
+          <td class="${getTdClass('3P%')}">${p.tpa > 0 ? (tpPct * 100).toFixed(1) + '%' : '-'}</td>
+          <td class="${getTdClass('FT')}">${p.ftm}-${p.fta}</td>
+          <td class="${getTdClass('FT%')}">${p.fta > 0 ? (ftPct * 100).toFixed(1) + '%' : '-'}</td>
+          <td class="${getTdClass('TO')}">${p.to}</td>
+          <td class="${getTdClass('PF')}">${p.pf}</td>
           <td class="${getTdClass('GAME_SCORE')}" style="font-weight: 700; color: var(--accent-gold);">${p.game_score}</td>
         </tr>
-      `);
+      `;
+      });
     } else if (sport === 'mlb') {
       const isBat = (this.mlbMode === 'batting');
       const getThClass = (col) => (activeCol.toLowerCase() === col.toLowerCase() ? 'sorted-active' : '');
@@ -716,8 +754,11 @@ const playersComponent = {
               <th class="${thClass('ast')}" onclick="playersComponent.sortDossierTable('ast')">AST${ind('ast')}</th>
               <th class="${thClass('stl')}" onclick="playersComponent.sortDossierTable('stl')">STL${ind('stl')}</th>
               <th class="${thClass('blk')}" onclick="playersComponent.sortDossierTable('blk')">BLK${ind('blk')}</th>
-              <th>FG</th>
-              <th>3P</th>
+              <th class="${thClass('fgm')}" onclick="playersComponent.sortDossierTable('fgm')">FG${ind('fgm')}</th>
+              <th class="${thClass('tpm')}" onclick="playersComponent.sortDossierTable('tpm')">3P${ind('tpm')}</th>
+              <th class="${thClass('ftm')}" onclick="playersComponent.sortDossierTable('ftm')">FT${ind('ftm')}</th>
+              <th class="${thClass('to')}" onclick="playersComponent.sortDossierTable('to')">TO${ind('to')}</th>
+              <th class="${thClass('pf')}" onclick="playersComponent.sortDossierTable('pf')">PF${ind('pf')}</th>
               <th class="${thClass('game_score')}" onclick="playersComponent.sortDossierTable('game_score')" style="color: var(--accent-gold);">GameScore${ind('game_score')}</th>
             </tr>
           </thead>
@@ -734,8 +775,11 @@ const playersComponent = {
                 <td class="${tdClass('ast')}">${g.ast}</td>
                 <td class="${tdClass('stl')}">${g.stl}</td>
                 <td class="${tdClass('blk')}">${g.blk}</td>
-                <td>${g.fgm}-${g.fga}</td>
-                <td>${g.tpm}-${g.tpa}</td>
+                <td class="${tdClass('fgm')}">${g.fgm}-${g.fga}</td>
+                <td class="${tdClass('tpm')}">${g.tpm}-${g.tpa}</td>
+                <td class="${tdClass('ftm')}">${g.ftm}-${g.fta}</td>
+                <td class="${tdClass('to')}">${g.to}</td>
+                <td class="${tdClass('pf')}">${g.pf}</td>
                 <td class="${tdClass('game_score')}" style="font-weight: 700; color: var(--accent-gold);">${g.game_score}</td>
               </tr>
             `).join('')}

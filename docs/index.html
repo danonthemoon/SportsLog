@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SportsLog</title>
-  <link rel="stylesheet" href="./css/app.css?v=9">
+  <link rel="stylesheet" href="./css/app.css?v=10">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏀</text></svg>">
 </head>
 <body>
@@ -128,11 +128,14 @@
               <th onclick="playersComponent.sortPerfBy('AST')">AST ↕</th>
               <th onclick="playersComponent.sortPerfBy('STL')">STL ↕</th>
               <th onclick="playersComponent.sortPerfBy('BLK')">BLK ↕</th>
-              <th onclick="playersComponent.sortPerfBy('3PM')">3PM ↕</th>
-              <th onclick="playersComponent.sortPerfBy('3PA')">3PA ↕</th>
+              <th onclick="playersComponent.sortPerfBy('FG')" title="Field Goals (FGM-FGA)">FG ↕</th>
               <th onclick="playersComponent.sortPerfBy('FG%')">FG% ↕</th>
-              <th onclick="playersComponent.sortPerfBy('FTM')">FTM ↕</th>
+              <th onclick="playersComponent.sortPerfBy('3P')" title="3-Pointers (3PM-3PA)">3P ↕</th>
+              <th onclick="playersComponent.sortPerfBy('3P%')">3P% ↕</th>
+              <th onclick="playersComponent.sortPerfBy('FT')" title="Free Throws (FTM-FTA)">FT ↕</th>
+              <th onclick="playersComponent.sortPerfBy('FT%')">FT% ↕</th>
               <th onclick="playersComponent.sortPerfBy('TO')">TO ↕</th>
+              <th onclick="playersComponent.sortPerfBy('PF')">PF ↕</th>
               <th onclick="playersComponent.sortPerfBy('GAME_SCORE')" style="color: var(--accent-gold);">GameScore ↕</th>
             </tr>
           </thead>
@@ -297,10 +300,10 @@
   </div>
 
   <!-- Application Scripts -->
-  <script src="./js/games.js?v=9"></script>
-  <script src="./js/players.js?v=9"></script>
-  <script src="./js/trophy.js?v=9"></script>
-  <script src="./js/records.js?v=9"></script>
-  <script src="./js/app.js?v=9"></script>
+  <script src="./js/games.js?v=10"></script>
+  <script src="./js/players.js?v=10"></script>
+  <script src="./js/trophy.js?v=10"></script>
+  <script src="./js/records.js?v=10"></script>
+  <script src="./js/app.js?v=10"></script>
 </body>
 </html>
