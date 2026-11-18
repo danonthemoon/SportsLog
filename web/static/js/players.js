@@ -173,25 +173,25 @@ const playersComponent = {
       const ind = (col) => this.getSortIndicator(activeCol, col);
 
       tableThead.innerHTML = `
-        <th class="text-left ${getThClass('NAME')}" style="width: 17.6%;" onclick="playersComponent.sortPerfBy('NAME')">Player${ind('NAME')}</th>
+        <th class="text-left ${getThClass('NAME')}" style="width: 17.2%;" onclick="playersComponent.sortPerfBy('NAME')">Player${ind('NAME')}</th>
         <th class="${getThClass('DATE')}" style="width: 7.2%;" onclick="playersComponent.sortPerfBy('DATE')">Date${ind('DATE')}</th>
-        <th class="${getThClass('TEAM')}" style="width: 3.8%;" onclick="playersComponent.sortPerfBy('TEAM')">Team${ind('TEAM')}</th>
-        <th class="${getThClass('OPP')}" style="width: 3.8%;" onclick="playersComponent.sortPerfBy('OPP')">Opp${ind('OPP')}</th>
+        <th class="${getThClass('TEAM')}" style="width: 4.6%;" onclick="playersComponent.sortPerfBy('TEAM')">Team${ind('TEAM')}</th>
+        <th class="${getThClass('OPP')}" style="width: 4.0%;" onclick="playersComponent.sortPerfBy('OPP')">Opp${ind('OPP')}</th>
         <th class="${getThClass('MINS')}" style="width: 3.6%;" onclick="playersComponent.sortPerfBy('MINS')">MIN${ind('MINS')}</th>
         <th class="${getThClass('PTS')}" style="width: 4.1%; color: var(--accent-cyan);" onclick="playersComponent.sortPerfBy('PTS')">PTS${ind('PTS')}</th>
         <th class="${getThClass('REB')}" style="width: 3.8%;" onclick="playersComponent.sortPerfBy('REB')">REB${ind('REB')}</th>
         <th class="${getThClass('AST')}" style="width: 3.8%;" onclick="playersComponent.sortPerfBy('AST')">AST${ind('AST')}</th>
         <th class="${getThClass('STL')}" style="width: 3.5%;" onclick="playersComponent.sortPerfBy('STL')">STL${ind('STL')}</th>
         <th class="${getThClass('BLK')}" style="width: 3.5%;" onclick="playersComponent.sortPerfBy('BLK')">BLK${ind('BLK')}</th>
-        <th class="${getThClass('FG')}" style="width: 5.6%;" onclick="playersComponent.sortPerfBy('FG')" title="Field Goals (FGM-FGA)">FG${ind('FG')}</th>
+        <th class="${getThClass('FG')}" style="width: 5.4%;" onclick="playersComponent.sortPerfBy('FG')" title="Field Goals (FGM-FGA)">FG${ind('FG')}</th>
         <th class="${getThClass('FG%')}" style="width: 4.8%;" onclick="playersComponent.sortPerfBy('FG%')">FG%${ind('FG%')}</th>
-        <th class="${getThClass('3P')}" style="width: 5.0%;" onclick="playersComponent.sortPerfBy('3P')" title="3-Pointers (3PM-3PA)">3P${ind('3P')}</th>
+        <th class="${getThClass('3P')}" style="width: 4.9%;" onclick="playersComponent.sortPerfBy('3P')" title="3-Pointers (3PM-3PA)">3P${ind('3P')}</th>
         <th class="${getThClass('3P%')}" style="width: 4.8%;" onclick="playersComponent.sortPerfBy('3P%')">3P%${ind('3P%')}</th>
-        <th class="${getThClass('FT')}" style="width: 5.0%;" onclick="playersComponent.sortPerfBy('FT')" title="Free Throws (FTM-FTA)">FT${ind('FT')}</th>
+        <th class="${getThClass('FT')}" style="width: 4.9%;" onclick="playersComponent.sortPerfBy('FT')" title="Free Throws (FTM-FTA)">FT${ind('FT')}</th>
         <th class="${getThClass('FT%')}" style="width: 4.8%;" onclick="playersComponent.sortPerfBy('FT%')">FT%${ind('FT%')}</th>
-        <th class="${getThClass('TO')}" style="width: 3.6%;" onclick="playersComponent.sortPerfBy('TO')">TO${ind('TO')}</th>
-        <th class="${getThClass('PF')}" style="width: 3.6%;" onclick="playersComponent.sortPerfBy('PF')">PF${ind('PF')}</th>
-        <th class="${getThClass('GAME_SCORE')}" style="width: 4.5%; color: var(--accent-gold);" onclick="playersComponent.sortPerfBy('GAME_SCORE')" title="GameScore">GS${ind('GAME_SCORE')}</th>
+        <th class="${getThClass('TO')}" style="width: 3.5%;" onclick="playersComponent.sortPerfBy('TO')">TO${ind('TO')}</th>
+        <th class="${getThClass('PF')}" style="width: 3.5%;" onclick="playersComponent.sortPerfBy('PF')">PF${ind('PF')}</th>
+        <th class="${getThClass('GAME_SCORE')}" style="width: 4.4%; color: var(--accent-gold);" onclick="playersComponent.sortPerfBy('GAME_SCORE')" title="GameScore">GS${ind('GAME_SCORE')}</th>
       `;
 
       let list = [...app.data.single_performances];
@@ -744,7 +744,7 @@ const playersComponent = {
         <table class="stats-table">
           <thead>
             <tr>
-              <th class="text-left ${thClass('date')}" onclick="playersComponent.sortDossierTable('date')">Date${ind('date')}</th>
+              <th class="${thClass('date')}" onclick="playersComponent.sortDossierTable('date')">Date${ind('date')}</th>
               <th class="${thClass('team')}" onclick="playersComponent.sortDossierTable('team')">Team${ind('team')}</th>
               <th class="${thClass('opp')}" onclick="playersComponent.sortDossierTable('opp')">Opp${ind('opp')}</th>
               <th class="${thClass('wl')}" onclick="playersComponent.sortDossierTable('wl')">W/L${ind('wl')}</th>
@@ -765,7 +765,7 @@ const playersComponent = {
           <tbody>
             ${log.map(g => `
               <tr>
-                <td class="text-left ${tdClass('date')}">${g.date}</td>
+                <td class="${tdClass('date')}">${g.date}</td>
                 <td class="${tdClass('team')}"><span style="font-weight: 700; color: ${app.getTeamColor(g.team)};">${g.team}</span></td>
                 <td class="${tdClass('opp')}">${g.opp}</td>
                 <td class="${tdClass('wl')}" style="font-weight: 700; color: ${g.wl === 'W' ? 'var(--accent-emerald)' : 'var(--accent-rose)'};">${g.wl}</td>
@@ -791,7 +791,7 @@ const playersComponent = {
         <table class="stats-table">
           <thead>
             <tr>
-              <th class="text-left ${thClass('date')}" onclick="playersComponent.sortDossierTable('date')">Date${ind('date')}</th>
+              <th class="${thClass('date')}" onclick="playersComponent.sortDossierTable('date')">Date${ind('date')}</th>
               <th class="${thClass('team')}" onclick="playersComponent.sortDossierTable('team')">Team${ind('team')}</th>
               <th class="${thClass('opp')}" onclick="playersComponent.sortDossierTable('opp')">Opp${ind('opp')}</th>
               <th class="${thClass('pos')}" onclick="playersComponent.sortDossierTable('pos')">Pos${ind('pos')}</th>
@@ -807,7 +807,7 @@ const playersComponent = {
           <tbody>
             ${log.map(g => `
               <tr>
-                <td class="text-left ${tdClass('date')}">${g.date}</td>
+                <td class="${tdClass('date')}">${g.date}</td>
                 <td class="${tdClass('team')}"><span style="font-weight: 700; color: ${app.getTeamColor(g.team)};">${g.team}</span></td>
                 <td class="${tdClass('opp')}">${g.opp}</td>
                 <td class="${tdClass('pos')}">${g.pos}</td>
@@ -828,7 +828,7 @@ const playersComponent = {
         <table class="stats-table">
           <thead>
             <tr>
-              <th class="text-left ${thClass('date')}" onclick="playersComponent.sortDossierTable('date')">Date${ind('date')}</th>
+              <th class="${thClass('date')}" onclick="playersComponent.sortDossierTable('date')">Date${ind('date')}</th>
               <th class="${thClass('team')}" onclick="playersComponent.sortDossierTable('team')">Team${ind('team')}</th>
               <th class="${thClass('opp')}" onclick="playersComponent.sortDossierTable('opp')">Opp${ind('opp')}</th>
               <th class="${thClass('ip')}" onclick="playersComponent.sortDossierTable('ip')">IP${ind('ip')}</th>
@@ -844,7 +844,7 @@ const playersComponent = {
           <tbody>
             ${log.map(g => `
               <tr>
-                <td class="text-left ${tdClass('date')}">${g.date}</td>
+                <td class="${tdClass('date')}">${g.date}</td>
                 <td class="${tdClass('team')}"><span style="font-weight: 700; color: ${app.getTeamColor(g.team)};">${g.team}</span></td>
                 <td class="${tdClass('opp')}">${g.opp}</td>
                 <td class="${tdClass('ip')}" style="font-weight: 700;">${g.ip}</td>
@@ -865,7 +865,7 @@ const playersComponent = {
         <table class="stats-table">
           <thead>
             <tr>
-              <th class="text-left ${thClass('date')}" onclick="playersComponent.sortDossierTable('date')">Date${ind('date')}</th>
+              <th class="${thClass('date')}" onclick="playersComponent.sortDossierTable('date')">Date${ind('date')}</th>
               <th class="${thClass('team')}" onclick="playersComponent.sortDossierTable('team')">Team${ind('team')}</th>
               <th class="${thClass('opp')}" onclick="playersComponent.sortDossierTable('opp')">Opp${ind('opp')}</th>
               <th class="${thClass('pos')}" onclick="playersComponent.sortDossierTable('pos')">Pos${ind('pos')}</th>
@@ -879,7 +879,7 @@ const playersComponent = {
           <tbody>
             ${log.map(g => `
               <tr>
-                <td class="text-left ${tdClass('date')}">${g.date}</td>
+                <td class="${tdClass('date')}">${g.date}</td>
                 <td class="${tdClass('team')}">${g.team}</td>
                 <td class="${tdClass('opp')}">${g.opp}</td>
                 <td class="${tdClass('pos')}">${g.pos}</td>
@@ -914,7 +914,7 @@ const playersComponent = {
         ${this.getCaliberBadge(player, 'nba')}
       `;
       document.getElementById('modal-player-subtitle').textContent = 
-        `🏀 NBA • Seen Live in Person: ${player.games_count} Games • Teams: ${player.teams.join(', ')} • Personal W-L: ${player.wins}-${player.losses}`;
+        `🏀 NBA • ${player.games_count} Games • Teams: ${player.teams.join(', ')} • Personal W-L: ${player.wins}-${player.losses}`;
 
       const html = `
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem;">
@@ -949,7 +949,7 @@ const playersComponent = {
         ${this.getCaliberBadge(player, 'mlb_bat')}
       `;
       document.getElementById('modal-player-subtitle').textContent = 
-        `⚾ MLB Batter • Seen Live in Person: ${player.games_count} Games • Teams: ${player.teams.join(', ')}`;
+        `⚾ MLB Batter • ${player.games_count} Games • Teams: ${player.teams.join(', ')}`;
 
       const html = `
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem;">
@@ -984,7 +984,7 @@ const playersComponent = {
         ${this.getCaliberBadge(player, 'mlb_pitch')}
       `;
       document.getElementById('modal-player-subtitle').textContent = 
-        `⚾ MLB Pitcher • Seen Live in Person: ${player.games_count} Outings • Teams: ${player.teams.join(', ')}`;
+        `⚾ MLB Pitcher • ${player.games_count} Outings • Teams: ${player.teams.join(', ')}`;
 
       const html = `
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem;">
@@ -1019,7 +1019,7 @@ const playersComponent = {
         ${this.getCaliberBadge(player, 'soccer')}
       `;
       document.getElementById('modal-player-subtitle').textContent = 
-        `⚽ Football Player • Seen in ${player.matches_count} Matches • Teams: ${player.teams.join(', ')}`;
+        `⚽ Football Player • ${player.matches_count} Matches • Teams: ${player.teams.join(', ')}`;
 
       const html = `
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem;">

@@ -640,7 +640,7 @@ main {
 #tab-performances .controls-bar,
 .table-fixed-container,
 #tab-performances .pagination-controls {
-  max-width: 1220px;
+  max-width: 1240px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -706,6 +706,31 @@ main {
 
 #players-agg-table th:not(:first-child),
 #players-agg-table td:not(:first-child) {
+  text-align: center !important;
+}
+
+/* Player Dossier Modal KPI & Table Centering */
+#modal-player-body .kpi-card {
+  text-align: center;
+}
+
+#modal-player-body .kpi-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#modal-player-body .kpi-value {
+  text-align: center;
+}
+
+#modal-player-body .kpi-subtext {
+  text-align: center;
+}
+
+#dossier-table-container table.stats-table th,
+#dossier-table-container table.stats-table td {
   text-align: center !important;
 }
 
