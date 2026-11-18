@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SportsLog | Personal Sports Attendance & Analytics</title>
+  <link rel="stylesheet" href="./css/app.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏀</text></svg>">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header>
+    <div class="nav-container">
+      <div class="brand" onclick="app.setTab('games')">
+        <div class="brand-icon">🏀</div>
+        <div class="brand-text">
+          <h1>SportsLog</h1>
+          <span id="current-sport-label">NBA Live Experience</span>
+        </div>
+      </div>
+
+      <!-- Multi-Sport Switcher -->
+      <div class="sports-pill-group">
+        <button class="sport-pill active" onclick="app.switchSport('nba')">
+          <span>🏀 NBA</span>
+          <span class="badge" id="nba-badge-count">48</span>
+        </button>
+        <button class="sport-pill" onclick="app.showSportPreview('mlb')">
+          <span>⚾ MLB</span>
+          <span class="badge">54</span>
+        </button>
+        <button class="sport-pill" onclick="app.showSportPreview('soccer')">
+          <span>⚽ Soccer</span>
+          <span class="badge">31</span>
+        </button>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-tabs">
+        <button class="tab-btn active" data-tab="games" onclick="app.setTab('games')">
+          <span>🏟️ Games Log</span>
+        </button>
+        <button class="tab-btn" data-tab="performances" onclick="app.setTab('performances')">
+          <span>⚡ Stat Leaderboard</span>
+        </button>
+        <button class="tab-btn" data-tab="players" onclick="app.setTab('players')">
+          <span>👤 Players Seen</span>
+        </button>
+        <button class="tab-btn" data-tab="trophy" onclick="app.setTab('trophy')">
+          <span>🏆 Trophy Case</span>
+        </button>
+        <button class="tab-btn" data-tab="records" onclick="app.setTab('records')">
+          <span>📊 Records & Luck</span>
+        </button>
+      </nav>
+
+      <!-- Global Search -->
+      <div class="nav-search">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="global-search-input" placeholder="Search player, team, arena..." oninput="app.handleGlobalSearch(this.value)">
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main>
+    <!-- Dynamic KPI Header -->
+    <section class="kpi-grid" id="kpi-container">
+      <!-- Injected via JavaScript -->
+    </section>
+
+    <!-- Tab 1: Games Log & Boxscores -->
+    <section id="tab-games" class="tab-view active">
+      <div class="controls-bar">
+        <div class="filter-group">
+          <input type="text" class="input-filter" id="game-search-input" placeholder="Filter games..." oninput="gamesComponent.render()">
+          <select class="select-filter" id="game-event-filter" onchange="gamesComponent.render()">
+            <option value="ALL">All Event Types</option>
+            <option value="Finals">NBA Finals</option>
+            <option value="Playoffs">Playoffs (All Rounds)</option>
+            <option value="Cup">NBA Cup / In-Season Tourney</option>
+            <option value="Regular">Regular Season</option>
+          </select>
+          <select class="select-filter" id="game-team-filter" onchange="gamesComponent.render()">
+            <option value="ALL">All Teams</option>
+            <!-- Injected via JS -->
+          </select>
+          <select class="select-filter" id="game-arena-filter" onchange="gamesComponent.render()">
+            <option value="ALL">All Arenas</option>
+            <!-- Injected via JS -->
+          </select>
+        </div>
+        <div class="filter-group">
+          <label style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Sort by:</label>
+          <select class="select-filter" id="game-sort-select" onchange="gamesComponent.render()">
+            <option value="date-desc">Date (Newest First)</option>
+            <option value="date-asc">Date (Oldest First)</option>
+            <option value="margin-asc">Closest Games (Smallest Margin)</option>
+            <option value="margin-desc">Biggest Blowouts</option>
+            <option value="pts-desc">Highest Combined Scoring</option>
+            <option value="pts-asc">Lowest Combined Scoring</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="games-grid" id="games-grid-container">
+        <!-- Injected via JS -->
+      </div>
+    </section>
+
+    <!-- Tab 2: Single-Game Stat Leaderboard (Sort Any Stat) -->
+    <section id="tab-performances" class="tab-view" style="display: none;">
+      <div class="controls-bar">
+        <div class="filter-group">
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan);">Quick Presets:</span>
+          <button class="chip-btn active" onclick="playersComponent.setPerfPreset('ALL')">All Performances</button>
+          <button class="chip-btn" onclick="playersComponent.setPerfPreset('40_PTS')">🔥 40+ PTS</button>
+          <button class="chip-btn" onclick="playersComponent.setPerfPreset('TRIPLE_DOUBLE')">👑 Triple-Doubles</button>
+          <button class="chip-btn" onclick="playersComponent.setPerfPreset('DOUBLE_DOUBLE')">⚡ Double-Doubles</button>
+          <button class="chip-btn" onclick="playersComponent.setPerfPreset('5_3PM')">🎯 5+ 3-Pointers</button>
+          <button class="chip-btn" onclick="playersComponent.setPerfPreset('15_REB')">🦾 15+ Rebounds</button>
+          <button class="chip-btn" onclick="playersComponent.setPerfPreset('10_AST')">🪄 10+ Assists</button>
+        </div>
+        <div class="filter-group">
+          <input type="text" class="input-filter" id="perf-search-input" placeholder="Search player name..." oninput="playersComponent.renderLeaderboard()">
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="stats-table" id="performances-table">
+          <thead>
+            <tr>
+              <th class="text-left" onclick="playersComponent.sortPerfBy('NAME')">Player ↕</th>
+              <th onclick="playersComponent.sortPerfBy('DATE')">Date ↕</th>
+              <th onclick="playersComponent.sortPerfBy('TEAM')">Team ↕</th>
+              <th onclick="playersComponent.sortPerfBy('OPP')">Opp ↕</th>
+              <th onclick="playersComponent.sortPerfBy('MINS')">MIN ↕</th>
+              <th onclick="playersComponent.sortPerfBy('PTS')" style="color: var(--accent-cyan);">PTS ↕</th>
+              <th onclick="playersComponent.sortPerfBy('REB')">REB ↕</th>
+              <th onclick="playersComponent.sortPerfBy('AST')">AST ↕</th>
+              <th onclick="playersComponent.sortPerfBy('STL')">STL ↕</th>
+              <th onclick="playersComponent.sortPerfBy('BLK')">BLK ↕</th>
+              <th onclick="playersComponent.sortPerfBy('3PM')">3PM ↕</th>
+              <th onclick="playersComponent.sortPerfBy('3PA')">3PA ↕</th>
+              <th onclick="playersComponent.sortPerfBy('FG%')">FG% ↕</th>
+              <th onclick="playersComponent.sortPerfBy('FTM')">FTM ↕</th>
+              <th onclick="playersComponent.sortPerfBy('TO')">TO ↕</th>
+              <th onclick="playersComponent.sortPerfBy('GAME_SCORE')" style="color: var(--accent-gold);">GameScore ↕</th>
+            </tr>
+          </thead>
+          <tbody id="performances-tbody">
+            <!-- Injected via JS -->
+          </tbody>
+        </table>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.25rem;">
+        <span style="font-size: 0.8rem; color: var(--text-muted);" id="perf-count-label"></span>
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="chip-btn" id="perf-prev-btn" onclick="playersComponent.changePage(-1)">← Prev</button>
+          <span style="font-size: 0.85rem; padding: 0.35rem 0.65rem;" id="perf-page-indicator">Page 1</span>
+          <button class="chip-btn" id="perf-next-btn" onclick="playersComponent.changePage(1)">Next →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 3: Aggregate Players Tracker ("All-Time Players I've Seen") -->
+    <section id="tab-players" class="tab-view" style="display: none;">
+      <div class="controls-bar">
+        <div class="filter-group">
+          <input type="text" class="input-filter" id="player-agg-search" placeholder="Search player name or team..." oninput="playersComponent.renderAggregates()">
+          <select class="select-filter" id="player-min-games" onchange="playersComponent.renderAggregates()">
+            <option value="1">All Players (1+ Game)</option>
+            <option value="3">Seen 3+ Times</option>
+            <option value="5" selected>Seen 5+ Times</option>
+            <option value="10">Seen 10+ Times (Core Stars)</option>
+          </select>
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-secondary);">
+          Showing aggregate numbers across <strong>every time you've watched them in person</strong>. Click any row for game-by-game log.
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="stats-table" id="players-agg-table">
+          <thead>
+            <tr>
+              <th class="text-left" onclick="playersComponent.sortAggBy('name')">Player ↕</th>
+              <th class="text-left">Teams ↕</th>
+              <th onclick="playersComponent.sortAggBy('games_count')">Games ↕</th>
+              <th onclick="playersComponent.sortAggBy('win_pct')" title="Team win percentage when you attended">Your W-L Record ↕</th>
+              <th onclick="playersComponent.sortAggBy('pts')" style="color: var(--accent-cyan);">Total PTS ↕</th>
+              <th onclick="playersComponent.sortAggBy('ppg')">PPG ↕</th>
+              <th onclick="playersComponent.sortAggBy('reb')">Total REB ↕</th>
+              <th onclick="playersComponent.sortAggBy('rpg')">RPG ↕</th>
+              <th onclick="playersComponent.sortAggBy('ast')">Total AST ↕</th>
+              <th onclick="playersComponent.sortAggBy('apg')">APG ↕</th>
+              <th onclick="playersComponent.sortAggBy('tpm')">3PM ↕</th>
+              <th onclick="playersComponent.sortAggBy('fg_pct')">FG% ↕</th>
+              <th onclick="playersComponent.sortAggBy('triple_doubles')">Tri-Dubs ↕</th>
+              <th onclick="playersComponent.sortAggBy('high_pts')" style="color: var(--accent-gold);">Personal High ↕</th>
+            </tr>
+          </thead>
+          <tbody id="players-agg-tbody">
+            <!-- Injected via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Tab 4: Trophy Case (Teams & Stadiums Quest) -->
+    <section id="tab-trophy" class="tab-view" style="display: none;">
+      <!-- Progress Trackers Banner -->
+      <div class="trophy-stats-row" id="trophy-summary-cards">
+        <!-- Injected via JS -->
+      </div>
+
+      <!-- Trophy Section Navigation -->
+      <div class="controls-bar">
+        <div class="filter-group">
+          <button class="chip-btn active" id="btn-trophy-teams" onclick="trophyComponent.setView('teams')">🏀 NBA Teams (30)</button>
+          <button class="chip-btn" id="btn-trophy-arenas" onclick="trophyComponent.setView('arenas')">🏟️ Arenas Quest</button>
+          <button class="chip-btn" id="btn-trophy-milestones" onclick="trophyComponent.setView('milestones')">🏆 Milestone Badges</button>
+        </div>
+        <div class="filter-group" id="trophy-subfilters">
+          <!-- Dynamically changed depending on sub-view -->
+        </div>
+      </div>
+
+      <!-- Subview: Teams -->
+      <div id="trophy-teams-view">
+        <div class="teams-quest-grid" id="teams-quest-container"></div>
+      </div>
+
+      <!-- Subview: Arenas -->
+      <div id="trophy-arenas-view" style="display: none;">
+        <div class="arenas-quest-grid" id="arenas-quest-container"></div>
+      </div>
+
+      <!-- Subview: Milestones -->
+      <div id="trophy-milestones-view" style="display: none;">
+        <div class="milestones-grid" id="milestones-container"></div>
+      </div>
+    </section>
+
+    <!-- Tab 5: Records, Trends & Luck -->
+    <section id="tab-records" class="tab-view" style="display: none;">
+      <div id="records-view-container">
+        <!-- Injected via JS -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Boxscore Modal -->
+  <div class="modal-overlay" id="boxscore-modal" onclick="if(event.target===this) app.closeModal()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h3 style="font-size: 1.25rem; font-weight: 800;" id="modal-game-title">Game Box Score</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted);" id="modal-game-subtitle"></p>
+        </div>
+        <button class="close-btn" onclick="app.closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modal-boxscore-body">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Player Dossier Modal -->
+  <div class="modal-overlay" id="player-modal" onclick="if(event.target===this) app.closeModal()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h3 style="font-size: 1.25rem; font-weight: 800;" id="modal-player-title">Player Dossier</h3>
+          <p style="font-size: 0.8rem; color: var(--accent-cyan);" id="modal-player-subtitle"></p>
+        </div>
+        <button class="close-btn" onclick="app.closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modal-player-body">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Multi-Sport Preview Modal -->
+  <div class="modal-overlay" id="sport-preview-modal" onclick="if(event.target===this) app.closeModal()">
+    <div class="modal-content" style="max-width: 650px;">
+      <div class="modal-header">
+        <h3 style="font-size: 1.2rem; font-weight: 800;" id="sport-preview-title">Multi-Sport Database</h3>
+        <button class="close-btn" onclick="app.closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="sport-preview-body">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="./js/games.js"></script>
+  <script src="./js/players.js"></script>
+  <script src="./js/trophy.js"></script>
+  <script src="./js/records.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
