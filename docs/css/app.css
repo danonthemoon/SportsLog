@@ -645,8 +645,14 @@ table.stats-table {
 }
 
 table.stats-table th, table.stats-table td {
-  padding: 0.55rem 0.75rem;
+  padding: 0.55rem 0.65rem;
   border-bottom: 1px solid var(--border-subtle);
+}
+
+.modal-body table.stats-table th:first-child,
+.modal-body table.stats-table td:first-child {
+  padding-left: 0.45rem;
+  padding-right: 0.25rem;
 }
 
 table.stats-table th {

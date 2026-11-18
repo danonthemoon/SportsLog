@@ -460,6 +460,26 @@ const gamesComponent = {
     }).join('');
   },
 
+  calcTightNameWidth(players, nameKey, hasBadges = false) {
+    if (!players || players.length === 0) return 90;
+    const widths = players.map(p => {
+      const name = String(p[nameKey] || '');
+      let w = 0;
+      for (let i = 0; i < name.length; i++) {
+        const ch = name[i];
+        if (ch === ' ' || ch === '-' || ch === '.') w += 3.8;
+        else if ('MWmw'.includes(ch)) w += 9.0;
+        else if ('ijlI1'.includes(ch)) w += 3.6;
+        else if (ch === ch.toUpperCase()) w += 7.5;
+        else w += 6.5;
+      }
+      if (hasBadges && (p.DOUBLE_DOUBLE || p.TRIPLE_DOUBLE)) w += 26;
+      return w;
+    });
+    const maxW = Math.max(...widths);
+    return Math.max(80, Math.ceil(maxW + 14));
+  },
+
   openNbaBoxscore(gameId) {
     const game = app.data.games.find(g => g.game_id === gameId);
     if (!game) return;
@@ -470,8 +490,7 @@ const gamesComponent = {
     const isHomeWinner = game.home.wl === 'W';
 
     const allPlayers = [...(game.away.players || []), ...(game.home.players || [])];
-    const maxNameLen = allPlayers.length > 0 ? Math.max(...allPlayers.map(p => (p.NAME || '').length)) : 16;
-    const boundPlayerWidth = Math.max(170, Math.min(260, Math.round(maxNameLen * 8.5) + 40));
+    const boundPlayerWidth = this.calcTightNameWidth(allPlayers, 'NAME', true);
 
     const renderRoster = (teamObj) => {
       const players = teamObj.players || [];
@@ -559,7 +578,7 @@ const gamesComponent = {
               <tfoot>
                 <tr style="font-weight: 800; background: rgba(255,255,255,0.06); border-top: 2px solid var(--border-accent);">
                   <td class="text-left" style="color: var(--accent-cyan);">Team Totals</td>
-                  <td>${players.reduce((sum, p) => sum + (parseInt(p.MINS) || 0), 0) || 240}</td>
+                  <td>-</td>
                   <td style="color: var(--accent-gold); font-size: 0.95rem;">${teamObj.pts}</td>
                   <td>${teamObj.reb}</td>
                   <td>${teamObj.ast}</td>
@@ -667,12 +686,10 @@ const gamesComponent = {
     document.getElementById('modal-game-subtitle').textContent = `${app.formatDate(game.date)} • 📍 ${game.stadium} • ⏱️ Duration: ${game.duration} • 👥 Attendance: ${game.attendance}`;
 
     const allBatters = [...(game.away.batting || []), ...(game.home.batting || [])];
-    const maxBatterLen = allBatters.length > 0 ? Math.max(...allBatters.map(b => (b.Batting || '').length)) : 16;
-    const boundBatterWidth = Math.max(170, Math.min(260, Math.round(maxBatterLen * 8.5) + 30));
+    const boundBatterWidth = this.calcTightNameWidth(allBatters, 'Batting', false);
 
     const allPitchers = [...(game.away.pitching || []), ...(game.home.pitching || [])];
-    const maxPitcherLen = allPitchers.length > 0 ? Math.max(...allPitchers.map(p => (p.Pitcher || '').length)) : 16;
-    const boundPitcherWidth = Math.max(170, Math.min(260, Math.round(maxPitcherLen * 8.5) + 30));
+    const boundPitcherWidth = this.calcTightNameWidth(allPitchers, 'Pitching', false);
 
     const renderBatting = (teamObj) => `
       <div style="margin-bottom: 1.5rem;">
