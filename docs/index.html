@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SportsLog</title>
-  <link rel="stylesheet" href="./css/app.css?v=6">
+  <link rel="stylesheet" href="./css/app.css?v=7">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏀</text></svg>">
 </head>
 <body>
@@ -143,7 +143,7 @@
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.25rem;">
         <span style="font-size: 0.8rem; color: var(--text-muted);" id="perf-count-label"></span>
-        <div style="display: flex; gap: 0.5rem;">
+        <div style="display: flex; gap: 0.5rem;" id="perf-pagination-controls">
           <button class="chip-btn" id="perf-prev-btn" onclick="playersComponent.changePage(-1)">← Prev</button>
           <span style="font-size: 0.85rem; padding: 0.35rem 0.65rem;" id="perf-page-indicator">Page 1</span>
           <button class="chip-btn" id="perf-next-btn" onclick="playersComponent.changePage(1)">Next →</button>
@@ -200,7 +200,7 @@
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.25rem;">
         <span style="font-size: 0.8rem; color: var(--text-muted);" id="agg-count-label"></span>
-        <div style="display: flex; gap: 0.5rem;">
+        <div style="display: flex; gap: 0.5rem;" id="agg-pagination-controls">
           <button class="chip-btn" id="agg-prev-btn" onclick="playersComponent.changeAggPage(-1)">← Prev</button>
           <span style="font-size: 0.85rem; padding: 0.35rem 0.65rem;" id="agg-page-indicator">Page 1</span>
           <button class="chip-btn" id="agg-next-btn" onclick="playersComponent.changeAggPage(1)">Next →</button>
@@ -297,10 +297,10 @@
   </div>
 
   <!-- Application Scripts -->
-  <script src="./js/games.js?v=6"></script>
-  <script src="./js/players.js?v=6"></script>
-  <script src="./js/trophy.js?v=6"></script>
-  <script src="./js/records.js?v=6"></script>
-  <script src="./js/app.js?v=6"></script>
+  <script src="./js/games.js?v=7"></script>
+  <script src="./js/players.js?v=7"></script>
+  <script src="./js/trophy.js?v=7"></script>
+  <script src="./js/records.js?v=7"></script>
+  <script src="./js/app.js?v=7"></script>
 </body>
 </html>

@@ -421,14 +421,32 @@ const playersComponent = {
     if (countLabel) {
       countLabel.textContent = `Showing ${totalCount > 0 ? startIdx + 1 : 0}-${Math.min(startIdx + pageSize, totalCount)} of ${totalCount}`;
     }
-    const indicator = document.getElementById('perf-page-indicator');
-    if (indicator) {
-      indicator.textContent = `Page ${this.perfState.page} of ${maxPage}`;
-    }
+
     const prevBtn = document.getElementById('perf-prev-btn');
-    if (prevBtn) prevBtn.disabled = (this.perfState.page <= 1);
     const nextBtn = document.getElementById('perf-next-btn');
-    if (nextBtn) nextBtn.disabled = (this.perfState.page >= maxPage);
+    const indicator = document.getElementById('perf-page-indicator');
+    const paginationControls = document.getElementById('perf-pagination-controls');
+
+    if (maxPage <= 1) {
+      if (paginationControls) paginationControls.style.display = 'none';
+      if (prevBtn) prevBtn.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
+      if (indicator) indicator.style.display = 'none';
+    } else {
+      if (paginationControls) paginationControls.style.display = 'flex';
+      if (indicator) {
+        indicator.style.display = 'inline-block';
+        indicator.textContent = `Page ${this.perfState.page} of ${maxPage}`;
+      }
+      if (prevBtn) {
+        prevBtn.style.display = (this.perfState.page <= 1) ? 'none' : 'inline-block';
+        prevBtn.disabled = (this.perfState.page <= 1);
+      }
+      if (nextBtn) {
+        nextBtn.style.display = (this.perfState.page >= maxPage) ? 'none' : 'inline-block';
+        nextBtn.disabled = (this.perfState.page >= maxPage);
+      }
+    }
 
     tbody.innerHTML = pageItems.map(rowRenderer).join('');
   },
@@ -448,14 +466,32 @@ const playersComponent = {
     if (countLabel) {
       countLabel.textContent = `Showing ${totalCount > 0 ? startIdx + 1 : 0}-${Math.min(startIdx + pageSize, totalCount)} of ${totalCount}`;
     }
-    const indicator = document.getElementById('agg-page-indicator');
-    if (indicator) {
-      indicator.textContent = `Page ${this.aggState.page} of ${maxPage}`;
-    }
+
     const prevBtn = document.getElementById('agg-prev-btn');
-    if (prevBtn) prevBtn.disabled = (this.aggState.page <= 1);
     const nextBtn = document.getElementById('agg-next-btn');
-    if (nextBtn) nextBtn.disabled = (this.aggState.page >= maxPage);
+    const indicator = document.getElementById('agg-page-indicator');
+    const paginationControls = document.getElementById('agg-pagination-controls');
+
+    if (maxPage <= 1) {
+      if (paginationControls) paginationControls.style.display = 'none';
+      if (prevBtn) prevBtn.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
+      if (indicator) indicator.style.display = 'none';
+    } else {
+      if (paginationControls) paginationControls.style.display = 'flex';
+      if (indicator) {
+        indicator.style.display = 'inline-block';
+        indicator.textContent = `Page ${this.aggState.page} of ${maxPage}`;
+      }
+      if (prevBtn) {
+        prevBtn.style.display = (this.aggState.page <= 1) ? 'none' : 'inline-block';
+        prevBtn.disabled = (this.aggState.page <= 1);
+      }
+      if (nextBtn) {
+        nextBtn.style.display = (this.aggState.page >= maxPage) ? 'none' : 'inline-block';
+        nextBtn.disabled = (this.aggState.page >= maxPage);
+      }
+    }
 
     tbody.innerHTML = pageItems.map(rowRenderer).join('');
   },
