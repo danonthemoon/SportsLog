@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SportsLog</title>
-  <link rel="stylesheet" href="./css/app.css?v=10">
+  <link rel="stylesheet" href="./css/app.css?v=11">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏀</text></svg>">
 </head>
 <body>
@@ -114,29 +114,29 @@
         </div>
       </div>
 
-      <div class="table-responsive">
+      <div class="table-responsive table-fixed-container" id="perf-table-container">
         <table class="stats-table" id="performances-table">
           <thead>
             <tr>
-              <th class="text-left" onclick="playersComponent.sortPerfBy('NAME')">Player ↕</th>
-              <th onclick="playersComponent.sortPerfBy('DATE')">Date ↕</th>
-              <th onclick="playersComponent.sortPerfBy('TEAM')">Team ↕</th>
-              <th onclick="playersComponent.sortPerfBy('OPP')">Opp ↕</th>
-              <th onclick="playersComponent.sortPerfBy('MINS')">MIN ↕</th>
-              <th onclick="playersComponent.sortPerfBy('PTS')" style="color: var(--accent-cyan);">PTS ↕</th>
-              <th onclick="playersComponent.sortPerfBy('REB')">REB ↕</th>
-              <th onclick="playersComponent.sortPerfBy('AST')">AST ↕</th>
-              <th onclick="playersComponent.sortPerfBy('STL')">STL ↕</th>
-              <th onclick="playersComponent.sortPerfBy('BLK')">BLK ↕</th>
-              <th onclick="playersComponent.sortPerfBy('FG')" title="Field Goals (FGM-FGA)">FG ↕</th>
-              <th onclick="playersComponent.sortPerfBy('FG%')">FG% ↕</th>
-              <th onclick="playersComponent.sortPerfBy('3P')" title="3-Pointers (3PM-3PA)">3P ↕</th>
-              <th onclick="playersComponent.sortPerfBy('3P%')">3P% ↕</th>
-              <th onclick="playersComponent.sortPerfBy('FT')" title="Free Throws (FTM-FTA)">FT ↕</th>
-              <th onclick="playersComponent.sortPerfBy('FT%')">FT% ↕</th>
-              <th onclick="playersComponent.sortPerfBy('TO')">TO ↕</th>
-              <th onclick="playersComponent.sortPerfBy('PF')">PF ↕</th>
-              <th onclick="playersComponent.sortPerfBy('GAME_SCORE')" style="color: var(--accent-gold);">GameScore ↕</th>
+              <th class="text-left" style="width: 18%;" onclick="playersComponent.sortPerfBy('NAME')">Player ↕</th>
+              <th style="width: 7.3%;" onclick="playersComponent.sortPerfBy('DATE')">Date ↕</th>
+              <th style="width: 3.8%;" onclick="playersComponent.sortPerfBy('TEAM')">Team ↕</th>
+              <th style="width: 3.8%;" onclick="playersComponent.sortPerfBy('OPP')">Opp ↕</th>
+              <th style="width: 3.5%;" onclick="playersComponent.sortPerfBy('MINS')">MIN ↕</th>
+              <th style="width: 4%; color: var(--accent-cyan);" onclick="playersComponent.sortPerfBy('PTS')">PTS ↕</th>
+              <th style="width: 3.5%;" onclick="playersComponent.sortPerfBy('REB')">REB ↕</th>
+              <th style="width: 3.5%;" onclick="playersComponent.sortPerfBy('AST')">AST ↕</th>
+              <th style="width: 3.2%;" onclick="playersComponent.sortPerfBy('STL')">STL ↕</th>
+              <th style="width: 3.2%;" onclick="playersComponent.sortPerfBy('BLK')">BLK ↕</th>
+              <th style="width: 5.4%;" onclick="playersComponent.sortPerfBy('FG')" title="Field Goals (FGM-FGA)">FG ↕</th>
+              <th style="width: 4.6%;" onclick="playersComponent.sortPerfBy('FG%')">FG% ↕</th>
+              <th style="width: 4.6%;" onclick="playersComponent.sortPerfBy('3P')" title="3-Pointers (3PM-3PA)">3P ↕</th>
+              <th style="width: 4.6%;" onclick="playersComponent.sortPerfBy('3P%')">3P% ↕</th>
+              <th style="width: 4.6%;" onclick="playersComponent.sortPerfBy('FT')" title="Free Throws (FTM-FTA)">FT ↕</th>
+              <th style="width: 4.6%;" onclick="playersComponent.sortPerfBy('FT%')">FT% ↕</th>
+              <th style="width: 3.2%;" onclick="playersComponent.sortPerfBy('TO')">TO ↕</th>
+              <th style="width: 3.2%;" onclick="playersComponent.sortPerfBy('PF')">PF ↕</th>
+              <th style="width: 7.5%; color: var(--accent-gold);" onclick="playersComponent.sortPerfBy('GAME_SCORE')">GameScore ↕</th>
             </tr>
           </thead>
           <tbody id="performances-tbody">
@@ -300,10 +300,10 @@
   </div>
 
   <!-- Application Scripts -->
-  <script src="./js/games.js?v=10"></script>
-  <script src="./js/players.js?v=10"></script>
-  <script src="./js/trophy.js?v=10"></script>
-  <script src="./js/records.js?v=10"></script>
-  <script src="./js/app.js?v=10"></script>
+  <script src="./js/games.js?v=11"></script>
+  <script src="./js/players.js?v=11"></script>
+  <script src="./js/trophy.js?v=11"></script>
+  <script src="./js/records.js?v=11"></script>
+  <script src="./js/app.js?v=11"></script>
 </body>
 </html>

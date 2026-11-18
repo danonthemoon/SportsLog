@@ -173,25 +173,25 @@ const playersComponent = {
       const ind = (col) => this.getSortIndicator(activeCol, col);
 
       tableThead.innerHTML = `
-        <th class="text-left ${getThClass('NAME')}" onclick="playersComponent.sortPerfBy('NAME')">Player${ind('NAME')}</th>
-        <th class="${getThClass('DATE')}" onclick="playersComponent.sortPerfBy('DATE')">Date${ind('DATE')}</th>
-        <th class="${getThClass('TEAM')}" onclick="playersComponent.sortPerfBy('TEAM')">Team${ind('TEAM')}</th>
-        <th class="${getThClass('OPP')}" onclick="playersComponent.sortPerfBy('OPP')">Opp${ind('OPP')}</th>
-        <th class="${getThClass('MINS')}" onclick="playersComponent.sortPerfBy('MINS')">MIN${ind('MINS')}</th>
-        <th class="${getThClass('PTS')}" onclick="playersComponent.sortPerfBy('PTS')" style="color: var(--accent-cyan);">PTS${ind('PTS')}</th>
-        <th class="${getThClass('REB')}" onclick="playersComponent.sortPerfBy('REB')">REB${ind('REB')}</th>
-        <th class="${getThClass('AST')}" onclick="playersComponent.sortPerfBy('AST')">AST${ind('AST')}</th>
-        <th class="${getThClass('STL')}" onclick="playersComponent.sortPerfBy('STL')">STL${ind('STL')}</th>
-        <th class="${getThClass('BLK')}" onclick="playersComponent.sortPerfBy('BLK')">BLK${ind('BLK')}</th>
-        <th class="${getThClass('FG')}" onclick="playersComponent.sortPerfBy('FG')" title="Field Goals (FGM-FGA)">FG${ind('FG')}</th>
-        <th class="${getThClass('FG%')}" onclick="playersComponent.sortPerfBy('FG%')">FG%${ind('FG%')}</th>
-        <th class="${getThClass('3P')}" onclick="playersComponent.sortPerfBy('3P')" title="3-Pointers (3PM-3PA)">3P${ind('3P')}</th>
-        <th class="${getThClass('3P%')}" onclick="playersComponent.sortPerfBy('3P%')">3P%${ind('3P%')}</th>
-        <th class="${getThClass('FT')}" onclick="playersComponent.sortPerfBy('FT')" title="Free Throws (FTM-FTA)">FT${ind('FT')}</th>
-        <th class="${getThClass('FT%')}" onclick="playersComponent.sortPerfBy('FT%')">FT%${ind('FT%')}</th>
-        <th class="${getThClass('TO')}" onclick="playersComponent.sortPerfBy('TO')">TO${ind('TO')}</th>
-        <th class="${getThClass('PF')}" onclick="playersComponent.sortPerfBy('PF')">PF${ind('PF')}</th>
-        <th class="${getThClass('GAME_SCORE')}" onclick="playersComponent.sortPerfBy('GAME_SCORE')" style="color: var(--accent-gold);">GameScore${ind('GAME_SCORE')}</th>
+        <th class="text-left ${getThClass('NAME')}" style="width: 18%;" onclick="playersComponent.sortPerfBy('NAME')">Player${ind('NAME')}</th>
+        <th class="${getThClass('DATE')}" style="width: 7.3%;" onclick="playersComponent.sortPerfBy('DATE')">Date${ind('DATE')}</th>
+        <th class="${getThClass('TEAM')}" style="width: 3.8%;" onclick="playersComponent.sortPerfBy('TEAM')">Team${ind('TEAM')}</th>
+        <th class="${getThClass('OPP')}" style="width: 3.8%;" onclick="playersComponent.sortPerfBy('OPP')">Opp${ind('OPP')}</th>
+        <th class="${getThClass('MINS')}" style="width: 3.5%;" onclick="playersComponent.sortPerfBy('MINS')">MIN${ind('MINS')}</th>
+        <th class="${getThClass('PTS')}" style="width: 4%; color: var(--accent-cyan);" onclick="playersComponent.sortPerfBy('PTS')">PTS${ind('PTS')}</th>
+        <th class="${getThClass('REB')}" style="width: 3.5%;" onclick="playersComponent.sortPerfBy('REB')">REB${ind('REB')}</th>
+        <th class="${getThClass('AST')}" style="width: 3.5%;" onclick="playersComponent.sortPerfBy('AST')">AST${ind('AST')}</th>
+        <th class="${getThClass('STL')}" style="width: 3.2%;" onclick="playersComponent.sortPerfBy('STL')">STL${ind('STL')}</th>
+        <th class="${getThClass('BLK')}" style="width: 3.2%;" onclick="playersComponent.sortPerfBy('BLK')">BLK${ind('BLK')}</th>
+        <th class="${getThClass('FG')}" style="width: 5.4%;" onclick="playersComponent.sortPerfBy('FG')" title="Field Goals (FGM-FGA)">FG${ind('FG')}</th>
+        <th class="${getThClass('FG%')}" style="width: 4.6%;" onclick="playersComponent.sortPerfBy('FG%')">FG%${ind('FG%')}</th>
+        <th class="${getThClass('3P')}" style="width: 4.6%;" onclick="playersComponent.sortPerfBy('3P')" title="3-Pointers (3PM-3PA)">3P${ind('3P')}</th>
+        <th class="${getThClass('3P%')}" style="width: 4.6%;" onclick="playersComponent.sortPerfBy('3P%')">3P%${ind('3P%')}</th>
+        <th class="${getThClass('FT')}" style="width: 4.6%;" onclick="playersComponent.sortPerfBy('FT')" title="Free Throws (FTM-FTA)">FT${ind('FT')}</th>
+        <th class="${getThClass('FT%')}" style="width: 4.6%;" onclick="playersComponent.sortPerfBy('FT%')">FT%${ind('FT%')}</th>
+        <th class="${getThClass('TO')}" style="width: 3.2%;" onclick="playersComponent.sortPerfBy('TO')">TO${ind('TO')}</th>
+        <th class="${getThClass('PF')}" style="width: 3.2%;" onclick="playersComponent.sortPerfBy('PF')">PF${ind('PF')}</th>
+        <th class="${getThClass('GAME_SCORE')}" style="width: 7.5%; color: var(--accent-gold);" onclick="playersComponent.sortPerfBy('GAME_SCORE')">GameScore${ind('GAME_SCORE')}</th>
       `;
 
       let list = [...app.data.single_performances];
@@ -250,9 +250,9 @@ const playersComponent = {
         return `
         <tr>
           <td class="text-left ${getTdClass('NAME')}">
-            <span class="player-link" onclick="app.openPlayerDossier('${p.name.replace(/'/g, "\\'")}', 'nba')">${p.name}</span>
+            <span class="player-link player-name-clamp" title="${p.name}" onclick="app.openPlayerDossier('${p.name.replace(/'/g, "\\'")}', 'nba')">${p.name}</span>
             ${this.getCaliberBadge(p, 'nba')}
-            ${p.triple_double ? '<span style="font-size: 0.65rem; background: rgba(245,158,11,0.25); color: var(--accent-gold); padding: 1px 5px; border-radius: 4px; margin-left: 4px; font-weight: 800;">TRIPLE-DOUBLE</span>' : ''}
+            ${p.triple_double ? '<span style="font-size: 0.65rem; background: rgba(245,158,11,0.25); color: var(--accent-gold); padding: 1px 4px; border-radius: 4px; margin-left: 3px; font-weight: 800;" title="Triple-Double">TD</span>' : ''}
           </td>
           <td class="${getTdClass('DATE')}">${p.date}</td>
           <td class="${getTdClass('TEAM')}"><span style="font-weight: 700; color: ${app.getTeamColor(p.team)};">${p.team}</span></td>

@@ -15,50 +15,64 @@ const recordsComponent = {
       const biggestBlowout = sortedByMargin[0] || {};
       const closestGame = sortedByMargin[sortedByMargin.length - 1] || {};
 
+      const perfs = app.data.single_performances || [];
+      const getLeader = (key) => {
+        if (!perfs.length) return { val: 0, holders: [], names: '-', top: {} };
+        const maxVal = Math.max(...perfs.map(p => p[key] || 0));
+        const holders = perfs.filter(p => p[key] === maxVal);
+        const nameList = [...new Set(holders.map(h => `${h.name} (${h.team})`))].join(', ');
+        return { val: maxVal, holders, names: nameList, top: holders[0] || {} };
+      };
+
+      const top3p = getLeader('tpm');
+      const topPts = getLeader('pts');
+      const topAst = getLeader('ast');
+      const topReb = getLeader('reb');
+
       container.innerHTML = `
         <div style="margin-bottom: 2rem;">
           <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 1rem;">🔥 Attended Records & Superlatives</h3>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
             <div class="kpi-card gold" style="padding: 1.15rem;">
               <div class="kpi-label">🎯 Most 3-Pointers in a Game</div>
-              <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-gold);">8 3PM</div>
-              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">Jordan Goodwin (MEM vs LAL)</div>
-              <div class="kpi-subtext">📅 2024-04-12 • 8-for-13 from downtown</div>
+              <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-gold);">${top3p.val} 3PM</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">${top3p.names}</div>
+              <div class="kpi-subtext">${top3p.top.date || ''} • 8-for-13 from downtown</div>
             </div>
 
             <div class="kpi-card purple" style="padding: 1.15rem;">
               <div class="kpi-label">⚡ Most Points Witnessed</div>
-              <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-purple);">50 PTS</div>
-              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">Russell Westbrook (OKC at DEN)</div>
-              <div class="kpi-subtext">📅 2017-04-09 • 50-16-10 buzzer-beater</div>
+              <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-purple);">${topPts.val} PTS</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">${topPts.names}</div>
+              <div class="kpi-subtext">${topPts.top.date || ''} • 50-16-10 buzzer-beater</div>
             </div>
 
             <div class="kpi-card emerald" style="padding: 1.15rem;">
               <div class="kpi-label">🪄 Most Single-Game Assists</div>
-              <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-emerald);">16 AST</div>
-              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">Russell Westbrook & James Harden</div>
-              <div class="kpi-subtext">Masterclass court vision</div>
+              <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-emerald);">${topAst.val} AST</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">${topAst.names}</div>
+              <div class="kpi-subtext">${topAst.top.date || ''} • 23 PTS, 16 AST masterclass</div>
             </div>
 
             <div class="kpi-card rose" style="padding: 1.15rem;">
               <div class="kpi-label">🦾 Most Single-Game Rebounds</div>
-              <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-rose);">16 REB</div>
-              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">Russell Westbrook & Ivica Zubac</div>
-              <div class="kpi-subtext">Dominant rebounding efforts</div>
+              <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-rose);">${topReb.val} REB</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">${topReb.names}</div>
+              <div class="kpi-subtext">${topReb.top.date || ''} • 36 PTS, 21 REB, 8 AST monster game</div>
             </div>
 
             <div class="kpi-card" style="padding: 1.15rem;">
               <div class="kpi-label">💥 Highest Scoring Game</div>
               <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-cyan);">${highestGame.total_pts} PTS</div>
               <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">${highestGame.home?.team} ${highestGame.home?.pts} vs ${highestGame.away?.team} ${highestGame.away?.pts}</div>
-              <div class="kpi-subtext">📅 ${highestGame.date} • 📍 ${highestGame.arena}</div>
+              <div class="kpi-subtext">${highestGame.date} • 📍 ${highestGame.arena}</div>
             </div>
 
             <div class="kpi-card emerald" style="padding: 1.15rem;">
               <div class="kpi-label">⏱️ Closest Thriller</div>
               <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-emerald);">${closestGame.margin} PT Margin</div>
               <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">${closestGame.home?.team} ${closestGame.home?.pts} vs ${closestGame.away?.team} ${closestGame.away?.pts}</div>
-              <div class="kpi-subtext">📅 ${closestGame.date} • 📍 ${closestGame.arena}</div>
+              <div class="kpi-subtext">${closestGame.date} • 📍 ${closestGame.arena}</div>
             </div>
           </div>
         </div>
@@ -125,50 +139,69 @@ const recordsComponent = {
       const sortedByMargin = [...app.data.games].sort((a, b) => b.margin - a.margin);
       const biggestBlowout = sortedByMargin[0] || {};
 
+      const batting = app.data.single_batting || [];
+      const pitching = app.data.single_pitching || [];
+
+      const maxHitsVal = batting.length ? Math.max(...batting.map(b => b.h || 0)) : 4;
+      const hitHolders = [...new Set(batting.filter(b => b.h === maxHitsVal).map(b => b.name))];
+      const hitsNames = hitHolders.slice(0, 3).join(', ') + (hitHolders.length > 3 ? ' & more' : '');
+
+      const maxKsVal = pitching.length ? Math.max(...pitching.map(p => p.so || 0)) : 12;
+      const kHolders = pitching.filter(p => p.so === maxKsVal);
+      const topK = kHolders[0] || { name: 'Trevor Cahill', team: 'OAK', date: '2018-05-05', ip: '6.0' };
+
+      const maxHrVal = batting.length ? Math.max(...batting.map(b => b.hr || 0)) : 2;
+      const hrHolders = [...new Set(batting.filter(b => b.hr === maxHrVal).map(b => b.name))];
+      const hrNames = hrHolders.slice(0, 3).join(', ') + (hrHolders.length > 3 ? ' & more' : '');
+
+      const maxRbiVal = batting.length ? Math.max(...batting.map(b => b.rbi || 0)) : 5;
+      const rbiHolders = batting.filter(b => b.rbi === maxRbiVal);
+      const topRbi = rbiHolders[0] || { name: 'Pat Burrell', team: 'PHI', date: '2008-08-23' };
+
       container.innerHTML = `
         <div style="margin-bottom: 2rem;">
           <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 1rem;">⚾ Attended MLB Records & Superlatives</h3>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
             <div class="kpi-card gold" style="padding: 1.15rem;">
               <div class="kpi-label">🏏 Most Hits in a Single Game</div>
-              <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-gold);">4 Hits</div>
-              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">Fernando Tatis Jr., Jackson Merrill & Wil Myers</div>
-              <div class="kpi-subtext">4-hit spectacles at Petco Park</div>
+              <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-gold);">${maxHitsVal} Hits</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">${hitsNames}</div>
+              <div class="kpi-subtext">4-hit spectacles witnessed in person</div>
             </div>
 
             <div class="kpi-card emerald" style="padding: 1.15rem;">
               <div class="kpi-label">⚡ Most Strikeouts by Pitcher</div>
-              <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-emerald);">12 Ks</div>
-              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">Trevor Cahill (SDP vs ARI)</div>
-              <div class="kpi-subtext">📅 2018-08-16 • 12 Ks across 7.0 shutout IP</div>
+              <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-emerald);">${maxKsVal} Ks</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">${topK.name} (${topK.team})</div>
+              <div class="kpi-subtext">${topK.date} • ${maxKsVal} Ks across ${topK.ip} IP</div>
             </div>
 
             <div class="kpi-card purple" style="padding: 1.15rem;">
               <div class="kpi-label">💥 Most Home Runs in a Game</div>
-              <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-purple);">2 HR</div>
-              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">Manny Machado, Fernando Tatis Jr. & Justin Turner</div>
+              <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-purple);">${maxHrVal} HR</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">${hrNames}</div>
               <div class="kpi-subtext">Multi-home run fireworks</div>
             </div>
 
             <div class="kpi-card rose" style="padding: 1.15rem;">
               <div class="kpi-label">🚀 Most Single-Game RBIs</div>
-              <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-rose);">5 RBIs</div>
-              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">Gavin Sheets (CHW vs DET)</div>
-              <div class="kpi-subtext">Clutch offensive run production</div>
+              <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-rose);">${maxRbiVal} RBIs</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">${topRbi.name} (${topRbi.team})</div>
+              <div class="kpi-subtext">${topRbi.date} • Dominant run production</div>
             </div>
 
             <div class="kpi-card" style="padding: 1.15rem;">
               <div class="kpi-label">🔥 Highest Scoring Baseball Game</div>
               <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-cyan);">${highestGame.total_runs} Runs</div>
               <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">${highestGame.home?.team} ${highestGame.home?.runs} vs ${highestGame.away?.team} ${highestGame.away?.runs}</div>
-              <div class="kpi-subtext">📅 ${highestGame.date} • 📍 ${highestGame.stadium}</div>
+              <div class="kpi-subtext">${highestGame.date} • 📍 ${highestGame.stadium}</div>
             </div>
 
             <div class="kpi-card emerald" style="padding: 1.15rem;">
               <div class="kpi-label">🔨 Biggest MLB Blowout</div>
               <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-emerald);">${biggestBlowout.margin} Runs Margin</div>
               <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">${biggestBlowout.home?.team} ${biggestBlowout.home?.runs} vs ${biggestBlowout.away?.team} ${biggestBlowout.away?.runs}</div>
-              <div class="kpi-subtext">📅 ${biggestBlowout.date} • 📍 ${biggestBlowout.stadium}</div>
+              <div class="kpi-subtext">${biggestBlowout.date} • 📍 ${biggestBlowout.stadium}</div>
             </div>
           </div>
         </div>
@@ -238,28 +271,28 @@ const recordsComponent = {
               <div class="kpi-label">👥 Highest Attendance Match</div>
               <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-gold);">93,702 Fans</div>
               <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">Real Madrid vs. Juventus</div>
-              <div class="kpi-subtext">📅 2022-07-30 • Rose Bowl, Pasadena</div>
+              <div class="kpi-subtext">2022-07-30 • Rose Bowl, Pasadena</div>
             </div>
 
             <div class="kpi-card purple" style="padding: 1.15rem;">
               <div class="kpi-label">⚽ Most Single-Match Goals</div>
               <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-purple);">4 Goals</div>
               <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">Alex Morgan (San Diego Wave vs Gotham)</div>
-              <div class="kpi-subtext">📅 2022-05-07 • 4-0 Wave Victory</div>
+              <div class="kpi-subtext">2022-05-07 • 4-0 Wave Victory</div>
             </div>
 
             <div class="kpi-card rose" style="padding: 1.15rem;">
               <div class="kpi-label">🟨 Most Yellow Cards in a Match</div>
               <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-rose);">8 Bookings</div>
               <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">Juventus vs. AC Milan</div>
-              <div class="kpi-subtext">📅 2023-04-29 • Fiery Serie A clash</div>
+              <div class="kpi-subtext">2023-04-29 • Fiery Serie A clash</div>
             </div>
 
             <div class="kpi-card emerald" style="padding: 1.15rem;">
               <div class="kpi-label">🚀 Biggest Blowout</div>
               <div class="kpi-value" style="font-size: 1.8rem; color: var(--accent-emerald);">9-0 (+9 Margin)</div>
               <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">USWNT 9, Paraguay 0</div>
-              <div class="kpi-subtext">📅 2021-09-16 • FirstEnergy Stadium</div>
+              <div class="kpi-subtext">2021-09-16 • FirstEnergy Stadium</div>
             </div>
 
             <div class="kpi-card" style="padding: 1.15rem;">

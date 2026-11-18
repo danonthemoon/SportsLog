@@ -636,6 +636,48 @@ main {
   background: rgba(15, 23, 42, 0.5);
 }
 
+/* Fixed Width Stat Leaderboard Container & Table */
+.table-fixed-container {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 900px) {
+  .table-fixed-container {
+    overflow-x: auto;
+  }
+}
+
+#performances-table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+#performances-table th,
+#performances-table td {
+  padding: 0.45rem 0.15rem;
+  font-size: 0.77rem;
+  white-space: nowrap;
+  letter-spacing: -0.015em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#performances-table th:first-child,
+#performances-table td:first-child {
+  padding-left: 0.4rem;
+  padding-right: 0.15rem;
+}
+
+#performances-table .player-name-clamp {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 table.stats-table {
   width: 100%;
   border-collapse: collapse;
