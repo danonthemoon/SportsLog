@@ -14,7 +14,7 @@ const app = {
 
   async init() {
     try {
-      const response = await fetch('./data.json?v=12');
+      const response = await fetch('./data.json?v=13');
       const rawText = await response.text();
       this.rawBundle = JSON.parse(rawText.replace(/\bNaN\b/g, 'null').replace(/\bInfinity\b/g, 'null'));
       this.setSportData(this.currentSport);
