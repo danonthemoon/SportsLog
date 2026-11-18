@@ -265,7 +265,11 @@ const gamesComponent = {
 
             <div class="game-meta-footer" style="margin-top: 0.5rem; padding-top: 0.5rem;">
               <span class="game-arena">📍 ${game.stadium}</span>
-              <span style="color: var(--text-muted); font-size: 0.72rem; margin-top: 0.2rem; display: block;">⏱️ Duration: ${game.duration || 'N/A'} • 👥 ${game.attendance ? Number(game.attendance).toLocaleString() + ' Fans' : 'N/A'}</span>
+              <span style="color: var(--text-muted); font-size: 0.72rem; margin-top: 0.2rem; display: block;">⏱️ Duration: ${game.duration || 'N/A'} • 👥 ${(() => {
+                if (!game.attendance) return 'N/A';
+                const n = parseInt(String(game.attendance).replace(/,/g, '').trim(), 10);
+                return (!isNaN(n) && n > 0) ? `${n.toLocaleString()} Fans` : `${game.attendance} Fans`;
+              })()}</span>
             </div>
           </div>
 
@@ -393,7 +397,11 @@ const gamesComponent = {
 
             <div class="game-meta-footer" style="margin-top: 0.5rem; padding-top: 0.5rem;">
               <span class="game-arena">📍 ${m.stadium} • ${m.city}</span>
-              <span style="color: var(--text-muted); font-size: 0.72rem; margin-top: 0.2rem; display: block;">👥 ${m.attendance ? Number(m.attendance).toLocaleString() + ' Fans' : 'Official Match'}</span>
+              <span style="color: var(--text-muted); font-size: 0.72rem; margin-top: 0.2rem; display: block;">👥 ${(() => {
+                if (!m.attendance) return 'Official Match';
+                const n = parseInt(String(m.attendance).replace(/,/g, '').trim(), 10);
+                return (!isNaN(n) && n > 0) ? `${n.toLocaleString()} Fans` : `${m.attendance} Fans`;
+              })()}</span>
             </div>
           </div>
 
@@ -682,8 +690,13 @@ const gamesComponent = {
     const game = app.data.games.find(g => g.game_id === gameId);
     if (!game) return;
 
+    const attStr = (() => {
+      if (!game.attendance) return 'N/A';
+      const n = parseInt(String(game.attendance).replace(/,/g, '').trim(), 10);
+      return (!isNaN(n) && n > 0) ? `${n.toLocaleString()} Fans` : `${game.attendance} Fans`;
+    })();
     document.getElementById('modal-game-title').textContent = `${game.away.team} vs. ${game.home.team}`;
-    document.getElementById('modal-game-subtitle').textContent = `${app.formatDate(game.date)} • 📍 ${game.stadium} • ⏱️ Duration: ${game.duration} • 👥 Attendance: ${game.attendance}`;
+    document.getElementById('modal-game-subtitle').textContent = `${app.formatDate(game.date)} • 📍 ${game.stadium} • ⏱️ Duration: ${game.duration || 'N/A'} • 👥 ${attStr}`;
 
     const allBatters = [...(game.away.batting || []), ...(game.home.batting || [])];
     const boundBatterWidth = this.calcTightNameWidth(allBatters, 'Batting', false);

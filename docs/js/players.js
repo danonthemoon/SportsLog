@@ -173,25 +173,25 @@ const playersComponent = {
       const ind = (col) => this.getSortIndicator(activeCol, col);
 
       tableThead.innerHTML = `
-        <th class="text-left ${getThClass('NAME')}" style="width: 21.8%;" onclick="playersComponent.sortPerfBy('NAME')">Player${ind('NAME')}</th>
-        <th class="${getThClass('DATE')}" style="width: 7.3%;" onclick="playersComponent.sortPerfBy('DATE')">Date${ind('DATE')}</th>
+        <th class="text-left ${getThClass('NAME')}" style="width: 17.6%;" onclick="playersComponent.sortPerfBy('NAME')">Player${ind('NAME')}</th>
+        <th class="${getThClass('DATE')}" style="width: 7.2%;" onclick="playersComponent.sortPerfBy('DATE')">Date${ind('DATE')}</th>
         <th class="${getThClass('TEAM')}" style="width: 3.8%;" onclick="playersComponent.sortPerfBy('TEAM')">Team${ind('TEAM')}</th>
         <th class="${getThClass('OPP')}" style="width: 3.8%;" onclick="playersComponent.sortPerfBy('OPP')">Opp${ind('OPP')}</th>
-        <th class="${getThClass('MINS')}" style="width: 3.5%;" onclick="playersComponent.sortPerfBy('MINS')">MIN${ind('MINS')}</th>
-        <th class="${getThClass('PTS')}" style="width: 4%; color: var(--accent-cyan);" onclick="playersComponent.sortPerfBy('PTS')">PTS${ind('PTS')}</th>
-        <th class="${getThClass('REB')}" style="width: 3.5%;" onclick="playersComponent.sortPerfBy('REB')">REB${ind('REB')}</th>
-        <th class="${getThClass('AST')}" style="width: 3.5%;" onclick="playersComponent.sortPerfBy('AST')">AST${ind('AST')}</th>
-        <th class="${getThClass('STL')}" style="width: 3.2%;" onclick="playersComponent.sortPerfBy('STL')">STL${ind('STL')}</th>
-        <th class="${getThClass('BLK')}" style="width: 3.2%;" onclick="playersComponent.sortPerfBy('BLK')">BLK${ind('BLK')}</th>
-        <th class="${getThClass('FG')}" style="width: 5.4%;" onclick="playersComponent.sortPerfBy('FG')" title="Field Goals (FGM-FGA)">FG${ind('FG')}</th>
-        <th class="${getThClass('FG%')}" style="width: 4.6%;" onclick="playersComponent.sortPerfBy('FG%')">FG%${ind('FG%')}</th>
-        <th class="${getThClass('3P')}" style="width: 4.6%;" onclick="playersComponent.sortPerfBy('3P')" title="3-Pointers (3PM-3PA)">3P${ind('3P')}</th>
-        <th class="${getThClass('3P%')}" style="width: 4.6%;" onclick="playersComponent.sortPerfBy('3P%')">3P%${ind('3P%')}</th>
-        <th class="${getThClass('FT')}" style="width: 4.6%;" onclick="playersComponent.sortPerfBy('FT')" title="Free Throws (FTM-FTA)">FT${ind('FT')}</th>
-        <th class="${getThClass('FT%')}" style="width: 4.6%;" onclick="playersComponent.sortPerfBy('FT%')">FT%${ind('FT%')}</th>
-        <th class="${getThClass('TO')}" style="width: 3.2%;" onclick="playersComponent.sortPerfBy('TO')">TO${ind('TO')}</th>
-        <th class="${getThClass('PF')}" style="width: 3.2%;" onclick="playersComponent.sortPerfBy('PF')">PF${ind('PF')}</th>
-        <th class="${getThClass('GAME_SCORE')}" style="width: 4.2%; color: var(--accent-gold);" onclick="playersComponent.sortPerfBy('GAME_SCORE')" title="GameScore">GS${ind('GAME_SCORE')}</th>
+        <th class="${getThClass('MINS')}" style="width: 3.6%;" onclick="playersComponent.sortPerfBy('MINS')">MIN${ind('MINS')}</th>
+        <th class="${getThClass('PTS')}" style="width: 4.1%; color: var(--accent-cyan);" onclick="playersComponent.sortPerfBy('PTS')">PTS${ind('PTS')}</th>
+        <th class="${getThClass('REB')}" style="width: 3.8%;" onclick="playersComponent.sortPerfBy('REB')">REB${ind('REB')}</th>
+        <th class="${getThClass('AST')}" style="width: 3.8%;" onclick="playersComponent.sortPerfBy('AST')">AST${ind('AST')}</th>
+        <th class="${getThClass('STL')}" style="width: 3.5%;" onclick="playersComponent.sortPerfBy('STL')">STL${ind('STL')}</th>
+        <th class="${getThClass('BLK')}" style="width: 3.5%;" onclick="playersComponent.sortPerfBy('BLK')">BLK${ind('BLK')}</th>
+        <th class="${getThClass('FG')}" style="width: 5.6%;" onclick="playersComponent.sortPerfBy('FG')" title="Field Goals (FGM-FGA)">FG${ind('FG')}</th>
+        <th class="${getThClass('FG%')}" style="width: 4.8%;" onclick="playersComponent.sortPerfBy('FG%')">FG%${ind('FG%')}</th>
+        <th class="${getThClass('3P')}" style="width: 5.0%;" onclick="playersComponent.sortPerfBy('3P')" title="3-Pointers (3PM-3PA)">3P${ind('3P')}</th>
+        <th class="${getThClass('3P%')}" style="width: 4.8%;" onclick="playersComponent.sortPerfBy('3P%')">3P%${ind('3P%')}</th>
+        <th class="${getThClass('FT')}" style="width: 5.0%;" onclick="playersComponent.sortPerfBy('FT')" title="Free Throws (FTM-FTA)">FT${ind('FT')}</th>
+        <th class="${getThClass('FT%')}" style="width: 4.8%;" onclick="playersComponent.sortPerfBy('FT%')">FT%${ind('FT%')}</th>
+        <th class="${getThClass('TO')}" style="width: 3.6%;" onclick="playersComponent.sortPerfBy('TO')">TO${ind('TO')}</th>
+        <th class="${getThClass('PF')}" style="width: 3.6%;" onclick="playersComponent.sortPerfBy('PF')">PF${ind('PF')}</th>
+        <th class="${getThClass('GAME_SCORE')}" style="width: 4.5%; color: var(--accent-gold);" onclick="playersComponent.sortPerfBy('GAME_SCORE')" title="GameScore">GS${ind('GAME_SCORE')}</th>
       `;
 
       let list = [...app.data.single_performances];
@@ -283,19 +283,19 @@ const playersComponent = {
 
       if (isBat) {
         tableThead.innerHTML = `
-          <th class="text-left ${getThClass('name')}" style="width: 25%;" onclick="playersComponent.sortPerfBy('name')">Batter${ind('name')}</th>
+          <th class="text-left ${getThClass('name')}" style="width: 20%;" onclick="playersComponent.sortPerfBy('name')">Batter${ind('name')}</th>
           <th class="${getThClass('date')}" style="width: 8%;" onclick="playersComponent.sortPerfBy('date')">Date${ind('date')}</th>
-          <th class="${getThClass('team')}" style="width: 4.5%;" onclick="playersComponent.sortPerfBy('team')">Team${ind('team')}</th>
-          <th class="${getThClass('opp')}" style="width: 4.5%;" onclick="playersComponent.sortPerfBy('opp')">Opp${ind('opp')}</th>
-          <th class="${getThClass('pos')}" style="width: 4%;" onclick="playersComponent.sortPerfBy('pos')">Pos${ind('pos')}</th>
-          <th class="${getThClass('ab')}" style="width: 4%;" onclick="playersComponent.sortPerfBy('ab')">AB${ind('ab')}</th>
-          <th class="${getThClass('r')}" style="width: 4%;" onclick="playersComponent.sortPerfBy('r')">R${ind('r')}</th>
-          <th class="${getThClass('h')}" style="width: 4.5%; color: var(--accent-cyan);" onclick="playersComponent.sortPerfBy('h')">Hits${ind('h')}</th>
-          <th class="${getThClass('hr')}" style="width: 4%; color: var(--accent-gold);" onclick="playersComponent.sortPerfBy('hr')">HR${ind('hr')}</th>
-          <th class="${getThClass('rbi')}" style="width: 4.5%;" onclick="playersComponent.sortPerfBy('rbi')">RBI${ind('rbi')}</th>
-          <th class="${getThClass('bb')}" style="width: 4%;" onclick="playersComponent.sortPerfBy('bb')">BB${ind('bb')}</th>
-          <th class="${getThClass('so')}" style="width: 4%;" onclick="playersComponent.sortPerfBy('so')">SO${ind('so')}</th>
-          <th class="text-left" style="width: 25%;">Details</th>
+          <th class="${getThClass('team')}" style="width: 5%;" onclick="playersComponent.sortPerfBy('team')">Team${ind('team')}</th>
+          <th class="${getThClass('opp')}" style="width: 5%;" onclick="playersComponent.sortPerfBy('opp')">Opp${ind('opp')}</th>
+          <th class="${getThClass('pos')}" style="width: 4.5%;" onclick="playersComponent.sortPerfBy('pos')">Pos${ind('pos')}</th>
+          <th class="${getThClass('h')}" style="width: 6%; color: var(--accent-cyan);" onclick="playersComponent.sortPerfBy('h')">Hits${ind('h')}</th>
+          <th class="${getThClass('ab')}" style="width: 5%;" onclick="playersComponent.sortPerfBy('ab')">AB${ind('ab')}</th>
+          <th class="${getThClass('bb')}" style="width: 5%;" onclick="playersComponent.sortPerfBy('bb')">BB${ind('bb')}</th>
+          <th class="${getThClass('so')}" style="width: 5%;" onclick="playersComponent.sortPerfBy('so')">SO${ind('so')}</th>
+          <th class="${getThClass('r')}" style="width: 5%;" onclick="playersComponent.sortPerfBy('r')">R${ind('r')}</th>
+          <th class="${getThClass('rbi')}" style="width: 5.5%;" onclick="playersComponent.sortPerfBy('rbi')">RBI${ind('rbi')}</th>
+          <th class="${getThClass('hr')}" style="width: 5.5%; color: var(--accent-gold);" onclick="playersComponent.sortPerfBy('hr')">HR${ind('hr')}</th>
+          <th style="width: 10.5%;">Details</th>
         `;
 
         let list = [...(app.data.single_batting || [])];
@@ -326,31 +326,31 @@ const playersComponent = {
             <td class="${getTdClass('team')}"><span style="font-weight: 700; color: ${app.getTeamColor(b.team)};">${b.team}</span></td>
             <td class="${getTdClass('opp')}">${b.opp}</td>
             <td class="${getTdClass('pos')}">${b.pos}</td>
-            <td class="${getTdClass('ab')}">${b.ab}</td>
-            <td class="${getTdClass('r')}">${b.r}</td>
             <td class="${getTdClass('h')}" style="font-weight: 700; color: ${b.h >= 3 ? 'var(--accent-cyan)' : 'inherit'};">${b.h}</td>
-            <td class="${getTdClass('hr')}" style="font-weight: 800; color: ${b.hr > 0 ? 'var(--accent-gold)' : 'inherit'};">${b.hr}</td>
-            <td class="${getTdClass('rbi')}" style="font-weight: 700;">${b.rbi}</td>
+            <td class="${getTdClass('ab')}">${b.ab}</td>
             <td class="${getTdClass('bb')}">${b.bb}</td>
             <td class="${getTdClass('so')}">${b.so}</td>
-            <td class="text-left" style="font-size: 0.72rem; color: var(--text-muted);">${b.details || '-'}</td>
+            <td class="${getTdClass('r')}">${b.r}</td>
+            <td class="${getTdClass('rbi')}" style="font-weight: 700;">${b.rbi}</td>
+            <td class="${getTdClass('hr')}" style="font-weight: 800; color: ${b.hr > 0 ? 'var(--accent-gold)' : 'inherit'};">${b.hr}</td>
+            <td style="font-size: 0.72rem; color: var(--text-muted);">${b.details || '-'}</td>
           </tr>
         `);
       } else {
         tableThead.innerHTML = `
-          <th class="text-left ${getThClass('name')}" style="width: 25%;" onclick="playersComponent.sortPerfBy('name')">Pitcher${ind('name')}</th>
-          <th class="${getThClass('date')}" style="width: 8.5%;" onclick="playersComponent.sortPerfBy('date')">Date${ind('date')}</th>
-          <th class="${getThClass('team')}" style="width: 4.5%;" onclick="playersComponent.sortPerfBy('team')">Team${ind('team')}</th>
-          <th class="${getThClass('opp')}" style="width: 4.5%;" onclick="playersComponent.sortPerfBy('opp')">Opp${ind('opp')}</th>
-          <th class="${getThClass('ip')}" style="width: 5.5%;" onclick="playersComponent.sortPerfBy('ip')">IP${ind('ip')}</th>
-          <th class="${getThClass('h')}" style="width: 4.5%;" onclick="playersComponent.sortPerfBy('h')">H${ind('h')}</th>
-          <th class="${getThClass('r')}" style="width: 4.5%;" onclick="playersComponent.sortPerfBy('r')">R${ind('r')}</th>
-          <th class="${getThClass('er')}" style="width: 4.5%;" onclick="playersComponent.sortPerfBy('er')">ER${ind('er')}</th>
-          <th class="${getThClass('bb')}" style="width: 4.5%;" onclick="playersComponent.sortPerfBy('bb')">BB${ind('bb')}</th>
-          <th class="${getThClass('so')}" style="width: 5.5%; color: var(--accent-gold);" onclick="playersComponent.sortPerfBy('so')">SO${ind('so')}</th>
-          <th class="${getThClass('hr')}" style="width: 4.5%;" onclick="playersComponent.sortPerfBy('hr')">HR${ind('hr')}</th>
-          <th class="${getThClass('pit')}" style="width: 6.5%;" onclick="playersComponent.sortPerfBy('pit')">Pitches${ind('pit')}</th>
-          <th class="${getThClass('gsc')}" style="width: 7.5%; color: var(--accent-cyan);" onclick="playersComponent.sortPerfBy('gsc')" title="GameScore">GS${ind('gsc')}</th>
+          <th class="text-left ${getThClass('name')}" style="width: 20%;" onclick="playersComponent.sortPerfBy('name')">Pitcher${ind('name')}</th>
+          <th class="${getThClass('date')}" style="width: 8%;" onclick="playersComponent.sortPerfBy('date')">Date${ind('date')}</th>
+          <th class="${getThClass('team')}" style="width: 5%;" onclick="playersComponent.sortPerfBy('team')">Team${ind('team')}</th>
+          <th class="${getThClass('opp')}" style="width: 5%;" onclick="playersComponent.sortPerfBy('opp')">Opp${ind('opp')}</th>
+          <th class="${getThClass('ip')}" style="width: 6%;" onclick="playersComponent.sortPerfBy('ip')">IP${ind('ip')}</th>
+          <th class="${getThClass('h')}" style="width: 5.5%;" onclick="playersComponent.sortPerfBy('h')">H${ind('h')}</th>
+          <th class="${getThClass('r')}" style="width: 5.5%;" onclick="playersComponent.sortPerfBy('r')">R${ind('r')}</th>
+          <th class="${getThClass('er')}" style="width: 5.5%;" onclick="playersComponent.sortPerfBy('er')">ER${ind('er')}</th>
+          <th class="${getThClass('bb')}" style="width: 5.5%;" onclick="playersComponent.sortPerfBy('bb')">BB${ind('bb')}</th>
+          <th class="${getThClass('so')}" style="width: 6.5%; color: var(--accent-gold);" onclick="playersComponent.sortPerfBy('so')">SO${ind('so')}</th>
+          <th class="${getThClass('hr')}" style="width: 5.5%;" onclick="playersComponent.sortPerfBy('hr')">HR${ind('hr')}</th>
+          <th class="${getThClass('pit')}" style="width: 7.5%;" onclick="playersComponent.sortPerfBy('pit')">Pitches${ind('pit')}</th>
+          <th class="${getThClass('gsc')}" style="width: 6.5%; color: var(--accent-cyan);" onclick="playersComponent.sortPerfBy('gsc')" title="GameScore">GS${ind('gsc')}</th>
         `;
 
         let list = [...(app.data.single_pitching || [])];
@@ -398,14 +398,14 @@ const playersComponent = {
       const getTdClass = (c) => (activeCol.toLowerCase() === c.toLowerCase() ? 'sorted-active-cell' : '');
 
       tableThead.innerHTML = `
-        <th class="text-left ${getThClass('name')}" style="width: 25%;" onclick="playersComponent.sortPerfBy('name')">Player${ind('name')}</th>
+        <th class="text-left ${getThClass('name')}" style="width: 22%;" onclick="playersComponent.sortPerfBy('name')">Player${ind('name')}</th>
         <th class="${getThClass('matches_count')}" style="width: 9%;" onclick="playersComponent.sortPerfBy('matches_count')">Matches${ind('matches_count')}</th>
         <th class="${getThClass('goals')}" style="width: 9%; color: var(--accent-gold);" onclick="playersComponent.sortPerfBy('goals')">Goals${ind('goals')}</th>
         <th class="${getThClass('assists')}" style="width: 9%; color: var(--accent-cyan);" onclick="playersComponent.sortPerfBy('assists')">Assists${ind('assists')}</th>
         <th class="${getThClass('mins')}" style="width: 10%;" onclick="playersComponent.sortPerfBy('mins')">Minutes${ind('mins')}</th>
         <th class="${getThClass('yc')}" style="width: 10%;" onclick="playersComponent.sortPerfBy('yc')">Yellow Cards${ind('yc')}</th>
         <th class="${getThClass('rc')}" style="width: 10%;" onclick="playersComponent.sortPerfBy('rc')">Red Cards${ind('rc')}</th>
-        <th class="text-left" style="width: 18%;">Teams</th>
+        <th style="width: 21%;">Teams</th>
       `;
       let list = [...(app.data.players || [])];
       if (this.perfState.preset === 'GOALS') list = list.filter(p => p.goals > 0);
@@ -438,7 +438,7 @@ const playersComponent = {
           <td class="${getTdClass('mins')}">${p.mins}</td>
           <td class="${getTdClass('yc')}">${p.yc}</td>
           <td class="${getTdClass('rc')}">${p.rc}</td>
-          <td class="text-left">${p.teams.join(', ')}</td>
+          <td>${p.teams.join(', ')}</td>
         </tr>
       `);
     }
