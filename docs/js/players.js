@@ -173,7 +173,7 @@ const playersComponent = {
       const ind = (col) => this.getSortIndicator(activeCol, col);
 
       tableThead.innerHTML = `
-        <th class="text-left ${getThClass('NAME')}" style="width: 18%;" onclick="playersComponent.sortPerfBy('NAME')">Player${ind('NAME')}</th>
+        <th class="text-left ${getThClass('NAME')}" style="width: 21.8%;" onclick="playersComponent.sortPerfBy('NAME')">Player${ind('NAME')}</th>
         <th class="${getThClass('DATE')}" style="width: 7.3%;" onclick="playersComponent.sortPerfBy('DATE')">Date${ind('DATE')}</th>
         <th class="${getThClass('TEAM')}" style="width: 3.8%;" onclick="playersComponent.sortPerfBy('TEAM')">Team${ind('TEAM')}</th>
         <th class="${getThClass('OPP')}" style="width: 3.8%;" onclick="playersComponent.sortPerfBy('OPP')">Opp${ind('OPP')}</th>
@@ -191,7 +191,7 @@ const playersComponent = {
         <th class="${getThClass('FT%')}" style="width: 4.6%;" onclick="playersComponent.sortPerfBy('FT%')">FT%${ind('FT%')}</th>
         <th class="${getThClass('TO')}" style="width: 3.2%;" onclick="playersComponent.sortPerfBy('TO')">TO${ind('TO')}</th>
         <th class="${getThClass('PF')}" style="width: 3.2%;" onclick="playersComponent.sortPerfBy('PF')">PF${ind('PF')}</th>
-        <th class="${getThClass('GAME_SCORE')}" style="width: 7.5%; color: var(--accent-gold);" onclick="playersComponent.sortPerfBy('GAME_SCORE')">GameScore${ind('GAME_SCORE')}</th>
+        <th class="${getThClass('GAME_SCORE')}" style="width: 4.2%; color: var(--accent-gold);" onclick="playersComponent.sortPerfBy('GAME_SCORE')" title="GameScore">GS${ind('GAME_SCORE')}</th>
       `;
 
       let list = [...app.data.single_performances];
@@ -250,9 +250,9 @@ const playersComponent = {
         return `
         <tr>
           <td class="text-left ${getTdClass('NAME')}">
-            <span class="player-link player-name-clamp" title="${p.name}" onclick="app.openPlayerDossier('${p.name.replace(/'/g, "\\'")}', 'nba')">${p.name}</span>
+            <span class="player-link" onclick="app.openPlayerDossier('${p.name.replace(/'/g, "\\'")}', 'nba')">${p.name}</span>
             ${this.getCaliberBadge(p, 'nba')}
-            ${p.triple_double ? '<span style="font-size: 0.65rem; background: rgba(245,158,11,0.25); color: var(--accent-gold); padding: 1px 4px; border-radius: 4px; margin-left: 3px; font-weight: 800;" title="Triple-Double">TD</span>' : ''}
+            ${p.triple_double ? '<span class="td-badge" style="font-size: 0.65rem; background: rgba(245,158,11,0.25); color: var(--accent-gold); padding: 1px 3px; border-radius: 4px; margin-left: 2px; font-weight: 800;" title="Triple-Double">TD</span>' : ''}
           </td>
           <td class="${getTdClass('DATE')}">${p.date}</td>
           <td class="${getTdClass('TEAM')}"><span style="font-weight: 700; color: ${app.getTeamColor(p.team)};">${p.team}</span></td>
@@ -759,7 +759,7 @@ const playersComponent = {
               <th class="${thClass('ftm')}" onclick="playersComponent.sortDossierTable('ftm')">FT${ind('ftm')}</th>
               <th class="${thClass('to')}" onclick="playersComponent.sortDossierTable('to')">TO${ind('to')}</th>
               <th class="${thClass('pf')}" onclick="playersComponent.sortDossierTable('pf')">PF${ind('pf')}</th>
-              <th class="${thClass('game_score')}" onclick="playersComponent.sortDossierTable('game_score')" style="color: var(--accent-gold);">GameScore${ind('game_score')}</th>
+              <th class="${thClass('game_score')}" onclick="playersComponent.sortDossierTable('game_score')" style="color: var(--accent-gold);" title="GameScore">GS${ind('game_score')}</th>
             </tr>
           </thead>
           <tbody>

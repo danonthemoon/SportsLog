@@ -665,17 +665,23 @@ main {
 
 #performances-table th:first-child,
 #performances-table td:first-child {
-  padding-left: 0.4rem;
-  padding-right: 0.15rem;
+  padding-left: 0.35rem;
+  padding-right: 0.05rem;
+  white-space: nowrap;
 }
 
-#performances-table .player-name-clamp {
-  display: inline-block;
-  vertical-align: middle;
-  max-width: 130px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+#performances-table .player-link {
   white-space: nowrap;
+}
+
+#performances-table .caliber-badge {
+  margin-left: 3px;
+  padding: 1px 4px;
+}
+
+#performances-table .td-badge {
+  margin-left: 2px;
+  padding: 1px 3px;
 }
 
 table.stats-table {

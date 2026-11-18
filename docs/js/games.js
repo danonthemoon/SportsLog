@@ -525,7 +525,7 @@ const gamesComponent = {
                 <col style="width: 58px;">
                 <col style="width: 46px;">
                 <col style="width: 46px;">
-                <col style="width: 80px;">
+                <col style="width: 54px;">
               </colgroup>
               <thead>
                 <tr>
@@ -544,7 +544,7 @@ const gamesComponent = {
                   <th>FT%</th>
                   <th>TO</th>
                   <th>PF</th>
-                  <th style="color: var(--accent-gold);">GameScore</th>
+                  <th style="color: var(--accent-gold);" title="GameScore">GS</th>
                 </tr>
               </thead>
               <tbody>
