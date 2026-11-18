@@ -364,25 +364,27 @@ main {
   font-weight: 700;
 }
 
-/* Games Grid - Single Column Layout */
+/* Games Grid - Single Column Compact Layout */
 .games-grid {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.9rem;
   width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
 }
 
 .game-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 1.25rem 1.5rem;
+  padding: 1.1rem 1.35rem;
   position: relative;
   transition: all 0.25s ease;
   cursor: pointer;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.75rem;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 1.5rem;
   align-items: center;
 }
 
@@ -733,12 +735,14 @@ table.stats-table tr:hover {
   background: linear-gradient(90deg, #d97706, #fbbf24);
 }
 
-/* Teams Quest - Single Column List */
+/* Teams Quest - Single Column Compact List */
 .teams-quest-grid {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .trophy-team-card {
@@ -805,12 +809,14 @@ table.stats-table tr:hover {
   color: var(--text-muted);
 }
 
-/* Arenas - Single Column List */
+/* Arenas - Single Column Compact List */
 .arenas-quest-grid {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .arena-card {
@@ -884,6 +890,8 @@ table.stats-table tr:hover {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1.25rem;
+  max-width: 1040px;
+  margin: 0 auto;
 }
 
 .milestone-card {
@@ -991,4 +999,150 @@ table.stats-table tr:hover {
   .games-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* NBA Right Column 2-Team Layout */
+.nba-right-teams-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .nba-right-teams-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+.nba-team-card-col {
+  display: flex;
+  flex-direction: column;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.75rem;
+}
+
+.nba-team-col-header {
+  font-size: 0.8rem;
+  font-weight: 800;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.35rem;
+  margin-bottom: 0.4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nba-leaders-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.45rem;
+}
+
+.nba-leader-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.74rem;
+}
+
+.nba-stat-pill {
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 1px 4px;
+  border-radius: 3px;
+  min-width: 26px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.nba-stat-pill.pts {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--accent-gold);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.nba-stat-pill.reb {
+  background: rgba(56, 189, 248, 0.2);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.nba-stat-pill.ast {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--accent-emerald);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.nba-leader-info {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.nba-leader-name {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 0.73rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nba-leader-pra {
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  flex-shrink: 0;
+}
+
+.nba-team-stats-box {
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.nba-stat-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+/* Caliber Badges */
+.caliber-badge {
+  font-size: 0.65rem;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+  font-weight: 800;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+.caliber-badge.mvp {
+  background: rgba(245, 158, 11, 0.25);
+  color: var(--accent-gold);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+}
+
+.caliber-badge.all-nba {
+  background: rgba(168, 85, 247, 0.25);
+  color: var(--accent-purple);
+  border: 1px solid rgba(168, 85, 247, 0.45);
+}
+
+.caliber-badge.all-star {
+  background: rgba(56, 189, 248, 0.2);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(56, 189, 248, 0.35);
 }

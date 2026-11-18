@@ -88,7 +88,6 @@ const gamesComponent = {
                 </div>
                 <div>
                   <div class="team-name-label">${game.away.team}</div>
-                  <div style="font-size: 0.72rem; color: var(--text-muted);">${game.away.matchup}</div>
                 </div>
               </div>
               <div class="team-score">${game.away.pts}</div>
@@ -101,7 +100,6 @@ const gamesComponent = {
                 </div>
                 <div>
                   <div class="team-name-label">${game.home.team}</div>
-                  <div style="font-size: 0.72rem; color: var(--text-muted);">${game.home.matchup}</div>
                 </div>
               </div>
               <div class="team-score">${game.home.pts}</div>
@@ -112,47 +110,84 @@ const gamesComponent = {
             </div>
           </div>
 
-          <!-- Right Column: Top Performers and Key Team Stats -->
+          <!-- Right Column: Each Team's Leaders (P/R/A) and Team Shooting/Stats -->
           <div class="game-card-right">
-            <div>
-              <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                ⭐ Top Performers
-              </div>
-              ${game.top_performers.mvp ? `
-                <div class="top-performer-pill" style="margin-top: 0; margin-bottom: 0.35rem;">
-                  <span>MVP: <strong>${game.top_performers.mvp.name}</strong> (${game.top_performers.mvp.team})</span>
-                  <span style="color: var(--accent-cyan); font-weight: 700;">${game.top_performers.mvp.pts} PTS • GS ${game.top_performers.mvp.game_score}</span>
-                </div>
-              ` : ''}
-              ${game.top_performers.scorer && (!game.top_performers.mvp || game.top_performers.scorer.name !== game.top_performers.mvp.name) ? `
-                <div class="top-performer-pill" style="margin-top: 0; margin-bottom: 0.35rem;">
-                  <span>Top Scorer: <strong>${game.top_performers.scorer.name}</strong> (${game.top_performers.scorer.team})</span>
-                  <span style="color: var(--accent-gold); font-weight: 700;">${game.top_performers.scorer.val} PTS</span>
-                </div>
-              ` : ''}
-              ${game.top_performers.playmaker ? `
-                <div class="top-performer-pill" style="margin-top: 0; margin-bottom: 0.35rem;">
-                  <span>Assists: <strong>${game.top_performers.playmaker.name}</strong></span>
-                  <span style="color: var(--accent-emerald); font-weight: 700;">${game.top_performers.playmaker.val} AST</span>
-                </div>
-              ` : ''}
+            ${(() => {
+              const getLeaders = (teamObj) => {
+                const players = teamObj.players || [];
+                if (players.length === 0) return { pts: null, reb: null, ast: null };
+                const pL = [...players].sort((a, b) => b.PTS - a.PTS || b.GAME_SCORE - a.GAME_SCORE)[0];
+                const rL = [...players].sort((a, b) => b.REB - a.REB || b.GAME_SCORE - a.GAME_SCORE)[0];
+                const aL = [...players].sort((a, b) => b.AST - a.AST || b.GAME_SCORE - a.GAME_SCORE)[0];
+                return { pts: pL, reb: rL, ast: aL };
+              };
 
-              <div style="margin-top: 0.75rem; padding-top: 0.6rem; border-top: 1px solid var(--border-subtle); font-size: 0.76rem; color: var(--text-secondary); display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
-                <div>
-                  <span style="color: var(--text-muted); font-size: 0.7rem; display: block;">SHOOTING SPLITS</span>
-                  <span>${game.away.abbrev}: ${(game.away.fg_pct * 100).toFixed(0)}% FG (${game.away.tpm} 3PM)</span><br>
-                  <span>${game.home.abbrev}: ${(game.home.fg_pct * 100).toFixed(0)}% FG (${game.home.tpm} 3PM)</span>
-                </div>
-                <div>
-                  <span style="color: var(--text-muted); font-size: 0.7rem; display: block;">REB & AST</span>
-                  <span>REB: ${game.away.reb} - ${game.home.reb}</span><br>
-                  <span>AST: ${game.away.ast} - ${game.home.ast}</span>
-                </div>
-              </div>
-            </div>
+              const awayL = getLeaders(game.away);
+              const homeL = getLeaders(game.home);
 
-            <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 0.75rem;">
-              <span style="color: var(--accent-cyan); font-weight: 700; font-size: 0.8rem;">View Full Box Score →</span>
+              const renderTeamCol = (teamObj, leaders) => `
+                <div class="nba-team-card-col">
+                  <div class="nba-team-col-header" style="color: ${app.getTeamColor(teamObj.abbrev)};">
+                    <strong>${teamObj.team}</strong>
+                  </div>
+                  
+                  <div class="nba-leaders-box">
+                    ${leaders.pts ? `
+                      <div class="nba-leader-row">
+                        <span class="nba-stat-pill pts">PTS</span>
+                        <div class="nba-leader-info">
+                          <span class="nba-leader-name">${leaders.pts.NAME}</span>
+                          <span class="nba-leader-pra">${leaders.pts.PTS}p, ${leaders.pts.REB}r, ${leaders.pts.AST}a</span>
+                        </div>
+                      </div>
+                    ` : ''}
+                    ${leaders.reb ? `
+                      <div class="nba-leader-row">
+                        <span class="nba-stat-pill reb">REB</span>
+                        <div class="nba-leader-info">
+                          <span class="nba-leader-name">${leaders.reb.NAME}</span>
+                          <span class="nba-leader-pra">${leaders.reb.PTS}p, ${leaders.reb.REB}r, ${leaders.reb.AST}a</span>
+                        </div>
+                      </div>
+                    ` : ''}
+                    ${leaders.ast ? `
+                      <div class="nba-leader-row">
+                        <span class="nba-stat-pill ast">AST</span>
+                        <div class="nba-leader-info">
+                          <span class="nba-leader-name">${leaders.ast.NAME}</span>
+                          <span class="nba-leader-pra">${leaders.ast.PTS}p, ${leaders.ast.REB}r, ${leaders.ast.AST}a</span>
+                        </div>
+                      </div>
+                    ` : ''}
+                  </div>
+
+                  <div class="nba-team-stats-box">
+                    <div class="nba-stat-line">
+                      <span><strong>FG:</strong> ${teamObj.fgm}/${teamObj.fga} (${(teamObj.fg_pct * (teamObj.fg_pct <= 1 ? 100 : 1)).toFixed(1)}%)</span>
+                      <span><strong>3P:</strong> ${teamObj.tpm}/${teamObj.tpa} (${(teamObj.tp_pct * (teamObj.tp_pct <= 1 ? 100 : 1)).toFixed(1)}%)</span>
+                    </div>
+                    <div class="nba-stat-line">
+                      <span><strong>AST:</strong> ${teamObj.ast}</span>
+                      <span><strong>DREB:</strong> ${teamObj.dreb} • <strong>OREB:</strong> ${teamObj.oreb}</span>
+                    </div>
+                    <div class="nba-stat-line">
+                      <span><strong>STL:</strong> ${teamObj.stl}</span>
+                      <span><strong>BLK:</strong> ${teamObj.blk}</span>
+                    </div>
+                  </div>
+                </div>
+              `;
+
+              return `
+                <div class="nba-right-teams-grid">
+                  ${renderTeamCol(game.away, awayL)}
+                  ${renderTeamCol(game.home, homeL)}
+                </div>
+              `;
+            })()}
+
+            <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 0.6rem;">
+              <span style="color: var(--accent-cyan); font-weight: 700; font-size: 0.78rem;">View Full Box Score →</span>
             </div>
           </div>
         </div>
@@ -454,6 +489,26 @@ const gamesComponent = {
                   </tr>
                 `).join('')}
               </tbody>
+              <tfoot>
+                <tr style="font-weight: 800; background: rgba(255,255,255,0.06); border-top: 2px solid var(--border-accent);">
+                  <td class="text-left" style="color: var(--accent-cyan);">Team Totals</td>
+                  <td>${players.reduce((sum, p) => sum + (parseInt(p.MINS) || 0), 0) || 240}</td>
+                  <td style="color: var(--accent-gold); font-size: 0.95rem;">${teamObj.pts}</td>
+                  <td>${teamObj.reb}</td>
+                  <td>${teamObj.ast}</td>
+                  <td>${teamObj.stl}</td>
+                  <td>${teamObj.blk}</td>
+                  <td>${teamObj.fgm}-${teamObj.fga}</td>
+                  <td>${(teamObj.fg_pct * (teamObj.fg_pct <= 1 ? 100 : 1)).toFixed(1)}%</td>
+                  <td>${teamObj.tpm}-${teamObj.tpa}</td>
+                  <td>${(teamObj.tp_pct * (teamObj.tp_pct <= 1 ? 100 : 1)).toFixed(1)}%</td>
+                  <td>${teamObj.ftm}-${teamObj.fta}</td>
+                  <td>${(teamObj.ft_pct * (teamObj.ft_pct <= 1 ? 100 : 1)).toFixed(1)}%</td>
+                  <td>${teamObj.to}</td>
+                  <td>${teamObj.pf}</td>
+                  <td style="color: var(--text-muted);">-</td>
+                </tr>
+              </tfoot>
             </table>
           </div>
         </div>
@@ -526,7 +581,7 @@ const gamesComponent = {
         ${renderStatComp('Assists', game.away.ast, game.home.ast)}
         ${renderStatComp('Steals', game.away.stl, game.home.stl)}
         ${renderStatComp('Blocks', game.away.blk, game.home.blk)}
-        ${renderStatComp('Turnovers (Lower is Better)', game.away.to, game.home.to)}
+        ${renderStatComp('Turnovers', game.away.to, game.home.to)}
       </div>
 
       ${renderRoster(game.away)}
@@ -585,6 +640,20 @@ const gamesComponent = {
                 </tr>
               `).join('')}
             </tbody>
+            <tfoot>
+              <tr style="font-weight: 800; background: rgba(255,255,255,0.06); border-top: 2px solid var(--border-accent);">
+                <td class="text-left" style="color: var(--accent-cyan);">Team Totals</td>
+                <td>-</td>
+                <td>${(teamObj.batting || []).reduce((s, b) => s + (parseInt(b.AB) || 0), 0)}</td>
+                <td style="color: var(--accent-gold); font-size: 0.95rem;">${teamObj.runs}</td>
+                <td style="color: var(--accent-cyan);">${teamObj.hits}</td>
+                <td style="color: var(--accent-gold);">${teamObj.hr}</td>
+                <td>${(teamObj.batting || []).reduce((s, b) => s + (parseInt(b.RBI) || 0), 0)}</td>
+                <td>${(teamObj.batting || []).reduce((s, b) => s + (parseInt(b.BB) || 0), 0)}</td>
+                <td>${(teamObj.batting || []).reduce((s, b) => s + (parseInt(b.SO) || 0), 0)}</td>
+                <td class="text-left">-</td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>
@@ -631,6 +700,20 @@ const gamesComponent = {
                 </tr>
               `).join('')}
             </tbody>
+            <tfoot>
+              <tr style="font-weight: 800; background: rgba(255,255,255,0.06); border-top: 2px solid var(--border-accent);">
+                <td class="text-left" style="color: var(--accent-emerald);">Team Totals</td>
+                <td>${(teamObj.pitching || []).reduce((s, p) => s + (parseFloat(p.IP) || 0), 0).toFixed(1)}</td>
+                <td>${(teamObj.pitching || []).reduce((s, p) => s + (parseInt(p.H) || 0), 0)}</td>
+                <td>${(teamObj.pitching || []).reduce((s, p) => s + (parseInt(p.R) || 0), 0)}</td>
+                <td>${(teamObj.pitching || []).reduce((s, p) => s + (parseInt(p.ER) || 0), 0)}</td>
+                <td>${(teamObj.pitching || []).reduce((s, p) => s + (parseInt(p.BB) || 0), 0)}</td>
+                <td style="color: var(--accent-gold); font-size: 0.95rem;">${(teamObj.pitching || []).reduce((s, p) => s + (parseInt(p.SO) || 0), 0)}</td>
+                <td>${(teamObj.pitching || []).reduce((s, p) => s + (parseInt(p.HR) || 0), 0)}</td>
+                <td>${(teamObj.pitching || []).reduce((s, p) => s + (parseInt(p.Pit) || 0), 0)}</td>
+                <td>-</td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>

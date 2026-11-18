@@ -20,6 +20,22 @@ const playersComponent = {
     log: []
   },
 
+  getCaliberBadge(p, sport = app.currentSport) {
+    if (!p) return '';
+    if (p.is_mvp) {
+      const txt = (sport === 'mlb_pitch' || (sport === 'mlb' && p.ip !== undefined)) ? '🏆 CY/MVP' : '🏆 MVP';
+      return `<span class="caliber-badge mvp">${txt}</span>`;
+    }
+    if (p.is_all_nba) {
+      const txt = sport === 'nba' ? '🎖️ All-NBA' : (sport === 'mlb' || sport === 'mlb_bat' || sport === 'mlb_pitch') ? '🎖️ All-MLB' : '🎖️ World XI';
+      return `<span class="caliber-badge all-nba">${txt}</span>`;
+    }
+    if (p.is_all_star) {
+      return `<span class="caliber-badge all-star">⭐ All-Star</span>`;
+    }
+    return '';
+  },
+
   renderPresets() {
     const container = document.getElementById('perf-presets-container');
     if (!container) return;
@@ -198,8 +214,7 @@ const playersComponent = {
         <tr>
           <td class="text-left ${getTdClass('NAME')}">
             <span class="player-link" onclick="app.openPlayerDossier('${p.name.replace(/'/g, "\\'")}', 'nba')">${p.name}</span>
-            ${p.is_mvp ? '<span style="font-size: 0.65rem; background: rgba(245,158,11,0.25); color: var(--accent-gold); padding: 1px 5px; border-radius: 4px; margin-left: 4px; font-weight: 800;">MVP</span>' : ''}
-            ${p.is_all_star && !p.is_mvp ? '<span style="font-size: 0.65rem; background: rgba(56,189,248,0.2); color: var(--accent-cyan); padding: 1px 5px; border-radius: 4px; margin-left: 4px; font-weight: 700;">★ ALL-STAR</span>' : ''}
+            ${this.getCaliberBadge(p, 'nba')}
             ${p.triple_double ? '<span style="font-size: 0.65rem; background: rgba(245,158,11,0.25); color: var(--accent-gold); padding: 1px 5px; border-radius: 4px; margin-left: 4px; font-weight: 800;">TRIPLE-DOUBLE</span>' : ''}
           </td>
           <td class="${getTdClass('DATE')}">${p.date}</td>
@@ -244,7 +259,7 @@ const playersComponent = {
         else if (this.perfState.preset === '3_HITS') list = list.filter(b => b.h >= 3);
         else if (this.perfState.preset === '3_RBI') list = list.filter(b => b.rbi >= 3);
         else if (this.perfState.preset === 'MVP') list = list.filter(b => b.is_mvp);
-        else if (this.perfState.preset === 'ALL_STAR') list = list.filter(b => b.is_all_star || b.is_mvp);
+        else if (this.perfState.preset === 'ALL_STAR') list = list.filter(b => b.is_all_star || b.is_all_nba || b.is_mvp);
 
         if (searchTerm) list = list.filter(b => b.name.toLowerCase().includes(searchTerm) || b.team.toLowerCase().includes(searchTerm));
 
@@ -261,8 +276,7 @@ const playersComponent = {
           <tr>
             <td class="text-left ${getTdClass('name')}">
               <span class="player-link" onclick="app.openPlayerDossier('${b.name.replace(/'/g, "\\'")}', 'mlb_bat')">${b.name}</span>
-              ${b.is_mvp ? '<span style="font-size: 0.65rem; background: rgba(245,158,11,0.25); color: var(--accent-gold); padding: 1px 5px; border-radius: 4px; margin-left: 4px; font-weight: 800;">MVP</span>' : ''}
-              ${b.is_all_star && !b.is_mvp ? '<span style="font-size: 0.65rem; background: rgba(56,189,248,0.2); color: var(--accent-cyan); padding: 1px 5px; border-radius: 4px; margin-left: 4px; font-weight: 700;">★ ALL-STAR</span>' : ''}
+              ${this.getCaliberBadge(b, 'mlb_bat')}
             </td>
             <td class="${getTdClass('date')}">${b.date}</td>
             <td class="${getTdClass('team')}"><span style="font-weight: 700; color: ${app.getTeamColor(b.team)};">${b.team}</span></td>
@@ -300,7 +314,7 @@ const playersComponent = {
         else if (this.perfState.preset === '7_K') list = list.filter(p => p.so >= 7);
         else if (this.perfState.preset === 'QS') list = list.filter(p => p.ip >= 6.0 && p.er <= 3);
         else if (this.perfState.preset === 'MVP') list = list.filter(p => p.is_mvp);
-        else if (this.perfState.preset === 'ALL_STAR') list = list.filter(p => p.is_all_star || p.is_mvp);
+        else if (this.perfState.preset === 'ALL_STAR') list = list.filter(p => p.is_all_star || p.is_all_nba || p.is_mvp);
 
         if (searchTerm) list = list.filter(p => p.name.toLowerCase().includes(searchTerm) || p.team.toLowerCase().includes(searchTerm));
 
@@ -317,8 +331,7 @@ const playersComponent = {
           <tr>
             <td class="text-left ${getTdClass('name')}">
               <span class="player-link" onclick="app.openPlayerDossier('${p.name.replace(/'/g, "\\'")}', 'mlb_pitch')">${p.name}</span>
-              ${p.is_mvp ? '<span style="font-size: 0.65rem; background: rgba(245,158,11,0.25); color: var(--accent-gold); padding: 1px 5px; border-radius: 4px; margin-left: 4px; font-weight: 800;">CY/MVP</span>' : ''}
-              ${p.is_all_star && !p.is_mvp ? '<span style="font-size: 0.65rem; background: rgba(56,189,248,0.2); color: var(--accent-cyan); padding: 1px 5px; border-radius: 4px; margin-left: 4px; font-weight: 700;">★ ALL-STAR</span>' : ''}
+              ${this.getCaliberBadge(p, 'mlb_pitch')}
             </td>
             <td class="${getTdClass('date')}">${p.date}</td>
             <td class="${getTdClass('team')}"><span style="font-weight: 700; color: ${app.getTeamColor(p.team)};">${p.team}</span></td>
@@ -356,6 +369,7 @@ const playersComponent = {
       else if (this.perfState.preset === 'ASSISTS') list = list.filter(p => p.assists > 0);
       else if (this.perfState.preset === 'CARDS') list = list.filter(p => p.yc > 0 || p.rc > 0);
       else if (this.perfState.preset === 'MVP') list = list.filter(p => p.is_mvp);
+      else if (this.perfState.preset === 'ALL_STAR') list = list.filter(p => p.is_all_star || p.is_all_nba || p.is_mvp);
 
       if (searchTerm) list = list.filter(p => p.name.toLowerCase().includes(searchTerm) || p.teams.some(t => t.toLowerCase().includes(searchTerm)));
 
@@ -372,7 +386,7 @@ const playersComponent = {
         <tr>
           <td class="text-left ${getTdClass('name')}">
             <span class="player-link" onclick="app.openPlayerDossier('${p.name.replace(/'/g, "\\'")}', 'soccer')">${p.name}</span>
-            ${p.is_mvp ? '<span style="font-size: 0.65rem; background: rgba(245,158,11,0.25); color: var(--accent-gold); padding: 1px 5px; border-radius: 4px; margin-left: 4px; font-weight: 800;">STAR</span>' : ''}
+            ${this.getCaliberBadge(p, 'soccer')}
           </td>
           <td class="${getTdClass('matches_count')}" style="font-weight: 700;">${p.matches_count}</td>
           <td class="${getTdClass('goals')}" style="font-weight: 800; color: ${p.goals > 0 ? 'var(--accent-gold)' : 'inherit'};">${p.goals}</td>
@@ -475,8 +489,7 @@ const playersComponent = {
         <tr onclick="app.openPlayerDossier('${p.name.replace(/'/g, "\\'")}', 'nba')" style="cursor: pointer;">
           <td class="text-left ${getTdClass('name')}">
             <span class="player-link">${p.name}</span>
-            ${p.is_mvp ? '<span style="font-size: 0.65rem; background: rgba(245,158,11,0.25); color: var(--accent-gold); padding: 1px 5px; border-radius: 4px; margin-left: 4px; font-weight: 800;">MVP</span>' : ''}
-            ${p.is_all_star && !p.is_mvp ? '<span style="font-size: 0.65rem; background: rgba(56,189,248,0.2); color: var(--accent-cyan); padding: 1px 5px; border-radius: 4px; margin-left: 4px; font-weight: 700;">★ ALL-STAR</span>' : ''}
+            ${this.getCaliberBadge(p, 'nba')}
           </td>
           <td class="text-left">${p.teams.map(t => `<span style="font-weight: 700; margin-right: 4px; color: ${app.getTeamColor(t)};">${t}</span>`).join('')}</td>
           <td class="${getTdClass('games_count')}" style="font-weight: 700;">${p.games_count}</td>
@@ -510,7 +523,7 @@ const playersComponent = {
       let list = [...(app.data.batters || [])];
       if (minGames > 1) list = list.filter(b => b.games_count >= minGames);
       if (caliberFilter === 'MVP') list = list.filter(b => b.is_mvp);
-      else if (caliberFilter === 'ALL_STAR') list = list.filter(b => b.is_all_star || b.is_mvp);
+      else if (caliberFilter === 'ALL_STAR') list = list.filter(b => b.is_all_star || b.is_all_nba || b.is_mvp);
 
       if (searchTerm) list = list.filter(b => b.name.toLowerCase().includes(searchTerm) || b.teams.some(t => t.toLowerCase().includes(searchTerm)));
 
@@ -527,8 +540,7 @@ const playersComponent = {
         <tr onclick="app.openPlayerDossier('${b.name.replace(/'/g, "\\'")}', 'mlb_bat')" style="cursor: pointer;">
           <td class="text-left ${getTdClass('name')}">
             <span class="player-link">${b.name}</span>
-            ${b.is_mvp ? '<span style="font-size: 0.65rem; background: rgba(245,158,11,0.25); color: var(--accent-gold); padding: 1px 5px; border-radius: 4px; margin-left: 4px; font-weight: 800;">MVP</span>' : ''}
-            ${b.is_all_star && !b.is_mvp ? '<span style="font-size: 0.65rem; background: rgba(56,189,248,0.2); color: var(--accent-cyan); padding: 1px 5px; border-radius: 4px; margin-left: 4px; font-weight: 700;">★ ALL-STAR</span>' : ''}
+            ${this.getCaliberBadge(b, 'mlb_bat')}
           </td>
           <td class="text-left">${b.teams.map(t => `<span style="font-weight: 700; margin-right: 4px; color: ${app.getTeamColor(t)};">${t}</span>`).join('')}</td>
           <td class="${getTdClass('games_count')}" style="font-weight: 700;">${b.games_count}</td>
@@ -555,7 +567,8 @@ const playersComponent = {
 
       let list = [...(app.data.players || [])];
       if (minGames > 1) list = list.filter(p => p.matches_count >= minGames);
-      if (caliberFilter === 'MVP' || caliberFilter === 'ALL_STAR') list = list.filter(p => p.is_mvp);
+      if (caliberFilter === 'MVP') list = list.filter(p => p.is_mvp);
+      else if (caliberFilter === 'ALL_STAR') list = list.filter(p => p.is_all_star || p.is_all_nba || p.is_mvp);
 
       if (searchTerm) list = list.filter(p => p.name.toLowerCase().includes(searchTerm) || p.teams.some(t => t.toLowerCase().includes(searchTerm)));
 
@@ -572,7 +585,7 @@ const playersComponent = {
         <tr onclick="app.openPlayerDossier('${p.name.replace(/'/g, "\\'")}', 'soccer')" style="cursor: pointer;">
           <td class="text-left ${getTdClass('name')}">
             <span class="player-link">${p.name}</span>
-            ${p.is_mvp ? '<span style="font-size: 0.65rem; background: rgba(245,158,11,0.25); color: var(--accent-gold); padding: 1px 5px; border-radius: 4px; margin-left: 4px; font-weight: 800;">STAR</span>' : ''}
+            ${this.getCaliberBadge(p, 'soccer')}
           </td>
           <td class="text-left">${p.teams.join(', ')}</td>
           <td class="${getTdClass('matches_count')}" style="font-weight: 700;">${p.matches_count}</td>
@@ -782,8 +795,7 @@ const playersComponent = {
 
       document.getElementById('modal-player-title').innerHTML = `
         ${player.name}
-        ${player.is_mvp ? '<span style="font-size: 0.75rem; background: rgba(245,158,11,0.25); color: var(--accent-gold); padding: 2px 8px; border-radius: 4px; margin-left: 8px; font-weight: 800;">🏆 LEAGUE MVP</span>' : ''}
-        ${player.is_all_star && !player.is_mvp ? '<span style="font-size: 0.75rem; background: rgba(56,189,248,0.2); color: var(--accent-cyan); padding: 2px 8px; border-radius: 4px; margin-left: 8px; font-weight: 700;">⭐ ALL-STAR & ALL-NBA</span>' : ''}
+        ${this.getCaliberBadge(player, 'nba')}
       `;
       document.getElementById('modal-player-subtitle').textContent = 
         `🏀 NBA • Seen Live in Person: ${player.games_count} Games • Teams: ${player.teams.join(', ')} • Personal W-L: ${player.wins}-${player.losses}`;
@@ -818,8 +830,7 @@ const playersComponent = {
 
       document.getElementById('modal-player-title').innerHTML = `
         ${player.name}
-        ${player.is_mvp ? '<span style="font-size: 0.75rem; background: rgba(245,158,11,0.25); color: var(--accent-gold); padding: 2px 8px; border-radius: 4px; margin-left: 8px; font-weight: 800;">🏆 LEAGUE MVP</span>' : ''}
-        ${player.is_all_star && !player.is_mvp ? '<span style="font-size: 0.75rem; background: rgba(56,189,248,0.2); color: var(--accent-cyan); padding: 2px 8px; border-radius: 4px; margin-left: 8px; font-weight: 700;">⭐ ALL-STAR</span>' : ''}
+        ${this.getCaliberBadge(player, 'mlb_bat')}
       `;
       document.getElementById('modal-player-subtitle').textContent = 
         `⚾ MLB Batter • Seen Live in Person: ${player.games_count} Games • Teams: ${player.teams.join(', ')}`;
@@ -854,8 +865,7 @@ const playersComponent = {
 
       document.getElementById('modal-player-title').innerHTML = `
         ${player.name}
-        ${player.is_mvp ? '<span style="font-size: 0.75rem; background: rgba(245,158,11,0.25); color: var(--accent-gold); padding: 2px 8px; border-radius: 4px; margin-left: 8px; font-weight: 800;">🏆 CY YOUNG / MVP</span>' : ''}
-        ${player.is_all_star && !player.is_mvp ? '<span style="font-size: 0.75rem; background: rgba(56,189,248,0.2); color: var(--accent-cyan); padding: 2px 8px; border-radius: 4px; margin-left: 8px; font-weight: 700;">⭐ ALL-STAR</span>' : ''}
+        ${this.getCaliberBadge(player, 'mlb_pitch')}
       `;
       document.getElementById('modal-player-subtitle').textContent = 
         `⚾ MLB Pitcher • Seen Live in Person: ${player.games_count} Outings • Teams: ${player.teams.join(', ')}`;
@@ -890,7 +900,7 @@ const playersComponent = {
 
       document.getElementById('modal-player-title').innerHTML = `
         ${player.name}
-        ${player.is_mvp ? '<span style="font-size: 0.75rem; background: rgba(245,158,11,0.25); color: var(--accent-gold); padding: 2px 8px; border-radius: 4px; margin-left: 8px; font-weight: 800;">⭐ WORLD STAR</span>' : ''}
+        ${this.getCaliberBadge(player, 'soccer')}
       `;
       document.getElementById('modal-player-subtitle').textContent = 
         `⚽ Football Player • Seen in ${player.matches_count} Matches • Teams: ${player.teams.join(', ')}`;

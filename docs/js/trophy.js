@@ -76,8 +76,12 @@ const trophyComponent = {
           <button class="chip-btn ${this.arenaFilter === 'LEFT' ? 'active' : ''}" onclick="trophyComponent.setArenaFilter('LEFT')">Active Left (18)</button>
         `;
       } else if (sport === 'mlb') {
+        const visitedCount = (app.data.trophy_ballparks || []).filter(b => b.visited).length;
+        const leftCount = (app.data.trophy_ballparks || []).filter(b => !b.visited).length;
         container.innerHTML = `
-          <span style="font-size: 0.85rem; color: var(--accent-emerald); font-weight: 700;">${app.data.trophy_ballparks.length} Unique MLB Ballparks Visited</span>
+          <button class="chip-btn ${this.arenaFilter === 'ALL' ? 'active' : ''}" onclick="trophyComponent.setArenaFilter('ALL')">All 30 Ballparks</button>
+          <button class="chip-btn ${this.arenaFilter === 'VISITED' ? 'active' : ''}" onclick="trophyComponent.setArenaFilter('VISITED')">Visited (${visitedCount})</button>
+          <button class="chip-btn ${this.arenaFilter === 'LEFT' ? 'active' : ''}" onclick="trophyComponent.setArenaFilter('LEFT')">Bucket List (${leftCount})</button>
         `;
       } else {
         container.innerHTML = `
@@ -85,9 +89,7 @@ const trophyComponent = {
         `;
       }
     } else {
-      container.innerHTML = `
-        <span style="font-size: 0.85rem; color: var(--accent-gold); font-weight: 700;">✨ All ${app.data.milestones.length} Milestone Badges Unlocked!</span>
-      `;
+      container.innerHTML = ``;
     }
   },
 
@@ -275,74 +277,76 @@ const trophyComponent = {
   },
 
   renderSoccerWorldMap() {
-    // 12 visited soccer stadiums coordinates
+    // 12 visited soccer stadiums coordinates in 1000x500 Equirectangular projection
     const pins = [
-      { name: 'Snapdragon Stadium', city: 'San Diego, USA', matches: 18, x: 175, y: 159 },
-      { name: 'Torero Stadium', city: 'San Diego, USA', matches: 2, x: 174, y: 161 },
-      { name: 'Rose Bowl', city: 'Pasadena (LA), USA', matches: 1, x: 172, y: 155 },
-      { name: 'Dignity Health Sports Park', city: 'Carson (LA), USA', matches: 2, x: 171, y: 157 },
-      { name: 'Avaya Stadium', city: 'San Jose, USA', matches: 1, x: 161, y: 146 },
-      { name: 'FirstEnergy Stadium', city: 'Cleveland, USA', matches: 1, x: 273, y: 135 },
-      { name: 'Talen Energy Stadium', city: 'Chester (Philly), USA', matches: 1, x: 291, y: 139 },
-      { name: 'Generali Arena', city: 'Prague, Czechia', matches: 1, x: 540, y: 111 },
-      { name: 'Allianz Stadium', city: 'Turin, Italy', matches: 1, x: 521, y: 125 },
-      { name: 'Stadio Olimpico', city: 'Rome, Italy', matches: 1, x: 535, y: 134 },
-      { name: 'Karaiskaki Stadium', city: 'Athens, Greece', matches: 1, x: 566, y: 145 },
-      { name: 'Athlone Stadium', city: 'Cape Town, South Africa', matches: 1, x: 551, y: 344 },
+      { name: 'Snapdragon Stadium', city: 'San Diego, USA', matches: 18, x: 174.7, y: 158.9, labelY: -8 },
+      { name: 'Torero Stadium', city: 'San Diego, USA', matches: 2, x: 174.5, y: 159.0, labelY: 14 },
+      { name: 'Rose Bowl', city: 'Pasadena (LA), USA', matches: 1, x: 171.8, y: 155.1, labelY: -8 },
+      { name: 'Dignity Health Sports Park', city: 'Carson (LA), USA', matches: 2, x: 171.5, y: 155.9, labelY: 14 },
+      { name: 'Avaya Stadium', city: 'San Jose, USA', matches: 1, x: 161.3, y: 146.2, labelY: -8 },
+      { name: 'FirstEnergy Stadium', city: 'Cleveland, USA', matches: 1, x: 273.1, y: 134.7, labelY: -8 },
+      { name: 'Talen Energy Stadium', city: 'Chester (Philly), USA', matches: 1, x: 290.6, y: 139.4, labelY: 14 },
+      { name: 'Generali Arena', city: 'Prague, Czechia', matches: 1, x: 540.0, y: 110.8, labelY: -8 },
+      { name: 'Allianz Stadium', city: 'Turin, Italy', matches: 1, x: 521.2, y: 124.7, labelY: -8 },
+      { name: 'Stadio Olimpico', city: 'Rome, Italy', matches: 1, x: 534.6, y: 133.5, labelY: 14 },
+      { name: 'Karaiskaki Stadium', city: 'Athens, Greece', matches: 1, x: 565.7, y: 144.6, labelY: -8 },
+      { name: 'Athlone Stadium', city: 'Cape Town, South Africa', matches: 1, x: 551.5, y: 344.4, labelY: -8 },
     ];
+
+    const landPath = app.data.soccer?.world_map_path || (app.rawBundle && app.rawBundle.soccer && app.rawBundle.soccer.world_map_path) || '';
 
     return `
       <div class="world-map-wrapper">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
           <div>
             <h3 style="font-size: 1.15rem; font-weight: 800; margin: 0;">🌍 Global Football Explorer Map</h3>
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.2rem 0 0;">12 Visited Stadiums across North America, Europe, and Africa. Hover or click any pin.</p>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.2rem 0 0;">High-fidelity natural world projection of all 12 visited stadiums across 3 continents. Hover or click any pin.</p>
           </div>
           <span style="font-size: 0.8rem; font-weight: 700; color: var(--accent-gold); background: rgba(245,158,11,0.15); padding: 0.25rem 0.75rem; border-radius: 9999px;">3 Continents Visited</span>
         </div>
 
         <div style="position: relative; width: 100%; border-radius: var(--radius-md); overflow: hidden; background: #070d19; border: 1px solid var(--border-subtle);">
           <svg viewBox="0 0 1000 500" style="width: 100%; height: auto; display: block;">
-            <!-- Grid Lines -->
+            <!-- Grid Lines & Defs -->
             <defs>
               <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
-                <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
+                <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="0.5"/>
               </pattern>
               <radialGradient id="pin-glow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.8"/>
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9"/>
+                <stop offset="60%" stop-color="#38bdf8" stop-opacity="0.3"/>
                 <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
               </radialGradient>
             </defs>
             <rect width="1000" height="500" fill="#070d19"/>
             <rect width="1000" height="500" fill="url(#grid)"/>
 
-            <!-- World Continents Simplified Outlines -->
-            <!-- North America -->
-            <path d="M 100,50 L 220,50 L 320,110 L 290,170 L 240,190 L 200,240 L 170,220 L 140,160 L 100,100 Z" fill="#131e33" stroke="#1e2e4a" stroke-width="1.2"/>
-            <!-- South America -->
-            <path d="M 230,250 L 310,270 L 340,330 L 290,440 L 260,450 L 230,350 Z" fill="#131e33" stroke="#1e2e4a" stroke-width="1.2"/>
-            <!-- Europe -->
-            <path d="M 470,70 L 590,70 L 580,150 L 520,160 L 480,130 Z" fill="#17243c" stroke="#253858" stroke-width="1.2"/>
-            <!-- Africa -->
-            <path d="M 470,170 L 580,170 L 610,250 L 560,370 L 510,360 L 460,250 Z" fill="#131e33" stroke="#1e2e4a" stroke-width="1.2"/>
-            <!-- Asia -->
-            <path d="M 600,60 L 850,70 L 880,180 L 750,220 L 650,250 L 600,160 Z" fill="#0f192b" stroke="#1a2b44" stroke-width="1.2"/>
-            <!-- Australia -->
-            <path d="M 780,310 L 880,310 L 890,390 L 800,400 Z" fill="#0f192b" stroke="#1a2b44" stroke-width="1.2"/>
+            <!-- High-Fidelity Natural Coastlines -->
+            ${landPath ? `
+              <path d="${landPath}" fill="#16233b" stroke="#253a5c" stroke-width="0.8" />
+            ` : `
+              <!-- Fallback -->
+              <path d="M 100,50 L 220,50 L 320,110 L 290,170 L 240,190 L 200,240 L 170,220 L 140,160 L 100,100 Z" fill="#16233b" stroke="#253a5c" stroke-width="1"/>
+              <path d="M 230,250 L 310,270 L 340,330 L 290,440 L 260,450 L 230,350 Z" fill="#16233b" stroke="#253a5c" stroke-width="1"/>
+              <path d="M 470,70 L 590,70 L 580,150 L 520,160 L 480,130 Z" fill="#16233b" stroke="#253a5c" stroke-width="1"/>
+              <path d="M 470,170 L 580,170 L 610,250 L 560,370 L 510,360 L 460,250 Z" fill="#16233b" stroke="#253a5c" stroke-width="1"/>
+              <path d="M 600,60 L 850,70 L 880,180 L 750,220 L 650,250 L 600,160 Z" fill="#16233b" stroke="#253a5c" stroke-width="1"/>
+              <path d="M 780,310 L 880,310 L 890,390 L 800,400 Z" fill="#16233b" stroke="#253a5c" stroke-width="1"/>
+            `}
 
             <!-- Equator & Meridian Line -->
-            <line x1="0" y1="250" x2="1000" y2="250" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4,4"/>
-            <line x1="500" y1="0" x2="500" y2="500" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4,4"/>
+            <line x1="0" y1="250" x2="1000" y2="250" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4,4"/>
+            <line x1="500" y1="0" x2="500" y2="500" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4,4"/>
 
             <!-- Stadium Pins -->
-            ${pins.map((pin, i) => `
+            ${pins.map((pin) => `
               <g class="map-pin" onclick="app.filterGamesByArena('${pin.name.replace(/'/g, "\\'")}')" style="cursor: pointer;">
                 <circle cx="${pin.x}" cy="${pin.y}" r="12" fill="url(#pin-glow)"/>
-                <circle cx="${pin.x}" cy="${pin.y}" r="4.5" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5"/>
-                <text x="${pin.x}" y="${pin.y - 8}" font-size="8" fill="#e2e8f0" font-weight="700" text-anchor="middle" style="text-shadow: 0 1px 3px rgba(0,0,0,0.9); pointer-events: none;">
+                <circle cx="${pin.x}" cy="${pin.y}" r="3.5" fill="#38bdf8" stroke="#ffffff" stroke-width="1.2"/>
+                <text x="${pin.x}" y="${pin.y + (pin.labelY || -7)}" font-size="7.5" fill="#f8fafc" font-weight="700" text-anchor="middle" style="paint-order: stroke fill; stroke: #070d19; stroke-width: 2.5px; stroke-linejoin: round; pointer-events: none;">
                   ${pin.name}
                 </text>
-                <title>${pin.name} (${pin.city}) - ${pin.matches} Matches Attended</title>
+                <title>${pin.name} (${pin.city}) • ${pin.matches} Matches Attended</title>
               </g>
             `).join('')}
           </svg>
@@ -394,21 +398,38 @@ const trophyComponent = {
         </div>
       `).join('');
     } else if (sport === 'mlb') {
-      container.innerHTML = (app.data.trophy_ballparks || []).map(b => `
-        <div class="arena-card visited">
+      let list = [...(app.data.trophy_ballparks || [])];
+      if (this.arenaFilter === 'VISITED') list = list.filter(b => b.visited);
+      else if (this.arenaFilter === 'LEFT') list = list.filter(b => !b.visited);
+
+      list.sort((a, b) => {
+        if (a.visited && !b.visited) return -1;
+        if (!a.visited && b.visited) return 1;
+        return b.games_count - a.games_count;
+      });
+
+      container.innerHTML = list.map(b => `
+        <div class="arena-card ${b.visited ? 'visited' : 'not-visited'}">
           <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div style="font-size: 1.5rem;">⚾</div>
+            <div style="font-size: 1.5rem;">${b.visited ? '⚾' : '📍'}</div>
             <div>
-              <h4 style="font-size: 1rem; font-weight: 800; margin: 0;">${b.name}</h4>
+              <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <h4 style="font-size: 1rem; font-weight: 800; margin: 0;">${b.name}</h4>
+                <span style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: 600;">${b.team}</span>
+              </div>
               <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.2rem;">
-                <span>Attended: <strong>${b.games_count} Games</strong></span> • <span>First: ${b.first_game} • Latest: ${b.last_game}</span>
+                <span>📍 ${b.city}</span> ${b.visited ? `• <span>Attended: <strong>${b.games_count} Games</strong></span>` : ''}
               </div>
             </div>
           </div>
 
           <div style="display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0;">
-            <span class="seen-badge">VISITED (${b.games_count}x)</span>
-            <button class="btn btn-sm btn-outline" style="font-size: 0.75rem; padding: 0.35rem 0.65rem; color: var(--accent-emerald); border: 1px solid rgba(16,185,129,0.3); border-radius: var(--radius-sm); background: transparent; cursor: pointer; font-weight: 700;" onclick="app.filterGamesByArena('${b.name.replace(/'/g, "\\'")}')">View Games →</button>
+            ${b.visited ? `
+              <span class="seen-badge">VISITED (${b.games_count} Games)</span>
+              <button class="btn btn-sm btn-outline" style="font-size: 0.75rem; padding: 0.35rem 0.65rem; color: var(--accent-cyan); border: 1px solid rgba(56,189,248,0.3); border-radius: var(--radius-sm); background: transparent; cursor: pointer; font-weight: 700;" onclick="app.filterGamesByArena('${b.name.replace(/'/g, "\\'")}')">View Games →</button>
+            ` : `
+              <span class="unseen-badge">BUCKET LIST</span>
+            `}
           </div>
         </div>
       `).join('');
@@ -452,7 +473,7 @@ const trophyComponent = {
           <h4>${m.title}</h4>
           <p>${m.description}</p>
           <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.4rem;">
-            📍 <strong>Venue:</strong> ${m.venue}
+            📍 <strong>${m.venue}</strong>
           </div>
           <div>
             <button class="milestone-link-btn" onclick="app.filterGamesByMilestone('${m.id}')">

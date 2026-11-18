@@ -92,54 +92,82 @@ NBA_ARENAS_CATALOG = [
 ]
 
 NBA_MVPS = {
-    'LeBron James', 'Nikola Jokic', 'Russell Westbrook', 'James Harden', 'Kevin Durant'
+    'LeBron James', 'Stephen Curry', 'Giannis Antetokounmpo', 'Nikola Jokic',
+    'Kevin Durant', 'Russell Westbrook', 'James Harden', 'Joel Embiid'
 }
-NBA_ALL_STARS = {
-    'LeBron James', 'Nikola Jokic', 'Russell Westbrook', 'James Harden', 'Kevin Durant',
-    'Shai Gilgeous-Alexander', 'Kawhi Leonard', 'Paul George', 'Anthony Davis', 'Chris Paul',
-    'Devin Booker', 'Dwyane Wade', 'Carmelo Anthony', 'Bradley Beal', "De'Aaron Fox",
-    'Domantas Sabonis', 'Tyrese Haliburton', 'Pascal Siakam', 'Rudy Gobert', 'Karl-Anthony Towns',
-    'Jamal Murray', 'Jrue Holiday', 'Brook Lopez', 'Kyle Lowry', 'Jimmy Butler', 'Andre Iguodala',
-    'Dwight Howard', 'Carlos Boozer', 'Elton Brand', 'Samuel Dalembert', 'Lou Williams',
-    'Victor Oladipo', 'Gordon Hayward', 'Marc Gasol', 'Pau Gasol', 'Mike Conley', 'Kemba Walker',
-    'Khris Middleton', 'Zach LaVine', 'Nikola Vucevic', 'DeMar DeRozan', 'Trae Young',
-    'Donovan Mitchell', 'Bam Adebayo', 'Jayson Tatum', 'Jaylen Brown', 'Fred VanVleet',
-    'Darius Garland', 'Jarrett Allen', 'Lauri Markkanen', 'Chet Holmgren', 'Jalen Williams'
+
+NBA_ALL_NBA = NBA_MVPS | {
+    'Kawhi Leonard', 'Anthony Davis', 'Paul George', 'Chris Paul', 'Damian Lillard',
+    'Luka Doncic', 'Jimmy Butler', 'Jayson Tatum', 'Jaylen Brown', 'Shai Gilgeous-Alexander',
+    'Donovan Mitchell', 'DeMar DeRozan', 'Rudy Gobert', 'Karl-Anthony Towns', 'Devin Booker',
+    'Pascal Siakam', 'Trae Young', 'Domantas Sabonis', "De'Aaron Fox", 'Jalen Brunson',
+    'Tyrese Haliburton', 'Dwyane Wade', 'Carmelo Anthony', 'Dwight Howard', 'Carlos Boozer',
+    'Elton Brand', 'Pau Gasol', 'Marc Gasol', 'DeAndre Jordan', 'Isaiah Thomas',
+    'Kemba Walker', 'John Wall', 'Bradley Beal', 'Goran Dragic', 'Al Horford',
+    'Ben Simmons', 'Victor Oladipo', 'Klay Thompson', 'Draymond Green', 'Kyle Lowry',
+    'Andre Iguodala', 'Shawn Marion'
 }
-NBA_ALL_NBA = {
-    'LeBron James', 'Nikola Jokic', 'Russell Westbrook', 'James Harden', 'Kevin Durant',
-    'Shai Gilgeous-Alexander', 'Kawhi Leonard', 'Paul George', 'Anthony Davis', 'Chris Paul',
-    'Devin Booker', 'Dwyane Wade', 'Carmelo Anthony', "De'Aaron Fox", 'Domantas Sabonis',
-    'Tyrese Haliburton', 'Pascal Siakam', 'Rudy Gobert', 'Karl-Anthony Towns', 'Jimmy Butler',
-    'Andre Iguodala', 'Dwight Howard', 'Carlos Boozer', 'Elton Brand', 'Marc Gasol', 'Pau Gasol',
-    'Kemba Walker', 'DeMar DeRozan', 'Trae Young', 'Donovan Mitchell', 'Jayson Tatum', 'Jaylen Brown'
+
+NBA_ALL_STARS = NBA_ALL_NBA | {
+    'Bam Adebayo', 'Andrew Wiggins', 'Brook Lopez', "D'Angelo Russell", 'Darius Garland',
+    'David West', 'Gordon Hayward', 'Jamaal Magloire', 'Jarrett Allen', 'Jrue Holiday',
+    'Khris Middleton', 'LaMelo Ball', 'Lauri Markkanen', 'Mike Conley', 'Nikola Vucevic',
+    'Paolo Banchero', 'Rajon Rondo', 'Roy Hibbert', 'Theo Ratliff', 'Tyrese Maxey',
+    'Victor Wembanyama', 'Zach LaVine', 'Dejounte Murray', 'Brandon Ingram', 'Fred VanVleet'
 }
 
 MLB_MVPS = {
-    'Mookie Betts', 'Christian Yelich', 'Bryce Harper', 'Freddie Freeman', 'Cody Bellinger',
-    'Paul Goldschmidt', 'Clayton Kershaw', 'Justin Verlander', 'Max Scherzer', 'Roy Halladay', 'Blake Snell'
+    'Shohei Ohtani', 'Aaron Judge', 'Mookie Betts', 'Freddie Freeman', 'Bryce Harper',
+    'Paul Goldschmidt', 'Cody Bellinger', 'Christian Yelich', 'Mike Trout', 'Giancarlo Stanton',
+    'Andrew McCutchen', 'Buster Posey', 'Albert Pujols', 'Dustin Pedroia', 'Jimmy Rollins',
+    'Ryan Howard', 'Ichiro Suzuki', 'Chipper Jones',
+    # Cy Young winners
+    'Clayton Kershaw', 'Justin Verlander', 'Max Scherzer', 'Roy Halladay', 'Blake Snell',
+    'Corbin Burnes', 'Shane Bieber', 'Trevor Bauer', 'Dallas Keuchel', 'Cliff Lee',
+    'Tim Lincecum', 'CC Sabathia', 'Zack Greinke', 'R.A. Dickey', 'Rick Porcello'
 }
-MLB_ALL_STARS = {
-    'Manny Machado', 'Fernando Tatis Jr.', 'Juan Soto', 'Jackson Merrill', 'Jurickson Profar',
-    'Xander Bogaerts', 'Luis Arraez', 'Ryan Howard', 'Chase Utley', 'Jimmy Rollins', 'Shane Victorino',
-    'Cole Hamels', 'Roy Oswalt', 'Yu Darvish', 'Dylan Cease', 'Michael King', 'Joe Musgrove',
-    'Trevor Cahill', 'Edwin Jackson', 'Mason Miller', 'Robert Suarez', 'Nolan Arenado', 'Justin Turner',
-    'Nick Castellanos', 'Wil Myers', 'Josh Bell', 'Kyle Tucker', 'Teoscar Hernandez', 'Will Smith',
-    'Max Muncy', 'Whit Merrifield', 'Salvador Perez', 'Bobby Witt Jr.', 'Christian Yelich', 'Mookie Betts',
-    'Freddie Freeman', 'Cody Bellinger', 'Paul Goldschmidt', 'Clayton Kershaw', 'Justin Verlander',
-    'Max Scherzer', 'Roy Halladay', 'Blake Snell', 'Brandon Woodruff', 'Taijuan Walker', 'Sean Manaea',
-    'Michael Wacha', 'Raul Ibanez', 'Hunter Renfroe', 'Austin Hays', 'Alek Thomas', 'Jose Iglesias',
-    'Jake Cronenworth', 'Carlos Santana', 'David Peralta', 'Jesse Winker', 'J.T. Realmuto', 'Kyle Schwarber',
-    'Trea Turner', 'Brad Hand', 'Craig Kimbrel', 'Ian Kinsler', 'Howie Kendrick', 'Torii Hunter'
+
+MLB_ALL_MLB = MLB_MVPS | {
+    'Manny Machado', 'Fernando Tatis Jr.', 'Juan Soto', 'Nolan Arenado', 'Trea Turner',
+    'Bobby Witt Jr.', 'Salvador Perez', 'Kyle Tucker', 'J.T. Realmuto', 'Kyle Schwarber',
+    'Chase Utley', 'Cole Hamels', 'Craig Kimbrel', 'Yu Darvish'
+}
+
+MLB_ALL_STARS = MLB_ALL_MLB | {
+    'Jackson Merrill', 'Jurickson Profar', 'Xander Bogaerts', 'Luis Arraez', 'Teoscar Hernandez',
+    'Will Smith', 'Max Muncy', 'Whit Merrifield', 'Shane Victorino', 'Roy Oswalt',
+    'Dylan Cease', 'Michael King', 'Joe Musgrove', 'Robert Suarez', 'Mason Miller',
+    'Brad Hand', 'Carlos Santana', 'David Peralta', 'Jesse Winker', 'Raul Ibanez',
+    'Trevor Cahill', 'Edwin Jackson', 'Ian Kinsler', 'Howie Kendrick', 'Torii Hunter',
+    'Wil Myers', 'Josh Bell', 'Justin Turner', 'Nick Castellanos', 'Brandon Woodruff',
+    'Taijuan Walker', 'Sean Manaea', 'Michael Wacha', 'Hunter Renfroe', 'Austin Hays',
+    'Alek Thomas', 'Jose Iglesias', 'Jake Cronenworth', 'Will Venable', 'Everth Cabrera',
+    'Huston Street', 'Heath Bell', 'Tyson Ross', 'Andrew Cashner', 'Drew Pomeranz'
 }
 
 SOCCER_MVPS = {
-    'Alex Morgan', 'Carli Lloyd', 'Tobin Heath', 'Christian Pulisic', 'Dusan Vlahovic',
-    'Paulo Dybala', 'Angel Di Maria', 'Paul Pogba', 'Leonardo Bonucci', 'Federico Chiesa',
-    'Patrik Schick', 'Alyssa Thompson', 'Jaedyn Shaw', 'Lynn Williams', 'Abby Dahlkemper',
-    'Walker Zimmerman', 'Timothy Weah', 'Christen Press', 'Rose Lavelle', 'Naomi Girma', 'Kailen Sheridan'
+    'Karim Benzema', 'Luka Modric', 'Carli Lloyd', 'Alex Morgan', 'Toni Kroos',
+    'Thibaut Courtois', 'Vinicius Junior', 'Eden Hazard', 'Leonardo Bonucci',
+    'Angel Di Maria', 'Sophia Smith', 'Crystal Dunn', 'Christian Pulisic'
 }
-SOCCER_ALL_STARS = SOCCER_MVPS
+
+SOCCER_ALL_WORLD = SOCCER_MVPS | {
+    'Casemiro', 'David Alaba', 'Antonio Rudiger', 'Dani Carvajal', 'Federico Valverde',
+    'Eduardo Camavinga', 'Aurelien Tchouameni', 'Rodrygo', 'Dusan Vlahovic', 'Paulo Dybala',
+    'Paul Pogba', 'Alex Sandro', 'Danilo', 'Bremer', 'Federico Chiesa', 'Juan Cuadrado',
+    'Manuel Locatelli', 'Patrik Schick', 'Tomas Soucek', 'Naomi Girma', 'Rose Lavelle',
+    'Mallory Swanson', 'Debinha', 'Becky Sauerbrunn', "Kelley O'Hara", 'Tobin Heath',
+    'Christen Press'
+}
+
+SOCCER_ALL_STARS = SOCCER_ALL_WORLD | {
+    'Alyssa Thompson', 'Jaedyn Shaw', 'Lynn Williams', 'Abby Dahlkemper', 'Kailen Sheridan',
+    'Antonee Robinson', 'Weston McKennie', 'Timothy Weah', 'Walker Zimmerman', 'Zack Steffen',
+    'Marco Asensio', 'Lucas Vazquez', 'Eder Militao', 'Ferland Mendy', 'Dani Ceballos',
+    'Moise Kean', 'Denis Zakaria', 'Adrien Rabiot', 'Wojciech Szczesny', 'Kostas Fortounis',
+    'Ivelin Popov', 'Ashley Sanchez', 'Emily Sonnett', 'Tierna Davidson', 'Andi Sullivan',
+    'Casey Murphy', 'Adrianna Franch', 'Savannah McCaskill', 'Taylor Flint', 'Sofia Jakobsson'
+}
 
 def build_nba():
     bs = pd.read_csv(os.path.join(NBA_DIR, 'nba_boxscores.csv'), index_col=[0])
@@ -617,6 +645,7 @@ def build_mlb():
         b['avg'] = round(b['h'] / b['ab'], 3) if b['ab'] > 0 else 0.0
         b['obp'] = round((b['h'] + b['bb']) / b['pa'], 3) if b['pa'] > 0 else 0.0
         b['is_mvp'] = b['name'] in MLB_MVPS
+        b['is_all_nba'] = b['name'] in MLB_ALL_MLB
         b['is_all_star'] = b['name'] in MLB_ALL_STARS
         b['log'].sort(key=lambda x: x['date'], reverse=True)
         batters_list.append(b)
@@ -659,6 +688,7 @@ def build_mlb():
         p['era'] = round((p['er'] * 9) / p['ip'], 2) if p['ip'] >= 1.0 else 0.0
         p['whip'] = round((p['bb'] + p['h']) / p['ip'], 2) if p['ip'] >= 1.0 else 0.0
         p['is_mvp'] = p['name'] in MLB_MVPS
+        p['is_all_nba'] = p['name'] in MLB_ALL_MLB
         p['is_all_star'] = p['name'] in MLB_ALL_STARS
         p['log'].sort(key=lambda x: x['date'], reverse=True)
         pitchers_list.append(p)
@@ -673,6 +703,7 @@ def build_mlb():
             'h': int(r.get('H',0)), 'hr': int(r.get('HR',0)), 'rbi': int(r.get('RBI',0)),
             'bb': int(r.get('BB',0)), 'so': int(r.get('SO',0)), 'details': str(r.get('Details','')) if not pd.isna(r.get('Details')) else '',
             'is_mvp': r['Batting'] in MLB_MVPS,
+            'is_all_nba': r['Batting'] in MLB_ALL_MLB,
             'is_all_star': r['Batting'] in MLB_ALL_STARS,
         })
 
@@ -686,6 +717,7 @@ def build_mlb():
             'gsc': float(r.get('GSc',0.0)) if not pd.isna(r.get('GSc')) else 0.0,
             'pit': int(r['Pit']) if not pd.isna(r.get('Pit')) and str(r.get('Pit')).replace('.','',1).isdigit() else 0,
             'is_mvp': r['Pitching'] in MLB_MVPS,
+            'is_all_nba': r['Pitching'] in MLB_ALL_MLB,
             'is_all_star': r['Pitching'] in MLB_ALL_STARS,
         })
 
@@ -703,18 +735,38 @@ def build_mlb():
             **t, 'seen': seen, 'games_count': games_count
         })
 
-    # MLB Trophy Ballparks
+    # MLB Trophy Ballparks (All 30 MLB stadiums: visited vs. bucket list)
+    mlb_stadium_aliases = {
+        'Angel Stadium of Anaheim': 'Angel Stadium',
+        'AT&T Park': 'Oracle Park',
+        'Oakland-Alameda County Coliseum': 'Oakland Coliseum',
+        'Yankee Stadium III': 'Yankee Stadium',
+    }
     seen_stadiums_counts = games_df['Stadium'].value_counts().to_dict()
+    std_visited_counts = {}
+    for raw_stadium, count in seen_stadiums_counts.items():
+        std_name = mlb_stadium_aliases.get(raw_stadium, raw_stadium)
+        std_visited_counts[std_name] = std_visited_counts.get(std_name, 0) + count
+
     trophy_ballparks = []
-    for s_name, count in sorted(seen_stadiums_counts.items(), key=lambda x: x[1], reverse=True):
-        stadium_games = [g for g in games if g['stadium'] == s_name]
+    for t in MLB_TEAMS_DATA:
+        s_name = t['stadium']
+        count = std_visited_counts.get(s_name, 0)
+        visited = count > 0
+        stadium_games = [g for g in games if mlb_stadium_aliases.get(g['stadium'], g['stadium']) == s_name]
         trophy_ballparks.append({
             'name': s_name,
-            'visited': True,
+            'team': t['name'],
+            'abbrev': t['abbrev'],
+            'city': t['city'],
+            'visited': visited,
+            'active': True,
             'games_count': count,
             'first_game': stadium_games[-1]['date'] if stadium_games else '',
             'last_game': stadium_games[0]['date'] if stadium_games else ''
         })
+
+    trophy_ballparks.sort(key=lambda x: (not x['visited'], -x['games_count'], x['name']))
 
     # MLB Milestones
     milestones = [
@@ -895,6 +947,7 @@ def build_soccer():
         p['opponents'] = sorted(list(p['opponents']))
         p['primary_team'] = p['teams'][0] if p['teams'] else ''
         p['is_mvp'] = p['name'] in SOCCER_MVPS
+        p['is_all_nba'] = p['name'] in SOCCER_ALL_WORLD
         p['is_all_star'] = p['name'] in SOCCER_ALL_STARS
         p['log'].sort(key=lambda x: x['date'], reverse=True)
         soccer_players.append(p)
@@ -959,11 +1012,53 @@ def build_soccer():
         'total_players_tracked': len(soccer_players), 'cities_visited': len(set(m['city'] for m in matches)),
     }
 
+    world_map_path = generate_world_svg_path()
+
     return {
         'summary': summary, 'matches': matches, 'players': soccer_players,
         'trophy_stadiums': trophy_stadiums, 'trophy_teams': trophy_teams, 'milestones': milestones,
-        'attendance_by_year': attendance_by_year, 'fun_records': fun_records
+        'attendance_by_year': attendance_by_year, 'fun_records': fun_records,
+        'world_map_path': world_map_path
     }
+
+def generate_world_svg_path():
+    json_path = os.path.join(BASE_DIR, 'land-110m.json')
+    if not os.path.exists(json_path):
+        return ''
+    try:
+        with open(json_path, 'r', encoding='utf-8') as f:
+            topo = json.load(f)
+        scale = topo['transform']['scale']
+        translate = topo['transform']['translate']
+        arcs = topo['arcs']
+        decoded = []
+        for a in arcs:
+            pts = []
+            x, y = 0, 0
+            for dx, dy in a:
+                x += dx; y += dy
+                pts.append((x * scale[0] + translate[0], y * scale[1] + translate[1]))
+            decoded.append(pts)
+        def get_arc(idx):
+            return decoded[idx] if idx >= 0 else list(reversed(decoded[~idx]))
+        geoms = topo['objects']['land']['geometries']
+        paths = []
+        for g in geoms:
+            polys = [g['arcs']] if g['type'] == 'Polygon' else g['arcs']
+            for poly in polys:
+                for ring in poly:
+                    ring_pts = []
+                    for arc_idx in ring:
+                        pts = get_arc(arc_idx)
+                        if ring_pts and pts and ring_pts[-1] == pts[0]: ring_pts.extend(pts[1:])
+                        else: ring_pts.extend(pts)
+                    if not ring_pts: continue
+                    proj = [(round((lon + 180.0) / 360.0 * 1000, 1), round((90.0 - lat) / 180.0 * 500, 1)) for lon, lat in ring_pts]
+                    paths.append('M ' + ' L '.join(f'{x},{y}' for x, y in proj) + ' Z')
+        return ' '.join(paths)
+    except Exception as e:
+        print('Error generating world SVG path:', e)
+        return ''
 
 def clean_nan_inf(obj):
     if isinstance(obj, float):
