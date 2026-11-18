@@ -578,7 +578,7 @@ const gamesComponent = {
               <tfoot>
                 <tr style="font-weight: 800; background: rgba(255,255,255,0.06); border-top: 2px solid var(--border-accent);">
                   <td class="text-left" style="color: var(--accent-cyan);">Team Totals</td>
-                  <td>-</td>
+                  <td></td>
                   <td style="color: var(--accent-gold); font-size: 0.95rem;">${teamObj.pts}</td>
                   <td>${teamObj.reb}</td>
                   <td>${teamObj.ast}</td>

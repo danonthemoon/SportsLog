@@ -29,15 +29,15 @@ const playersComponent = {
   getCaliberBadge(p, sport = app.currentSport) {
     if (!p) return '';
     if (p.is_mvp) {
-      const txt = (sport === 'mlb_pitch' || (sport === 'mlb' && p.ip !== undefined)) ? '🏆 CY/MVP' : '🏆 MVP';
+      const txt = (sport === 'mlb_pitch' || (sport === 'mlb' && p.ip !== undefined)) ? 'CY/MVP' : 'MVP';
       return `<span class="caliber-badge mvp">${txt}</span>`;
     }
     if (p.is_all_nba) {
-      const txt = sport === 'nba' ? '🎖️ All-NBA' : (sport === 'mlb' || sport === 'mlb_bat' || sport === 'mlb_pitch') ? '🎖️ All-MLB' : '🎖️ World XI';
+      const txt = sport === 'nba' ? 'All-NBA' : (sport === 'mlb' || sport === 'mlb_bat' || sport === 'mlb_pitch') ? 'All-MLB' : 'World XI';
       return `<span class="caliber-badge all-nba">${txt}</span>`;
     }
     if (p.is_all_star) {
-      return `<span class="caliber-badge all-star">⭐ All-Star</span>`;
+      return `<span class="caliber-badge all-star">All-Star</span>`;
     }
     return '';
   },
@@ -58,8 +58,8 @@ const playersComponent = {
         { id: '5_3PM', label: '🎯 5+ 3-Pointers' },
         { id: '15_REB', label: '🦾 15+ Rebounds' },
         { id: '10_AST', label: '🪄 10+ Assists' },
-        { id: 'MVP', label: '🏆 League MVPs' },
-        { id: 'ALL_STAR', label: '⭐ All-Stars & All-NBA' },
+        { id: 'MVP', label: 'League MVPs' },
+        { id: 'ALL_STAR', label: 'All-Stars & All-NBA' },
       ];
       html += presets.map(p => `
         <button class="chip-btn ${this.perfState.preset === p.id ? 'active' : ''}" onclick="playersComponent.setPerfPreset('${p.id}')">${p.label}</button>
@@ -77,8 +77,8 @@ const playersComponent = {
           { id: 'MULTI_HR', label: '💥 Multi-HR (2+ HR)' },
           { id: '3_HITS', label: '⚾ 3+ Hits' },
           { id: '3_RBI', label: '🚀 3+ RBIs' },
-          { id: 'MVP', label: '🏆 League MVPs' },
-          { id: 'ALL_STAR', label: '⭐ All-Stars' },
+          { id: 'MVP', label: 'League MVPs' },
+          { id: 'ALL_STAR', label: 'All-Stars' },
         ];
         html += presets.map(p => `
           <button class="chip-btn ${this.perfState.preset === p.id ? 'active' : ''}" onclick="playersComponent.setPerfPreset('${p.id}')">${p.label}</button>
@@ -89,8 +89,8 @@ const playersComponent = {
           { id: '10_K', label: '⚡ 10+ Strikeouts' },
           { id: '7_K', label: '🔥 7+ Strikeouts' },
           { id: 'QS', label: '💎 Quality Starts' },
-          { id: 'MVP', label: '🏆 Cy Young & MVPs' },
-          { id: 'ALL_STAR', label: '⭐ All-Stars' },
+          { id: 'MVP', label: 'Cy Young & MVPs' },
+          { id: 'ALL_STAR', label: 'All-Stars' },
         ];
         html += presets.map(p => `
           <button class="chip-btn ${this.perfState.preset === p.id ? 'active' : ''}" onclick="playersComponent.setPerfPreset('${p.id}')">${p.label}</button>
@@ -103,7 +103,7 @@ const playersComponent = {
         { id: 'MULTI_GOAL', label: '🎯 Multi-Goal (2+ Goals)' },
         { id: 'ASSISTS', label: '🪄 Playmakers (Assists)' },
         { id: 'CARDS', label: '🟨 Card Magnet' },
-        { id: 'MVP', label: '🏆 World Stars & MVPs' },
+        { id: 'MVP', label: 'World Stars & MVPs' },
       ];
       html += presets.map(p => `
         <button class="chip-btn ${this.perfState.preset === p.id ? 'active' : ''}" onclick="playersComponent.setPerfPreset('${p.id}')">${p.label}</button>
